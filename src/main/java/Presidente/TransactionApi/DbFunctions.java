@@ -4,9 +4,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import com.impossibl.postgres.jdbc.PGDriver;
+import com.impossibl.postgres.jdbc.PGDataSource;
+import com.impossibl.postgres.api.jdbc.PGConnection;
+import com.impossibl.postgres.api.jdbc.PGNotificationListener;
+import com.impossibl.postgres.jdbc.PGConnectionPoolDataSource;
+import com.impossibl.postgres.jdbc.xa.PGXADataSource;
+import java.sql.Connection;
+
 
 
 public class DbFunctions {
+	String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
+	String user = "presidente";
+	String password = "test";
+	
 	public void connect() {
 		try (Connection connection = DriverManager.getConnection("jdbc:postgresql://65.21.110.211:5432/accounting", "presidente", "test")) {
 			 
@@ -32,4 +44,20 @@ public class DbFunctions {
             e.printStackTrace();
         }
 	}
+	
+	public void asyconnect() {
+		String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
+		String user = "presidente";
+		String password = "test";
+		try(Connection connection = DriverManager.getConnection(url, user, password);) {
+			System.out.println("Connected asy to PostgreSQL database!");
+		} catch (SQLException e) {
+			  System.out.println("Connection failure.");
+	          e.printStackTrace();
+			
+		}
+	}
+	
+	
+	
 }
