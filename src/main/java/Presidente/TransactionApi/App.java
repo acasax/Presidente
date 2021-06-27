@@ -1,13 +1,11 @@
 package Presidente.TransactionApi;
+import Presidente.TransactionApi.DbFunctions;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        DbFunctions db = new DbFunctions(); 
+        db.connect();
     }
 }
