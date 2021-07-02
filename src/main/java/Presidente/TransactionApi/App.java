@@ -14,8 +14,8 @@ public class App
     public static void main( String[] args ) throws SQLException, InterruptedException, ExecutionException
     {
     	String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
-		String user = "presidente";
-		String password = "test";
+		String user = "ensico";
+		String password = "jflakj344*&^4J2fdHDSF&^FN";
 		
         DbFunctions db = new DbFunctions(); 
         //db.connect();
