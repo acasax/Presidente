@@ -15,7 +15,8 @@ class Listener implements Runnable {
    private final Connection conn;
    private final org.postgresql.PGConnection pgconn;
    public String transaction;
-
+   private long startMilis = 0;
+   
    Listener(Connection conn) throws SQLException {
       this.conn = conn;
       this.pgconn = (org.postgresql.PGConnection) conn;
@@ -27,51 +28,32 @@ class Listener implements Runnable {
    @Override
    public void run() {
       while (true) {
-         try {
-            // issue a dummy query to contact the backend
-            // and receive any pending notifications.
-            /*Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT 1");
-            rs.close();
-            stmt.close();*/
-
-            /*org.postgresql.PGNotification[] notifications = pgconn.getNotifications();
-            if (Objects.nonNull(notifications)) {
-               for (org.postgresql.PGNotification notification : notifications) {
-                  System.out.println("Got job ss: " + notification.getParameter());
-                  transaction = notification.getParameter();
-                  
-                  // interesting async processing
-               }
-            }*/
-        	 test();
-            // wait a while before checking again for new notifications
-            //Thread.sleep(0);
-         } /*catch (SQLException sqle) {
-            sqle.printStackTrace();
-         }*/ catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            ie.printStackTrace();
-         } catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+         notifyReturn();
+         long millis=System.currentTimeMillis();  
+         if (startMilis == 0) {
+        	 startMilis = millis;
+         }
+         else {
+        	 if (millis > startMilis + 120000) {
+        		 /*new Thread(new Runnable() {
+        			 public void Run() {
+        				 proveri();
+        			 }
+        		 }).start();
+        		 startMilis = millis;*/
+        	 }
+         }
       }
    }
    
-   public void test() throws InterruptedException, ExecutionException
+   public void notifyReturn() 
    {   
        ExecutorService executor = Executors.newSingleThreadExecutor();
        Callable<String> callable = new Callable<String>() {
            @Override
            public String call() {
         	   try {
-                   // issue a dummy query to contact the backend
-                   // and receive any pending notifications.
-                   /*Statement stmt = conn.createStatement();
-                   ResultSet rs = stmt.executeQuery("SELECT 1");
-                   rs.close();
-                   stmt.close();*/
+                 
 
                    org.postgresql.PGNotification[] notifications = pgconn.getNotifications();
                    if (Objects.nonNull(notifications)) {
@@ -79,6 +61,7 @@ class Listener implements Runnable {
                          System.out.println("Got job: " + notification.getParameter());
                          transaction = notification.getParameter();
                          return transaction;
+                         
                          // interesting async processing
                       }
                    }
@@ -93,11 +76,20 @@ class Listener implements Runnable {
 			return "Proba";
            }
        };
-       Future<String> future = executor.submit(callable);
-       if(future.isDone()) {
-    	   future.get();
-       };
-       executor.shutdown();
+       try {
+	       Future<String> future = executor.submit(callable);
+	       if(future.isDone()) {
+	    	   future.get();
+	       };
+       }
+       catch (Exception e) {
+           e.printStackTrace();
+       }
+       finally {    	   
+    	   executor.shutdown();
+       }
    }
-
+   
+   
 }
+
