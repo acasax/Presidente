@@ -8,42 +8,100 @@ import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 
 import Presidente.TransactionApi.DbFunctions;
+import Presidente.TransactionApi.Processing;
+import java.util.ArrayList;
 
 public class App 
 {
 	static Listener listener = null;
+    static ArrayList<Processing> lista = new ArrayList<>();
+    static String notifyTransaction;
+    static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
+    static String user = "presidente";
+	static String password = "test";
+	static Object pgconn;
+	static String transactionWithStatus0;
+	static String transactionId;
+	static String transactionPath;
+	static String transactionWithtransactionId;
+	
+	static DbFunctions db = new DbFunctions(); 
+    static Functions fun  = new Functions();
+    static Connection lConn;
+    
+	/*public static Processing nadjiProcessing(String ID) {
+		for (Processing p : lista){
+			if (p.getId().equals(ID)) {
+				//nasao
+				return p;
+			}
+		}
+		return null;
+	}*/
+	
+	// kad processing zavrsi
+	public static void ugasi (Processing p) {
+		for (int i = 0 ; i < lista.size(); i++) {
+			if (lista.get(i) == p){
+				lista.remove(i);
+			}
+		}
+	}
+	
+	public static void prekini(Processing p) {
+		p.interrupt();
+		ugasi(p);
+	}
+	
+	public static void sendTransaction(String transaction) {
+		//System.out.println(transaction);
+		if(transaction != null) {
+			String transactionId =  fun.getTransansactionId(transaction, "n");
+			//db.executeProcedure("CALL public.set_status_10_by_transaction_id('"+ transactionId +"')", lConn);
+	    	//Pokretanje procesa za odredjeni transaction id
+			//Ako ne moze da se promeni u bazi vidi kako i ovde da dobijas ovo sve
+	    	/*Processing newProcess = new Processing(transactionId);
+	    	lista.add(newProcess);
+	    	newProcess.start();*/
+		}
+	}
+	
+	public static void sendTransactionWithStatus0() throws SQLException {
+		  transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
+          while(transactionWithStatus0 != null) {
+        	  System.out.println("Ima transakcija sa statusom 0");
+          	transactionId   =  fun.getTransansactionId(transactionWithStatus0, "s");
+          	transactionWithtransactionId = db.executeFunction("SELECT public.get_json_by_transaction_id('"+ transactionId + "')", lConn, "get_json_by_transaction_id");
+          	
+          	transactionPath =  fun.getTransansactionPath(transactionWithtransactionId, "s");
+          	//Procedura Set Status 10
+          	db.executeProcedure("CALL public.set_status_10_by_transaction_id('"+ transactionId +"')", lConn);
+          	//Pokretanje procesa za odredjeni transaction id
+          	Processing newProcess = new Processing(transactionId, transactionPath, transactionWithtransactionId);
+          	lista.add(newProcess);
+          	newProcess.start();
+          	transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
+          }
+          System.out.println("nema transakcija sa statusom 0");
+	}
 	
     public static void main( String[] args ) throws SQLException, InterruptedException, ExecutionException
     {
-    	String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
-		String user = "ensico";
-		String password = "jflakj344*&^4J2fdHDSF&^FN";
-		Object pgconn;
-		String transactionWithStatus0;
-		
-		
-        DbFunctions db = new DbFunctions(); 
-        Functions fun  = new Functions();
-        //db.connect();
-        db.asyconnect();
+    	
+    	db.asyconnect(url, user, password);
+    	lConn = DriverManager.getConnection(url, user, password);
+    	
+    	//Proveri da nije null
+    	//sendTransactionWithStatus0();
+          
+    	//Cekanje notify-a
+        Listener listener = new Listener(lConn);
+		listener.start();
         
-        
-        Connection lConn = DriverManager.getConnection(url, user, password);
+      
        
-        transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
+       
         
-        while(transactionWithStatus0 != "0") {
-        	db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
-        	fun.getTransansactionId(transactionWithStatus0);
-        }
-        
-        
-        if (listener == null) {
-        	listener = new Listener(lConn);
-        	new Thread(listener).start();
-        }
-        
-        db.executeProcedure("p_new_transaction", lConn);
-        
+   
     }
 }

@@ -40,10 +40,8 @@ public class DbFunctions {
         }
 	}
 	
-	public void asyconnect() {
-		String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
-		String user = "ensico";
-		String password = "jflakj344*&^4J2fdHDSF&^FN";
+	public void asyconnect(String url, String user, String password) {
+		
 		try(Connection connection = DriverManager.getConnection(url, user, password);) {
 			System.out.println("Connected asy to PostgreSQL database!");
 		} catch (SQLException e) {
@@ -76,7 +74,7 @@ public class DbFunctions {
 			ResultSet resultSet = statement.executeQuery(SQL);
 			if(resultSet != null) {
 				while (resultSet.next()) {
-					System.out.printf(resultSet.getString(functionName));
+					System.out.println(resultSet.getString(functionName));
 					return notSendtransaction = resultSet.getString(functionName);
 				}
 			}else {
