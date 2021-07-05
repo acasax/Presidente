@@ -1,5 +1,7 @@
 package Presidente.TransactionApi;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 import org.json.*;
@@ -8,7 +10,7 @@ public class Functions {
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
-	public String getTransansactionId(String JSON, String Status) {
+	public String getTransansactionId(String JSON, String Status) throws JSONException {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
@@ -32,7 +34,7 @@ public class Functions {
 
 	// Funkcija koja uzima iz JSON-a samo path
 	//
-	public String getTransansactionPath(String JSON, String Status) {
+	public String getTransansactionPath(String JSON, String Status) throws JSONException {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
@@ -56,7 +58,7 @@ public class Functions {
 
 	// Funkcija koja uzima odredjeni parametar iz JSON-a
 	//
-	public String getParamFromJson(String JSON, String Param) {
+	public String getParamFromJson(String JSON, String Param) throws JSONException {
 		String jsonString = JSON;
 		double paramValueD;
 		String paramValue;
@@ -94,7 +96,7 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path) {
+	public JSONObject checkJSONforSend(String JSON, String path) throws JSONException {
 
 		// Uzimanje podataka iz JSON-a
 		//
@@ -172,10 +174,32 @@ public class Functions {
 		}
 	}
 
-	// Funkcija koja iz provere salje zahteve na transakcioni Api
+	//Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public void sendTransactionToApi() {
-
+	public String getApiCounter(String transaction_id, DbFunctions db, Connection con) {
+		try {
+			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')", con, "get_api_counter");
+			if(Integer.parseInt(apiCounter) < 3) {
+				return "60000";
+			}else {
+				return "3600000";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Api kaunter nije kako treba";
+		}
+	}
+	
+	public String getWorkStatus(String transaction_id, DbFunctions db, Connection con) {
+		try {
+			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')", con, "get_transaction_exe_status");
+			return workStatus;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "work status nije kako treba";
+		}
 	}
 
 }

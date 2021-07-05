@@ -1,5 +1,6 @@
 package Presidente.TransactionApi;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
@@ -31,7 +32,9 @@ public class Processing extends Thread {
 	static String user = "presidente";
 	static String password = "test";
 	static String api_uid;
-	
+	static String response_text;
+	static String threadSleep;
+
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static Connection lConn;
@@ -44,51 +47,130 @@ public class Processing extends Thread {
 		this.TransactionBody = TransactionBody;
 	}
 
-	// dodaj getere i setere
+	public String getTransactionId() {
+		return TransactionId;
+	}
 
 	@Override
 	public void run() {
-		// TODO
-		
+
+		// Pokusava da otvori konekciju na bazu
 		try {
 			lConn = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
+		// Kreira httpClient
+		//
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		try {
 
+			// Kreira httpPostRequest
+			//
 			HttpPost request = new HttpPost(URL + TransactionPath);
 
-			// add request headers
-			request.addHeader("x-api-key", "56443d42ce9c84e2dcc14f7bcc55bdbce21b0577458e18e82741979c9362c6e0");
-			request.setEntity(new StringEntity(TransactionBody.toString(), ContentType.APPLICATION_JSON));
+			// Dodaje potrebne parametre u request
+			//
+			request.addHeader("x-api-key", "56443d42ce9c84e2dcc14f7bcc55bdbce21b0577458e18e82741979c9362c6e0"); // parametri
+																												// za
+																												// heder
+			request.setEntity(new StringEntity(TransactionBody.toString(), ContentType.APPLICATION_JSON)); // parametri
+																											// body
 
+			// Izvrsava request i ceka odgovor
+			//
 			CloseableHttpResponse response = httpClient.execute(request);
 
 			try {
 
-				// Get HttpResponse Status
-				System.out.println(response.getStatusLine().getStatusCode()); // 200
-				System.out.println(response.getStatusLine().getReasonPhrase()); // OK
+				Status = response.getStatusLine().getStatusCode(); // status odgovora
 
-				Status = response.getStatusLine().getStatusCode();
-
+				// Body odgovora
+				//
 				HttpEntity entity = response.getEntity();
 				if (entity != null) {
 					// return it as a String
 					String result = EntityUtils.toString(entity);
-					api_uid = fun.getParamFromJson(result, "uuid");
+					if (Status == 201) {
+						api_uid = fun.getParamFromJson(result, "uuid");
+					} else {
+						response_text = result;
+					}
+
 					System.out.println(result);
 				}
 
+				// Ako je status uspesan menja status u bazi na 1 i gasi tred
+				//
 				if (Status == 201) {
-					db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId + "','"+ api_uid +"')", lConn);
-				}
 
+					db.executeProcedure(
+							"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')",
+							lConn);
+					response.close();
+					httpClient.close();
+				} else {
+
+					while (true) {
+						// Proverava da li je radna za prekidanje
+						//
+						if (!Thread.interrupted()) {
+							// Funkcija za api kaunter
+							//
+							threadSleep = fun.getApiCounter(TransactionId, db, lConn);
+							Thread.sleep(Long.parseLong(threadSleep));
+							db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"
+									+ response_text + "', '" + String.valueOf(Status) + "')", lConn);
+
+							request = new HttpPost(URL + TransactionPath);
+
+							// Dodaje potrebne parametre u request
+							//
+							request.addHeader("x-api-key",
+									"56443d42ce9c84e2dcc14f7bcc55bdbce21b0577458e18e82741979c9362c6e0"); // parametri za
+																											// heder
+							request.setEntity(
+									new StringEntity(TransactionBody.toString(), ContentType.APPLICATION_JSON)); // parametri
+																													// body
+							response = httpClient.execute(request);
+
+							Status = response.getStatusLine().getStatusCode();
+
+							entity = response.getEntity();
+							if (entity != null) {
+								// return it as a String
+								String result = EntityUtils.toString(entity);
+								api_uid = fun.getParamFromJson(result, "uuid");
+								System.out.println(result);
+							}
+
+							if (Status == 201) {
+								db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId
+										+ "','" + api_uid + "')", lConn);
+								response.close();
+								httpClient.close();
+								return;
+							}
+							request = null;
+						}else {
+							return;
+						}
+
+					}
+
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} finally {
 				response.close();
 			}
@@ -96,15 +178,7 @@ public class Processing extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				httpClient.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 	}
