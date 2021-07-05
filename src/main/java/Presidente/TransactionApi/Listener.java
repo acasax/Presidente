@@ -35,7 +35,7 @@ class Listener extends Thread {
 		         }
 		         else {
 		        	 if (millis > startMilis + 60000) {
-		        		 new Thread(new Runnable() {
+		        		 /*new Thread(new Runnable() {
 		        			 public void run() {
 		        				 try {
 									App.sendTransactionWithStatus0();
@@ -44,7 +44,7 @@ class Listener extends Thread {
 									e.printStackTrace();
 								}
 		        			 }
-		        		 }).start();
+		        		 }).start();*/
 		        		 startMilis = millis;
 		        	 }
 		         }

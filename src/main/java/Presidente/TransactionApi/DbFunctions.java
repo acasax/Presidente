@@ -83,9 +83,8 @@ public class DbFunctions {
 		} catch (SQLException e) {
             System.out.println(e.getMessage());
             return e.getMessage();
-        } 
-		return " ";
-			
+        }
+		return null; 	
 	}
 	
 	
