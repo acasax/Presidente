@@ -1,15 +1,17 @@
 package Presidente.TransactionApi;
 
+import org.json.JSONObject;
+
 public class Processing extends Thread {
 	private String 	TransactionId;
 	private String  TransactionPath;
-	private String  TransactionData;
+	private JSONObject  TransactionBody;
 	//Konsturktor osnovne klase
-	public Processing (String TransactionId, String TransactionPath, String TransactionData) {
+	public Processing (String TransactionId, String TransactionPath, JSONObject TransactionBody) {
 		super();
 		this.TransactionId   = TransactionId;
 		this.TransactionPath = TransactionPath;
-		this.TransactionData = TransactionData;
+		this.TransactionBody = TransactionBody;
 	}
 	
 	@Override
@@ -17,7 +19,14 @@ public class Processing extends Thread {
 		//TODO
 		
 		
-		System.out.println(TransactionId);
+		System.out.println(TransactionId + TransactionPath + TransactionBody);
+		
+		try {
+			Thread.sleep(6000000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}

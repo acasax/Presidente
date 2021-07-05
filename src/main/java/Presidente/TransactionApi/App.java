@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONObject;
+
 import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 
@@ -24,6 +26,7 @@ public class App
 	static String transactionId;
 	static String transactionPath;
 	static String transactionWithtransactionId;
+	static JSONObject transactionBody;
 	
 	static DbFunctions db = new DbFunctions(); 
     static Functions fun  = new Functions();
@@ -54,9 +57,18 @@ public class App
 	}
 	
 	public static void sendTransaction(String transaction) {
-		//System.out.println(transaction);
+		
 		if(transaction != null) {
-			String transactionId =  fun.getTransansactionId(transaction, "n");
+			transactionId   =  fun.getTransansactionId(transaction, "s");
+			transactionPath =  fun.getTransansactionPath(transaction, "s");
+          	transactionBody =  fun.checkJSONforSend(transaction, transactionPath);
+          	//Procedura Set Status 10
+          	db.executeProcedure("CALL public.set_status_10_by_transaction_id('"+ transactionId +"')", lConn);
+          	//Pokretanje procesa za odredjeni transaction id
+          	Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+          	lista.add(newProcess);
+          	System.out.println(lista);
+          	newProcess.start();
 			//db.executeProcedure("CALL public.set_status_10_by_transaction_id('"+ transactionId +"')", lConn);
 	    	//Pokretanje procesa za odredjeni transaction id
 			//Ako ne moze da se promeni u bazi vidi kako i ovde da dobijas ovo sve
@@ -69,20 +81,18 @@ public class App
 	public static void sendTransactionWithStatus0() throws SQLException {
 		  transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
           while(transactionWithStatus0 != null) {
-        	  System.out.println("Ima transakcija sa statusom 0");
+        	System.out.println("Ima transakcija sa statusom 0");
           	transactionId   =  fun.getTransansactionId(transactionWithStatus0, "s");
-          	transactionWithtransactionId = db.executeFunction("SELECT public.get_json_by_transaction_id('"+ transactionId + "')", lConn, "get_json_by_transaction_id");
-          	
-          	transactionPath =  fun.getTransansactionPath(transactionWithtransactionId, "s");
+          	transactionPath =  fun.getTransansactionPath(transactionWithStatus0, "s");
+          	transactionBody =  fun.checkJSONforSend(transactionWithStatus0, transactionPath);
           	//Procedura Set Status 10
           	db.executeProcedure("CALL public.set_status_10_by_transaction_id('"+ transactionId +"')", lConn);
           	//Pokretanje procesa za odredjeni transaction id
-          	Processing newProcess = new Processing(transactionId, transactionPath, transactionWithtransactionId);
+          	Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
           	lista.add(newProcess);
           	newProcess.start();
           	transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
           }
-          System.out.println("nema transakcija sa statusom 0");
 	}
 	
     public static void main( String[] args ) throws SQLException, InterruptedException, ExecutionException
