@@ -3,6 +3,7 @@ package Presidente.TransactionApi;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.concurrent.ExecutionException;
 
 import org.json.*;
 
@@ -10,12 +11,13 @@ public class Functions {
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
-	public String getTransansactionId(String JSON, String Status) throws JSONException {
+	public String getTransansactionId(String JSON, String Status)  {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
-			JSONObject obj = new JSONObject(jsonString);
+			
 			try {
+				JSONObject obj = new JSONObject(jsonString);
 				String transactionId = obj.getString("transaction_id");
 				return transactionId;
 			} catch (JSONException e) {
@@ -24,22 +26,28 @@ public class Functions {
 			}
 			
 		} else {
-			String str = JSON.substring(JSON.indexOf("{"));
-			String jsonString = str;
-			JSONObject obj = new JSONObject(jsonString);
-			String transactionId = obj.getString("transaction_id");
-			return transactionId;
+			try {
+				String str = JSON.substring(JSON.indexOf("{"));
+				String jsonString = str;
+				JSONObject obj = new JSONObject(jsonString);
+				String transactionId = obj.getString("transaction_id");
+				return transactionId;
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return "U ovom JSON-u nema polja transaction_id";
+			}
+			
 		}
 	}
 
 	// Funkcija koja uzima iz JSON-a samo path
 	//
-	public String getTransansactionPath(String JSON, String Status) throws JSONException {
+	public String getTransansactionPath(String JSON, String Status)  {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
-			JSONObject obj = new JSONObject(jsonString);
 			try {
+				JSONObject obj = new JSONObject(jsonString);
 				String transactionPath = obj.getString("path");
 				return transactionPath;
 			} catch (JSONException e) {
@@ -48,17 +56,23 @@ public class Functions {
 			}
 			
 		} else {
-			String str = JSON.substring(JSON.indexOf("{"));
-			String jsonString = str;
-			JSONObject obj = new JSONObject(jsonString);
-			String transactionPath = obj.getString("path");
-			return transactionPath;
+			try {
+				String str = JSON.substring(JSON.indexOf("{"));
+				String jsonString = str;
+				JSONObject obj = new JSONObject(jsonString);
+				String transactionPath = obj.getString("path");
+				return transactionPath;
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return "U ovom JSON-u nema polja path";
+			}
+			
 		}
 	}
 
 	// Funkcija koja uzima odredjeni parametar iz JSON-a
 	//
-	public String getParamFromJson(String JSON, String Param) throws JSONException {
+	public String getParamFromJson(String JSON, String Param) {
 		String jsonString = JSON;
 		double paramValueD;
 		String paramValue;
@@ -96,7 +110,7 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path) throws JSONException {
+	public JSONObject checkJSONforSend(String JSON, String path) {
 
 		// Uzimanje podataka iz JSON-a
 		//

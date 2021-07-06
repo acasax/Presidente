@@ -86,41 +86,6 @@ public class DbFunctions {
         }
 		return null; 	
 	}
-	
-	
-	
-	public void executeQuery(String SQL, Connection connection) throws SQLException {
-		 try {
-			System.out.println("Connected asy to PostgreSQL database!");
-            //Statement statement = connection.createStatement();
-            //System.out.println("Insert...");
-            //ResultSet resultSet = statement.executeQuery("INSERT INTO public.transactions( machine_num_id, transaction_amount, transaction_types, slot_club_id, transaction_time) VALUES (112233445566, 258741, 1, 1, now());");
-            //SQL = "UPDATE public.transactions SET  transaction_amount=2587777444 WHERE trans_id=32572;";
-			   //Statement statement = connection.createStatement();
-	           // System.out.println("Insert...");
-	            //ResultSet resultSet = statement.executeQuery("INSERT INTO public.transactions( machine_num_id, transaction_amount, transaction_types, slot_club_id, transaction_time) VALUES (112233445566, 258741, 1, 1, now());");
-	            //String SQL = "DELETE FROM public.transactions WHERE trans_id=32575;";
-	           // PreparedStatement statemet = connection.prepareStatement(SQL);
-	           // int a = statemet.executeUpdate();
-	           // System.out.println(a);
-	            /*while (resultSet.next()) {
-	                System.out.printf("%-30.30s  %-30.30s%n", resultSet.getString("model"), resultSet.getString("price"));
-	            }*/
-            PreparedStatement statemet = connection.prepareStatement(SQL);
-            int a = statemet.executeUpdate();
-            System.out.println(a);
-            /*while (resultSet.next()) {
-                System.out.printf("%-30.30s  %-30.30s%n", resultSet.getString("model"), resultSet.getString("price"));
-            }*/
-		 } catch (SQLException e) {
-			 
-		 }
 		
-		
-	}
-	
-	
-	
-	
 	
 }

@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.impossibl.postgres.api.jdbc.PGConnection;
@@ -57,26 +56,22 @@ public class App {
 	public static void sendTransaction(String transaction) {
 
 		if (transaction != null) {
-			try {
-				transactionId = fun.getTransansactionId(transaction, "s");
-				transactionPath = fun.getTransansactionPath(transaction, "s");
-				transactionBody = fun.checkJSONforSend(transaction, transactionPath);
-				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
-					// salje obavestenje da nesto nije u redu
-				} else {
-					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-					lista.add(newProcess);
-					newProcess.start();
-				}
-			} catch (JSONException e) {
+			transactionId = fun.getTransansactionId(transaction, "s");
+			transactionPath = fun.getTransansactionPath(transaction, "s");
+			transactionBody = fun.checkJSONforSend(transaction, transactionPath);
+			transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+			if (transactionJSONError != null) {
+				// salje obavestenje da nesto nije u redu
+			} else {
+				// Procedura Set Status 10
+				db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+				// Pokretanje procesa za odredjeni transaction id
+				Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+				lista.add(newProcess);
+				newProcess.start();
+				
 				
 			}
-			
-			
 
 		}
 	}
@@ -87,28 +82,23 @@ public class App {
 	public static void sendTransactionWithStatus0() throws SQLException {
 		transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
 		while (transactionWithStatus0 != null) {
-			try {
-				transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
-				transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
-				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
-					// salje obavestenje da nesto nije u redu
-				} else {
-					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-					lista.add(newProcess);
-					newProcess.start();
-					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
-							"get_json_by_status");
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println("Ima transakcija sa statusom 0");
+			transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
+			transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
+			transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
+			transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+			if (transactionJSONError != null) {
+				// salje obavestenje da nesto nije u redu
+			} else {
+				// Procedura Set Status 10
+				db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+				// Pokretanje procesa za odredjeni transaction id
+				Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+				lista.add(newProcess);
+				newProcess.start();
+				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
+						"get_json_by_status");
 			}
-			
 		}
 	}
 
