@@ -48,7 +48,6 @@ public class App {
 	//Prekida proces
 	public static void prekini(Processing p) {
 		p.interrupt();
-		
 	}
 
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
@@ -83,12 +82,13 @@ public class App {
 		transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
 		while (transactionWithStatus0 != null) {
 			System.out.println("Ima transakcija sa statusom 0");
-			transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-			transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
-			transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
+			transactionId        = fun.getTransansactionId(transactionWithStatus0, "s");
+			transactionPath      = fun.getTransansactionPath(transactionWithStatus0, "s");
+			transactionBody      = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
 			transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 			if (transactionJSONError != null) {
 				// salje obavestenje da nesto nije u redu
+				//
 			} else {
 				// Procedura Set Status 10
 				db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);

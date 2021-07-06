@@ -34,11 +34,12 @@ class Listener extends Thread {
 		        	 startMilis = millis;
 		         }
 		         else {
-		        	 if (millis > startMilis + 60000) {
+		        	 if (millis > startMilis + 60000) { // vreme za proveru statusa 0
 		        		 new Thread(new Runnable() {
 		        			 public void run() {
 		        				 try {
 									App.sendTransactionWithStatus0();
+									//U log fajlu da li se ovo desava
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
