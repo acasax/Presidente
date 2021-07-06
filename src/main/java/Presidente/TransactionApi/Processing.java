@@ -118,12 +118,13 @@ public class Processing extends Thread {
 						// Proverava da li je radna za prekidanje
 						//
 						if (!Thread.interrupted()) {
+							
+							
 							// Funkcija za api kaunter
 							//
 							threadSleep = fun.getApiCounter(TransactionId, db, lConn);
 							Thread.sleep(Long.parseLong(threadSleep));
-							db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"
-									+ response_text + "', '" + String.valueOf(Status) + "')", lConn);
+							
 
 							request = new HttpPost(URL + TransactionPath);
 
@@ -153,6 +154,9 @@ public class Processing extends Thread {
 								response.close();
 								httpClient.close();
 								return;
+							}else {
+								db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"
+										+ response_text + "', '" + String.valueOf(Status) + "')", lConn);
 							}
 							request = null;
 						}else {
