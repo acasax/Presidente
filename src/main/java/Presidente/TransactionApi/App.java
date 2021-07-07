@@ -1,5 +1,6 @@
 package Presidente.TransactionApi;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,8 +34,8 @@ public class App {
 	static Functions fun = new Functions();
 	static Connection lConn;
 
-	//Da li postoji proces sa zadatim transaction_id koji radi
-	public static Processing nadjiProcessing(String transactionId){ 
+	// Da li postoji proces sa zadatim transaction_id koji radi
+	public static Processing nadjiProcessing(String transactionId) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i).getTransactionId().equals(transactionId)) {
 				Processing badProcess = lista.get(i);
@@ -44,69 +45,76 @@ public class App {
 		}
 		return null;
 	}
-	 
-	//Prekida proces
+
+	// Prekida proces
 	public static void prekini(Processing p) {
 		p.interrupt();
 	}
 
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
 	//
-	public static void sendTransaction(String transaction) {
+	public static void sendTransaction(String transaction) throws SecurityException, IOException {
+		try {
+			if (transaction != null) {
+				transactionId = fun.getTransansactionId(transaction, "s");
+				transactionPath = fun.getTransansactionPath(transaction, "s");
+				transactionBody = fun.checkJSONforSend(transaction, transactionPath);
+				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+				if (transactionJSONError != null) {
+					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
+				} else {
+					// Procedura Set Status 10
+					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+					// Pokretanje procesa za odredjeni transaction id
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+					lista.add(newProcess);
+					newProcess.start();
+				}
 
-		if (transaction != null) {
-			transactionId = fun.getTransansactionId(transaction, "s");
-			transactionPath = fun.getTransansactionPath(transaction, "s");
-			transactionBody = fun.checkJSONforSend(transaction, transactionPath);
-			transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-			if (transactionJSONError != null) {
-				// salje obavestenje da nesto nije u redu
-			} else {
-				// Procedura Set Status 10
-				db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-				// Pokretanje procesa za odredjeni transaction id
-				Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-				lista.add(newProcess);
-				newProcess.start();
-				
-				
 			}
-
+		} catch (SecurityException | IOException e) {
+			fun.createLog(e.getMessage());
 		}
 	}
 
 	// Funkcija koja kreira novi processing od transakcija koja je pronadjena u bazi
 	// i koja ima status 0
 	//
-	public static void sendTransactionWithStatus0() throws SQLException {
-		transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn, "get_json_by_status");
-		while (transactionWithStatus0 != null) {
-			System.out.println("Ima transakcija sa statusom 0");
-			transactionId        = fun.getTransansactionId(transactionWithStatus0, "s");
-			transactionPath      = fun.getTransansactionPath(transactionWithStatus0, "s");
-			transactionBody      = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
-			transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-			if (transactionJSONError != null) {
-				// salje obavestenje da nesto nije u redu
-				//
-			} else {
-				// Procedura Set Status 10
-				db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-				// Pokretanje procesa za odredjeni transaction id
-				Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-				lista.add(newProcess);
-				newProcess.start();
-				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
-						"get_json_by_status");
+	public static void sendTransactionWithStatus0() throws SQLException, SecurityException, IOException {
+		try {
+			transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
+					"get_json_by_status");
+			while (transactionWithStatus0 != null) {
+				transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
+				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
+				transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
+				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+				if (transactionJSONError != null) {
+					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
+				} else {
+					// Procedura Set Status 10
+					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+					// Pokretanje procesa za odredjeni transaction id
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+					lista.add(newProcess);
+					newProcess.start();
+					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
+							"get_json_by_status");
+				}
 			}
+		} catch (SQLException | SecurityException | IOException e) {
+			fun.createLog(e.getMessage());
 		}
 	}
 
-	public static void main(String[] args) throws SQLException, InterruptedException, ExecutionException {
+	public static void main(String[] args)
+			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
 
 		db.asyconnect(url, user, password);
 		lConn = DriverManager.getConnection(url, user, password);
 
+		fun.sendEmail();
+		
 		// Proveri da nije null
 		sendTransactionWithStatus0();
 

@@ -58,16 +58,21 @@ public class Processing extends Thread {
 		try {
 			lConn = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			try {
+				fun.createLog(e1.getMessage());
+			} catch (SecurityException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
-		// Kreira httpClient
-		//
-		CloseableHttpClient httpClient = HttpClients.createDefault();
+		
 
 		try {
-
+			
+			// Kreira httpClient
+			//
+			CloseableHttpClient httpClient = HttpClients.createDefault();
 			// Kreira httpPostRequest
 			//
 			HttpPost request = new HttpPost(URL + TransactionPath);
@@ -99,8 +104,6 @@ public class Processing extends Thread {
 					} else {
 						response_text = result;
 					}
-
-					System.out.println(result);
 				}
 
 				// Ako je status uspesan menja status u bazi na 1 i gasi tred
@@ -144,8 +147,11 @@ public class Processing extends Thread {
 							if (entity != null) {
 								// return it as a String
 								String result = EntityUtils.toString(entity);
-								api_uid = fun.getParamFromJson(result, "uuid");
-								System.out.println(result);
+								if (Status == 201) {
+									api_uid = fun.getParamFromJson(result, "uuid");
+								} else {
+									response_text = result;
+								}
 							}
 
 							if (Status == 201) {
@@ -169,17 +175,42 @@ public class Processing extends Thread {
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try {
+					fun.createLog(e.getMessage());
+				} catch (SecurityException | IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try {
+					fun.createLog(e.getMessage());
+				} catch (SecurityException | IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			} finally {
 				response.close();
 			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				fun.createLog(e.getMessage());
+			} catch (SecurityException | IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			try {
+				fun.createLog(e.getMessage());
+			} catch (SecurityException | IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 		}
 
 	}

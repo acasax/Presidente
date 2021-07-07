@@ -1,4 +1,5 @@
 package Presidente.TransactionApi;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +44,12 @@ class Listener extends Thread {
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
 		        			 }
 		        		 }).start();
@@ -56,64 +63,23 @@ class Listener extends Thread {
 				sqle.printStackTrace();
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}
 
-  
    
-   public void notifyReturn() 
-   {   
-       ExecutorService executor = Executors.newSingleThreadExecutor();
-       Callable<String> callable = new Callable<String>() {
-           @Override
-           public String call() {
-        	   try {
-                 
-
-                   org.postgresql.PGNotification[] notifications = pgconn.getNotifications();
-                   if (Objects.nonNull(notifications)) {
-                      for (org.postgresql.PGNotification notification : notifications) {
-                         System.out.println("Got job: " + notification.getParameter());
-                         transaction = notification.getParameter();
-                         //App.sendTransaction(transaction);
-                         return transaction;
-                         // interesting async processing
-                      }
-                   }
-                   // wait a while before checking again for new notifications
-                   Thread.sleep(200);
-                } catch (SQLException sqle) {
-                   sqle.printStackTrace();
-                } catch (InterruptedException ie) {
-                   Thread.currentThread().interrupt();
-                   ie.printStackTrace();
-                }
-			return "Proba";
-           }
-       };
-       try {
-	       Future<String> future = executor.submit(callable);
-	       if(future.isDone()) {
-	    	   future.get();
-	       };
-       }
-       catch (Exception e) {
-           e.printStackTrace();
-       }
-       finally {    	   
-    	   executor.shutdown();
-       }
-   }
-   
-   public void notifyWaiter() throws SQLException {
+   public void notifyWaiter() throws SQLException, SecurityException, IOException {
 	   org.postgresql.PGNotification[] notifications = pgconn.getNotifications();
        if (Objects.nonNull(notifications)) {
           for (org.postgresql.PGNotification notification : notifications) {
-             System.out.println("Got job: " + notification.getParameter());
              transaction = notification.getParameter();
              App.sendTransaction(transaction);
-             // interesting async processing
           }
        }
    }
