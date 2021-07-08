@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import java.util.logging.FileHandler;
@@ -28,15 +29,18 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.io.File;
+import java.io.FilenameFilter;
+
 public class Functions {
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
-	public String getTransansactionId(String JSON, String Status) throws SecurityException, IOException  {
+	public String getTransansactionId(String JSON, String Status) throws SecurityException, IOException {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
-			
+
 			try {
 				JSONObject obj = new JSONObject(jsonString);
 				String transactionId = obj.getString("transaction_id");
@@ -45,7 +49,7 @@ public class Functions {
 				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
 			}
-			
+
 		} else {
 			try {
 				String str = JSON.substring(JSON.indexOf("{"));
@@ -57,13 +61,13 @@ public class Functions {
 				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
 			}
-			
+
 		}
 	}
 
 	// Funkcija koja uzima iz JSON-a samo path
 	//
-	public String getTransansactionPath(String JSON, String Status) throws SecurityException, IOException  {
+	public String getTransansactionPath(String JSON, String Status) throws SecurityException, IOException {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
@@ -75,7 +79,7 @@ public class Functions {
 				createLog("U ovom JSON-u nema polja path" + e.getMessage());
 				return "U ovom JSON-u nema polja path";
 			}
-			
+
 		} else {
 			try {
 				String str = JSON.substring(JSON.indexOf("{"));
@@ -87,7 +91,7 @@ public class Functions {
 				createLog("U ovom JSON-u nema polja path" + e.getMessage());
 				return "U ovom JSON-u nema polja path";
 			}
-			
+
 		}
 	}
 
@@ -121,7 +125,7 @@ public class Functions {
 				paramValue = obj.getString(Param);
 				return paramValue;
 			} catch (JSONException e) {
-				if(!Param.equals("error")) {
+				if (!Param.equals("error")) {
 					createLog(e.getMessage());
 				}
 				return null;
@@ -211,14 +215,16 @@ public class Functions {
 		}
 	}
 
-	//Funkcija za proveru cekanja do sledeceg slanja
+	// Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public String getApiCounter(String transaction_id, DbFunctions db, Connection con) throws SecurityException, IOException {
+	public String getApiCounter(String transaction_id, DbFunctions db, Connection con)
+			throws SecurityException, IOException {
 		try {
-			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')", con, "get_api_counter");
-			if(Integer.parseInt(apiCounter) < 3) {
+			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')", con,
+					"get_api_counter");
+			if (Integer.parseInt(apiCounter) < 3) {
 				return "60000";
-			}else {
+			} else {
 				return "3600000";
 			}
 		} catch (SQLException e) {
@@ -227,90 +233,125 @@ public class Functions {
 			return "Api kaunter nije kako treba";
 		}
 	}
-	
-	public String getWorkStatus(String transaction_id, DbFunctions db, Connection con) throws SecurityException, IOException {
+
+	public String getWorkStatus(String transaction_id, DbFunctions db, Connection con)
+			throws SecurityException, IOException {
 		try {
-			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')", con, "get_transaction_exe_status");
+			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')",
+					con, "get_transaction_exe_status");
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("work status nije kako treba" + e.getMessage());
 			return "work status nije kako treba";
 		}
 	}
-	
-	//Funkcija koja kreira log fajlove sa greskom
+
+	// Funkcija koja kreira log fajlove sa greskom
 	//
 	public void createLog(String msg) throws SecurityException, IOException {
+			String path = "logs";
+			// Creating a File object
+			File file = new File(path);
 			DateFormat FileNameFormat = new SimpleDateFormat("dd-M-yyyy_hh-mm-ss");
 			Date FileName = new Date();
-	        FileHandler handler = new FileHandler("log_" + FileNameFormat.format(FileName) + ".log");
-	 
-	        Logger logger = Logger.getLogger("ResivoJe");
-	        logger.addHandler(handler);
-	         
-	        logger.warning(msg);
+			FileHandler handler = new FileHandler("logs/" + "log_" + FileNameFormat.format(FileName) + ".log");
+
+			Logger logger = Logger.getLogger("ResivoJe");
+			logger.addHandler(handler);
+
+			logger.warning(msg);
+		
+
 	}
 
-	//Funkcija za slanje e-mail
+	// Funkcija za slanje e-mail
 	//
-	public void sendEmail() 
-	{
-		 // Recipient's email ID needs to be mentioned.
-        String to = "resivojee@gmail.com";
+	public void sendEmail(String msg) {
+		// Recipient's email ID needs to be mentioned.
+		String to = "resivojee@gmail.com";
 
-        // Sender's email ID needs to be mentioned
-        String from = "acasax@gmail.com";
+		// Sender's email ID needs to be mentioned
+		String from = "prezidentplay1@gmail.com";
 
-        // Assuming you are sending email from through gmails smtp
-        String host = "smtp.gmail.com";
+		// Assuming you are sending email from through gmails smtp
+		String host = "smtp.gmail.com";
 
-        // Get system properties
-        Properties properties = System.getProperties();
+		// Get system properties
+		Properties properties = System.getProperties();
 
-        // Setup mail server
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
+		// Setup mail server
+		properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.port", "465");
+		properties.put("mail.smtp.ssl.enable", "true");
+		properties.put("mail.smtp.auth", "true");
 
-        // Get the Session object.// and pass username and password
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+		// Get the Session object.// and pass username and password
+		Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
-            protected PasswordAuthentication getPasswordAuthentication() {
+			protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("acasax@gmail.com", "Podlogazamis123");
+				return new PasswordAuthentication("prezidentplay1@gmail.com", "igrajdabidobio");
 
-            }
+			}
 
-        });
+		});
 
-        // Used to debug SMTP issues
-        session.setDebug(true);
+		// Used to debug SMTP issues
+		session.setDebug(true);
 
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
+		try {
+			// Create a default MimeMessage object.
+			MimeMessage message = new MimeMessage(session);
 
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+			// Set From: header field of the header.
+			message.setFrom(new InternetAddress(from));
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			// Set To: header field of the header.
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            // Set Subject: header field
-            message.setSubject("Poslato iz Jave napokon");
+			// Set Subject: header field
+			message.setSubject("Postoji greska na sistemu");
 
-            // Now set the actual message
-            message.setText("Da mi pusis kurac vise ");
+			// Now set the actual message
+			message.setText(msg);
 
-            System.out.println("sending...");
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        } 
-		
-		
+			Transport.send(message);
+		} catch (MessagingException mex) {
+			mex.printStackTrace();
+		}
+
 	}
+
+	// Funkcija koja proverava da li postoji folder sa logovima
+	//
+	public void checkIsLogExist(String path) {
+		String newLine = System.getProperty("line.separator");
+		String msg;
+		File directory = new File(path);
+        
+        String[] flist = directory.list();
+        int flag = 0;
+        if (flist == null) {
+        	msg = "Folder logs je prazan.";
+        }
+        else {
+        	msg = "Pronadjeni log fajlovi sa imenima:" + newLine;
+            // Linear search in the array
+            for (int i = 0; i < flist.length; i++) {
+                String filename = flist[i];
+                if (filename.endsWith(".log")) {
+                    msg = msg + filename + newLine;
+                    flag = 1;
+                }
+            }
+            sendEmail(msg);
+        }
+  
+        if (flag == 0) {
+        	msg = "Nema pronadjenih log fajlova";
+        	sendEmail(msg);
+        }
+
+	}
+
 }

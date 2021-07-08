@@ -2,6 +2,7 @@ Presidente\TransactionApi\Check.class
 Presidente\TransactionApi\Functions.class
 Presidente\TransactionApi\Listener.class
 Presidente\TransactionApi\Functions$1.class
+Presidente\TransactionApi\errorCheck.class
 Presidente\TransactionApi\DbFunctions.class
 Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class

@@ -1,5 +1,6 @@
 package Presidente.TransactionApi;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +12,7 @@ import org.json.JSONObject;
 import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 
-import Presidente.TransactionApi.DbFunctions;
-import Presidente.TransactionApi.Processing;
+import Presidente.TransactionApi.*;
 import java.util.ArrayList;
 
 public class App {
@@ -32,6 +32,7 @@ public class App {
 
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
+	static errorCheck er = new errorCheck();
 	static Connection lConn;
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
@@ -109,15 +110,16 @@ public class App {
 
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
-
+		//Proverava da li ima log fajlova
+		er.start();
+		
 		db.asyconnect(url, user, password);
 		lConn = DriverManager.getConnection(url, user, password);
-
-		fun.sendEmail();
 		
 		// Proveri da nije null
 		sendTransactionWithStatus0();
-
+		
+		
 		// Cekanje notify-a
 		Listener listener = new Listener(lConn);
 		listener.start();
