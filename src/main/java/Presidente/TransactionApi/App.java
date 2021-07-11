@@ -33,6 +33,7 @@ public class App {
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
 	static errorCheck er = new errorCheck();
+	static spStart sp = new spStart();
 	static Connection lConn;
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
@@ -112,6 +113,9 @@ public class App {
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
 		//Proverava da li ima log fajlova
 		er.start();
+		
+		//SlotPeriodic
+		sp.start();
 		
 		db.asyconnect(url, user, password);
 		lConn = DriverManager.getConnection(url, user, password);
