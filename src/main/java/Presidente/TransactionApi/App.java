@@ -113,7 +113,7 @@ public class App {
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
 		//Proverava da li ima log fajlova
 		er.start();
-		
+		fun.createLog("proba");
 		//SlotPeriodic
 		sp.start();
 		

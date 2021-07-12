@@ -256,6 +256,8 @@ public class Functions {
 		String path = "logs";
 		// Creating a File object
 		File file = new File(path);
+	      //Creating the directory
+	     file.mkdir();
 		DateFormat FileNameFormat = new SimpleDateFormat("dd-M-yyyy_hh-mm-ss");
 		Date FileName = new Date();
 		FileHandler handler = new FileHandler("logs/" + "log_" + FileNameFormat.format(FileName) + ".log");
@@ -264,6 +266,7 @@ public class Functions {
 		logger.addHandler(handler);
 
 		logger.warning(msg);
+		
 
 	}
 
