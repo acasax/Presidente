@@ -34,6 +34,7 @@ public class App {
 	static Functions fun = new Functions();
 	static errorCheck er = new errorCheck();
 	static spStart sp = new spStart();
+	static Check ck  = new Check();
 	static Connection lConn;
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
@@ -113,8 +114,9 @@ public class App {
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
 		//Proverava da li ima log fajlova
 		er.start();
-		fun.createLog("proba");
+	
 		//SlotPeriodic
+		//
 		sp.start();
 		
 		db.asyconnect(url, user, password);
@@ -123,6 +125,9 @@ public class App {
 		// Proveri da nije null
 		sendTransactionWithStatus0();
 		
+		//Provera da li ima nekih koje ne rade kako treba
+		//
+		ck.start();
 		
 		// Cekanje notify-a
 		Listener listener = new Listener(lConn);

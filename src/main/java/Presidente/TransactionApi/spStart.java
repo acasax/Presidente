@@ -16,16 +16,17 @@ public class spStart extends Thread {
 	static Object pgconn;
 	static Connection lConn;
 	static String spWithStatus0;
-	static String reportIndex;
+	static int reportIndex;
 	static ArrayList<spProcessing> lista = new ArrayList<>();
 
-	Functions fun = new Functions();
+	Functions fun  = new Functions();
 	DbFunctions db = new DbFunctions();
-
+	spCheck sk     = new spCheck();
+	
 	// Da li postoji proces sa zadatim report index koji radi
-	public static spProcessing nadjiProcessing(String transactionId) {
+	public static spProcessing nadjiProcessing(int reportIndex) {
 		for (int i = 0; i < lista.size(); i++) {
-			if (lista.get(i).getReportIndex().equals(transactionId)) {
+			if (lista.get(i).getReportIndex() == reportIndex) {
 				spProcessing badProcess = lista.get(i);
 				lista.remove(i);
 				return badProcess;
@@ -41,11 +42,16 @@ public class spStart extends Thread {
 
 	@Override
 	public void run() {
+		//Startuje proveru za slot periodic
+		//
+		sk.start();
+		
 		while(true) {
 			try {
 
 				db.asyconnect(url, user, password);
 				lConn = DriverManager.getConnection(url, user, password);
+			
 				//Slanje zahteva na putanju slot-periodic
 				//
 				fun.sendSlotPeriodicWithStatus0(lConn, reportIndex, db, lista);

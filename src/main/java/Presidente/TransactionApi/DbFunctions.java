@@ -56,8 +56,9 @@ public class DbFunctions {
 		try {
 			String notSendtransaction;
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(SQL);
-			if(resultSet != null) {
+			if(resultSet != null /*resultSet != "0#]}"*/) {
 				while (resultSet.next()) {
 					return notSendtransaction = resultSet.getString(functionName);
 				}

@@ -17,7 +17,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 public class spProcessing extends Thread {
-	String reportIndex;
+	int reportIndex;
 	JSONObject slotPeriodicBody;
 	static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
 	static String user = "presidente";
@@ -34,7 +34,7 @@ public class spProcessing extends Thread {
 
 	// Konsturktor osnovne klase
 	//
-	public spProcessing(String reportIndex, JSONObject slotPeriodicBody) {
+	public spProcessing(int reportIndex, JSONObject slotPeriodicBody) {
 		super();
 		this.reportIndex = reportIndex;
 		this.slotPeriodicBody = slotPeriodicBody;
@@ -42,7 +42,7 @@ public class spProcessing extends Thread {
 
 	// geterr za report index
 	//
-	public String getReportIndex() {
+	public int getReportIndex() {
 		return reportIndex;
 	}
 
@@ -118,7 +118,7 @@ public class spProcessing extends Thread {
 
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getApiCounter(reportIndex, db, lConn);
+							threadSleep = fun.getSpApiCounter(reportIndex, db, lConn);
 							Thread.sleep(Long.parseLong(threadSleep));
 
 							request = new HttpPost(URL + TransactionPath);

@@ -361,23 +361,23 @@ public class Functions {
 
 	// Funkcija koja uzima iz JSON-a samo report index
 	//
-	public String getReportIndex(String JSON, String Status) throws SecurityException, IOException {
+	public int getReportIndex(String JSON, String Status) throws SecurityException, IOException {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
+			int report_index = 0;
 			try {
 
 				final JSONObject jsonObject = new JSONObject(jsonString);
 				final JSONArray machines = jsonObject.getJSONArray("machines");
 				for (int i = 0; i < machines.length(); i++) {
 					final JSONObject machine = machines.getJSONObject(i);
-					final int properties = machine.getInt("report_index");
-					System.out.println(properties);
+					report_index = machine.getInt("report_index");
 				}
-				return "";
+				return report_index;
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
-				return "U ovom JSON-u nema polja transaction_id";
+				createLog("U ovom JSON-u nema polja report index" + e.getMessage());
+				return 0;
 			}
 
 		} else {
@@ -386,10 +386,10 @@ public class Functions {
 				String jsonString = str;
 				JSONObject obj = new JSONObject(jsonString);
 				String transactionId = obj.getString("transaction_id");
-				return transactionId;
+				return 1;
 			} catch (JSONException e) {
 				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
-				return "U ovom JSON-u nema polja transaction_id";
+				return 0;
 			}
 
 		}
@@ -400,93 +400,74 @@ public class Functions {
 	//
 	public JSONObject checkSpJSONforSend(String JSON) throws SecurityException, IOException {
 
+		int b;
+		int g;
+		int j;
+		int w;
+		int pi;
+		int po;
+		String sn;
 		// Uzimanje podataka iz JSON-a
 		//
-		String transaction_time = getParamFromJson(JSON, "transaction_time");
-		String transaction_id = getParamFromJson(JSON, "transaction_id");
-		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
-		String transaction_type = getParamFromJson(JSON, "transaction_type");
-		String slot_club_id = getParamFromJson(JSON, "slot_club_id");
-		String sticker_no = getParamFromJson(JSON, "sticker_no");
+		String date = getParamFromJson(JSON, "date");
+	
 
-		JSONObject transactionBody = new JSONObject();
-
+		JSONObject slotPeriodicBody = new JSONObject();
+		JSONObject machineElement   = new JSONObject();
+		JSONArray  machinesJSON   = new JSONArray();
+		
+		
+		
 		// Provera da li su svi parametri tu
 		//
-		if (transaction_time == null || transaction_id == null || transaction_amount == null || transaction_type == null
-				|| slot_club_id == null || sticker_no == null) {
-			transactionBody.put("error", "JSON koji je stigao u aplikaciju nema sve potrebne elemente za slanja");
-			return transactionBody;
+		if (date == null ) {
+			slotPeriodicBody.put("error", "SP JSON koji je stigao u aplikaciju nema sve potrebne elemente za slanja");
+			return slotPeriodicBody;
 		}
 
 		// Parsiranje podataka u potreban format
 		//
-		Double p_transaction_amount = Double.valueOf(transaction_amount);
-
-		switch ("") {
-		case "slot/deposit":
-			transactionBody.put("transaction_time", transaction_time);
-			transactionBody.put("transaction_id", transaction_id);
-			transactionBody.put("transaction_amount", p_transaction_amount);
-			transactionBody.put("transaction_type", transaction_type);
-			transactionBody.put("slot_club_id", slot_club_id);
-			transactionBody.put("sticker_no", sticker_no);
-			return transactionBody;
-		case "slot/withdraw":
-			transactionBody.put("transaction_time", transaction_time);
-			transactionBody.put("transaction_id", transaction_id);
-			transactionBody.put("transaction_amount", p_transaction_amount);
-			transactionBody.put("transaction_type", transaction_type);
-			transactionBody.put("slot_club_id", slot_club_id);
-			transactionBody.put("sticker_no", sticker_no);
-			return transactionBody;
-		case "slot/jackpot":
-			// Ovde je zato sto postoji samo za ovu rutu
-			//
-			String transaction_withdraw_amount = getParamFromJson(JSON, "transaction_withdraw_amount");
-			Double p_transaction_withdraw_amount = Double.valueOf(transaction_withdraw_amount); // Konvertovanje u
-																								// potrebni tip
-
-			transactionBody.put("transaction_time", transaction_time);
-			transactionBody.put("transaction_id", transaction_id);
-			transactionBody.put("transaction_amount", p_transaction_amount);
-			transactionBody.put("transaction_type", transaction_type);
-			transactionBody.put("slot_club_id", slot_club_id);
-			transactionBody.put("sticker_no", sticker_no);
-			transactionBody.put("transaction_withdraw_amount", 0);
-			return transactionBody;
-		case "slot/rollback":
-			// Ovde je zato sto postoji samo za ovu rutu
-			//
-			String rollback_transaction_id = getParamFromJson(JSON, "rollback_transaction_id");
-			transactionBody.put("transaction_time", transaction_time);
-			transactionBody.put("transaction_id", transaction_id);
-			transactionBody.put("transaction_amount", p_transaction_amount);
-			transactionBody.put("transaction_type", transaction_type);
-			transactionBody.put("slot_club_id", slot_club_id);
-			transactionBody.put("sticker_no", sticker_no);
-			transactionBody.put("rollback_transaction_id", rollback_transaction_id);
-			return transactionBody;
-		/*
-		 * case "imports/slot-periodic": break; case "casino": break;
-		 */
-		default:
-			transactionBody.put("error", "Putanja koju ste poslali u funkciju nije dobra");
-			return transactionBody;
+        slotPeriodicBody.put("date", date);
+		
+        final JSONObject jsonObject = new JSONObject(JSON);
+		final JSONArray machines = jsonObject.getJSONArray("machines");
+		for (int i = 0; i < machines.length(); i++) {
+			final JSONObject machine = machines.getJSONObject(i);
+			b  = machine.getInt("b");
+			g  = machine.getInt("g");
+			j  = machine.getInt("j");
+			w  = machine.getInt("w");
+			pi = machine.getInt("pi");
+			po = machine.getInt("po");
+			sn = machine.getString("sn");
+			
+			machineElement.put("b", b);
+			machineElement.put("g", g);
+			machineElement.put("j", j);
+			machineElement.put("w", w);
+			machineElement.put("pi", pi);
+			machineElement.put("po", po);
+			machineElement.put("sn", sn);
+		
+			machinesJSON.put(machineElement);
 		}
+			
+		slotPeriodicBody.put("machines", machinesJSON);
+		
+		return slotPeriodicBody;
 	}
 
 	// Funkcija koja kreira novi processing od slot-periodic koja je pronadjena u
 	// bazi
 	// i koja ima status 0
 	//
-	public void sendSlotPeriodicWithStatus0(Connection lConn, String reportIndex, DbFunctions db,
+	public void sendSlotPeriodicWithStatus0(Connection lConn, int reportIndex, DbFunctions db,
 			ArrayList<spProcessing> lista) throws SQLException, SecurityException, IOException {
 		try {
 			String spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", lConn,
 					"get_json_sp_by_status");
 
-			while (spWithStatus0 != null) {
+			while (spWithStatus0 != null || spWithStatus0 != "0#]}") {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
 				String slotPeriodicJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
@@ -507,5 +488,38 @@ public class Functions {
 			createLog(e.getMessage());
 		}
 	}
+	
+	//Funkcija koja proverava da li ima spProcesa koji ne rade kako treba
+	//
+	public String getSpWorkStatus(int reportIndex, DbFunctions db, Connection con)
+			throws SecurityException, IOException {
+		try {
+			String workStatus = db.executeFunction("SELECT public.get_sp_report_exe_status('" + reportIndex + "')",
+					con, "get_sp_report_exe_status");
+			return workStatus;
+		} catch (SQLException e) {
+			createLog("work status nije kako treba" + e.getMessage());
+			return "work status nije kako treba";
+		}
+	}
+	
+	// Funkcija za proveru cekanja do sledeceg slanja
+		//
+		public String getSpApiCounter(int reportIndex, DbFunctions db, Connection con)
+				throws SecurityException, IOException {
+			try {
+				String apiCounter = db.executeFunction("SELECT public.get_sp_api_counter('" + reportIndex + "')", con,
+						"get_sp_api_counter");
+				if (Integer.parseInt(apiCounter) < 3) {
+					return "60000";
+				} else {
+					return "3600000";
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				createLog("Api kaunter nije kako treba" + e.getMessage());
+				return "Api kaunter nije kako treba";
+			}
+		}
 
 }
