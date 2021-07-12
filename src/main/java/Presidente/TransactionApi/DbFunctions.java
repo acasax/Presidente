@@ -22,9 +22,12 @@ import java.sql.Connection;
 
 
 public class DbFunctions {
-	String url = "jdbc:postgresql://65.21.110.211:5432/accounting";  
-	String user = "presidente";
-	String password = "test";
+	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
+	static String user = "presidente";
+	static String password = "test";*/
+	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
+	static String user = "presidente";
+	static String password = "testpass";
 	Functions fun = new Functions();
 	
 	public void asyconnect(String url, String user, String password) throws SecurityException, IOException {

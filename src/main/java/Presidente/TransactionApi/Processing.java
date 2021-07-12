@@ -28,9 +28,14 @@ public class Processing extends Thread {
 	private JSONObject TransactionBody;
 	private String URL = "https://api.uis.gov.rs/api/imports/v1/";
 	private int Status;
-	static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
+	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
 	static String user = "presidente";
-	static String password = "test";
+	static String password = "test";*/
+	
+	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
+	static String user = "presidente";
+	static String password = "testpass";
+	
 	static String api_uid;
 	static String response_text;
 	static String threadSleep;
@@ -40,11 +45,12 @@ public class Processing extends Thread {
 	static Connection lConn;
 
 	// Konsturktor osnovne klase
-	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody) {
+	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody, Connection lConn) {
 		super();
-		this.TransactionId = TransactionId;
+		this.TransactionId   = TransactionId;
 		this.TransactionPath = TransactionPath;
 		this.TransactionBody = TransactionBody;
+		this.lConn           = lConn;
 	}
 
 	public String getTransactionId() {
@@ -52,21 +58,7 @@ public class Processing extends Thread {
 	}
 
 	@Override
-	public void run() {
-
-		// Pokusava da otvori konekciju na bazu
-		try {
-			lConn = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e1) {
-			try {
-				fun.createLog(e1.getMessage());
-			} catch (SecurityException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		
+	public void run() {	
 
 		try {
 			

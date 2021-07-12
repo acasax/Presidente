@@ -19,9 +19,13 @@ public class App {
 	static Listener listener = null;
 	static ArrayList<Processing> lista = new ArrayList<>();
 	static String notifyTransaction;
-	static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
+	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
 	static String user = "presidente";
-	static String password = "test";
+	static String password = "test";*/
+	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
+	static String user = "presidente";
+	static String password = "testpass";
+	
 	static Object pgconn;
 	static String transactionWithStatus0;
 	static String transactionId;
@@ -32,9 +36,9 @@ public class App {
 
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
-	static errorCheck er = new errorCheck();
-	static spStart sp = new spStart();
-	static Check ck  = new Check();
+	
+	
+	
 	static Connection lConn;
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
@@ -69,7 +73,7 @@ public class App {
 					// Procedura Set Status 10
 					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
 					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
 					lista.add(newProcess);
 					newProcess.start();
 				}
@@ -98,7 +102,7 @@ public class App {
 					// Procedura Set Status 10
 					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
 					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
 					lista.add(newProcess);
 					newProcess.start();
 					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
@@ -112,16 +116,23 @@ public class App {
 
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
-		//Proverava da li ima log fajlova
-		er.start();
 	
-		//SlotPeriodic
-		//
-		sp.start();
 		
 		db.asyconnect(url, user, password);
 		lConn = DriverManager.getConnection(url, user, password);
 		
+		
+		spStart sp      = new spStart(lConn);
+		Check ck        = new Check(lConn);
+		errorCheck ec   = new errorCheck(lConn);
+		
+		//Proverava da li ima log fajlova
+		ec.start();
+	
+		//SlotPeriodic
+		//
+		sp.start();
+			
 		// Proveri da nije null
 		sendTransactionWithStatus0();
 		

@@ -10,9 +10,14 @@ import org.json.JSONObject;
 
 public class spStart extends Thread {
 
-	static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
+	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
 	static String user = "presidente";
-	static String password = "test";
+	static String password = "test";*/
+	
+	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
+	static String user = "presidente";
+	static String password = "testpass";
+	
 	static Object pgconn;
 	static Connection lConn;
 	static String spWithStatus0;
@@ -21,7 +26,8 @@ public class spStart extends Thread {
 
 	Functions fun  = new Functions();
 	DbFunctions db = new DbFunctions();
-	spCheck sk     = new spCheck();
+	
+	spErrorCheck er = new spErrorCheck();
 	
 	// Da li postoji proces sa zadatim report index koji radi
 	public static spProcessing nadjiProcessing(int reportIndex) {
@@ -40,18 +46,25 @@ public class spStart extends Thread {
 		p.interrupt();
 	}
 
+	public spStart(Connection lConn) {
+		super();
+		this.lConn = lConn;
+	}
+	
+	
 	@Override
 	public void run() {
 		//Startuje proveru za slot periodic
 		//
+		spCheck sk     = new spCheck(lConn);
 		sk.start();
-		
+		//Kron error provera
+		//
+		er.start();
 		while(true) {
 			try {
 
-				db.asyconnect(url, user, password);
-				lConn = DriverManager.getConnection(url, user, password);
-			
+				
 				//Slanje zahteva na putanju slot-periodic
 				//
 				fun.sendSlotPeriodicWithStatus0(lConn, reportIndex, db, lista);

@@ -19,9 +19,14 @@ import org.json.JSONObject;
 public class spProcessing extends Thread {
 	int reportIndex;
 	JSONObject slotPeriodicBody;
-	static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
+	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
 	static String user = "presidente";
-	static String password = "test";
+	static String password = "test";*/
+	
+	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
+	static String user = "presidente";
+	static String password = "testpass";
+	
 	private String URL = "https://api.uis.gov.rs/api/imports/v1/";
 	private String TransactionPath = "slot-periodic";
 	DbFunctions db = new DbFunctions();
@@ -34,10 +39,11 @@ public class spProcessing extends Thread {
 
 	// Konsturktor osnovne klase
 	//
-	public spProcessing(int reportIndex, JSONObject slotPeriodicBody) {
+	public spProcessing(int reportIndex, JSONObject slotPeriodicBody, Connection lConn) {
 		super();
-		this.reportIndex = reportIndex;
+		this.reportIndex      = reportIndex;
 		this.slotPeriodicBody = slotPeriodicBody;
+		this.lConn            = lConn;
 	}
 
 	// geterr za report index
@@ -105,7 +111,7 @@ public class spProcessing extends Thread {
 				if (Status == 201) {
 
 					db.executeProcedure(
-							"CALL public.set_sp_status_10_by_report_index('" + reportIndex + "','" + api_uid + "')",
+							"CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")",
 							lConn);
 					response.close();
 					httpClient.close();
@@ -154,7 +160,7 @@ public class spProcessing extends Thread {
 								return;
 							} else {
 								db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex
-										+ "','" + api_uid + "')", lConn);
+										+ "','" + response_text + "'," + String.valueOf(Status) + "')", lConn);
 							}
 							request = null;
 						} else {
