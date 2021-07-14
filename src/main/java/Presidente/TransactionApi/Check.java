@@ -31,13 +31,16 @@ public class Check extends Thread {
 		while (true) {
 
 			try {
-				//lConn = DriverManager.getConnection(url, user, password); // Pokusava da otvori konekciju na bazu
+				// proverava da li u bazi ima transakcija sa statusom 11
 				transactionWithStatus11 = db.executeFunction("SELECT public.get_json_by_status(11)", lConn,
 						"get_json_by_status");
-				if (transactionWithStatus11 != null && transactionWithStatus11.isEmpty() && Integer.parseInt(transactionWorkStatus) == 1) {
-					// proverava da li u bazi ima transakcija sa statusom 11
+				//kreira parametre
+				if(transactionWithStatus11 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus11, "s"); // uzima transaction_id za taj
 					transactionWorkStatus = fun.getWorkStatus(transactionId, db, lConn);
+				}
+				//ubija los proces
+				if (transactionWithStatus11 != null && Integer.parseInt(transactionWorkStatus) == 1) {
 					Processing badProcessing = App.nadjiProcessing(transactionId);
 					App.prekini(badProcessing);
 				}

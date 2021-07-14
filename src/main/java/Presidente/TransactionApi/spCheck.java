@@ -28,14 +28,17 @@ public class spCheck extends Thread {
 	public void run() {
 		while (true) {
 			try {
+				// proverava da li u bazi ima izvestaja sa statusom 11
 				spWithStatus11 = db.executeFunction("SELECT public.get_json_sp_by_status(11)", lConn,
 						"get_json_sp_by_status");
-				
-				if (spWithStatus11 != null && Integer.parseInt(spWorkStatus) == 1) {
-					// proverava da li u bazi ima izvestaja sa statusom 11
+				//kreira parametre
+				if (spWithStatus11 != null ) {
 					reportIndex = fun.getReportIndex(spWithStatus11, "s"); // uzima reportindex za taj
 					spWorkStatus = fun.getSpWorkStatus(reportIndex, db, lConn); // proveraba procedurom da li ima procesinga
-																				// koji nerade kako treba
+				}
+				
+				// ubija koji nerade kako treba
+				if (spWithStatus11 != null && Integer.parseInt(spWorkStatus) == 1) {
 					spProcessing badProcessing = spStart.nadjiProcessing(reportIndex);
 					spStart.prekini(badProcessing);
 				}

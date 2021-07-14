@@ -110,9 +110,8 @@ public class spProcessing extends Thread {
 				//
 				if (Status == 201) {
 
-					db.executeProcedure(
-							"CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")",
-							lConn);
+					db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex
+							+ "','" + api_uid + "')", lConn);
 					response.close();
 					httpClient.close();
 				} else {

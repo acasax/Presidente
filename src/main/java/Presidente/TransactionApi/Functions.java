@@ -150,7 +150,7 @@ public class Functions {
 		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
 		String transaction_type = getParamFromJson(JSON, "transaction_type");
 		String slot_club_id = getParamFromJson(JSON, "slot_club_id");
-		String sticker_no = getParamFromJson(JSON, "sticker_no");
+		String sticker_no = getParamFromJson(JSON, "sticker_number");
 
 		JSONObject transactionBody = new JSONObject();
 
@@ -467,7 +467,7 @@ public class Functions {
 			String spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", lConn,
 					"get_json_sp_by_status");
 
-			while (spWithStatus0 != null && spWithStatus0.isEmpty()) {
+			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
 				String slotPeriodicJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
