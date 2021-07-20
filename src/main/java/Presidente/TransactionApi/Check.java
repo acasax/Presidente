@@ -11,12 +11,7 @@ public class Check extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static Connection lConn;
-	/*static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";*/
-	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";
+	
 	static String transactionWithStatus11;
 	static String transactionId;
 	static String transactionWorkStatus;

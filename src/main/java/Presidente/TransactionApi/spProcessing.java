@@ -19,13 +19,7 @@ import org.json.JSONObject;
 public class spProcessing extends Thread {
 	int reportIndex;
 	JSONObject slotPeriodicBody;
-	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
-	static String user = "presidente";
-	static String password = "test";*/
 	
-	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";
 	
 	private String URL = "https://api.uis.gov.rs/api/imports/v1/";
 	private String TransactionPath = "slot-periodic";
@@ -54,20 +48,7 @@ public class spProcessing extends Thread {
 
 	@Override
 	public void run() {
-		// Pokusava da otvori konekciju na bazu
-		try
-
-		{
-			lConn = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e1) {
-			try {
-				fun.createLog(e1.getMessage());
-			} catch (SecurityException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		
 		try {
 
 			// Kreira httpClient

@@ -9,13 +9,7 @@ public class errorCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static Connection lConn;
-	/*static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";*/
 	
-	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";
 	static String cronError;
 	static int reportIndex;
 	static String spWorkStatus;

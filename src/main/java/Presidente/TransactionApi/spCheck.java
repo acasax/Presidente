@@ -9,12 +9,7 @@ public class spCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static Connection lConn;
-	/*static String url = "jdbc:postgresql://65.21.110.211:5432/accounting";
-	static String user = "presidente";
-	static String password = "test";*/
-	static String url = "jdbc:postgresql://93.87.76.160:5432/accounting";
-	static String user = "presidente";
-	static String password = "testpass";
+	
 	static String spWithStatus11;
 	static int reportIndex;
 	static String spWorkStatus;
