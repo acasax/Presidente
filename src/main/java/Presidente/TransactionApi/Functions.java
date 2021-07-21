@@ -186,8 +186,8 @@ public class Functions {
 		case "slot/jackpot":
 			// Ovde je zato sto postoji samo za ovu rutu
 			//
-			String transaction_withdraw_amount = getParamFromJson(JSON, "transaction_withdraw_amount");
-			Double p_transaction_withdraw_amount = Double.valueOf(transaction_withdraw_amount); // Konvertovanje u
+			//String transaction_withdraw_amount = getParamFromJson(JSON, "transaction_withdraw_amount");
+			//Double p_transaction_withdraw_amount = Double.valueOf(transaction_withdraw_amount); // Konvertovanje u
 																								// potrebni tip
 
 			transactionBody.put("transaction_time", transaction_time);
@@ -208,7 +208,7 @@ public class Functions {
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
-			transactionBody.put("rollback_transaction_id", rollback_transaction_id);
+			//transactionBody.put("rollback_transaction_id", rollback_transaction_id);
 			return transactionBody;
 		/*
 		 * case "imports/slot-periodic": break; case "casino": break;
