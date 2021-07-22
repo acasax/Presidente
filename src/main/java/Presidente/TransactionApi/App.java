@@ -19,7 +19,8 @@ public class App {
 	static Listener listener = null;
 	static ArrayList<Processing> lista = new ArrayList<>();
 	static String notifyTransaction;
-	static String url = "jdbc:postgresql://93.87.76.139:5432/accounting";
+	//static String url = "jdbc:postgresql://93.87.76.139:1521/accounting"; sa lokalne masine
+	static String url = "jdbc:postgresql://localhost:1521/accounting";
 	static String user = "presidente";
 	static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 	
