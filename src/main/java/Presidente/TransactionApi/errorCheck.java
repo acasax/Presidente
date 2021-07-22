@@ -25,7 +25,7 @@ public class errorCheck extends Thread {
 				cronError = fun.getCronError(db, lConn);
 				if (cronError.equals("1")) {
 					// proverava da li u bazi ima izvestaja sa statusom 11
-					fun.sendEmail("cron error je 1");
+					fun.sendEmailYahho("cron error je 1");
 				}
 			} catch (SecurityException | IOException e) {
 				// TODO Auto-generated catch block
