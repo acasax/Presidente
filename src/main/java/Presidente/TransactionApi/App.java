@@ -19,8 +19,8 @@ public class App {
 	static Listener listener = null;
 	static ArrayList<Processing> lista = new ArrayList<>();
 	static String notifyTransaction;
-	//static String url = "jdbc:postgresql://93.87.76.139:1521/accounting"; sa lokalne masine
-	static String url = "jdbc:postgresql://localhost:1521/accounting";
+	static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; //sa lokaln emasine
+	//static String url = "jdbc:postgresql://localhost:1521/accounting";
 	static String user = "presidente";
 	static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 	
@@ -115,9 +115,8 @@ public class App {
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
 	
-		
-		db.asyconnect(url, user, password);
-		lConn = DriverManager.getConnection(url, user, password);
+		db.asyconnect(urlL, user, password);
+		lConn = DriverManager.getConnection(urlL, user, password);
 		
 		
 		spStart sp      = new spStart(lConn);

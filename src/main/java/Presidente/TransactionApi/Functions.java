@@ -472,7 +472,7 @@ public class Functions {
 
 		JSONObject slotPeriodicBody = new JSONObject();
 		JSONObject machineElement   = new JSONObject();
-		JSONArray  machinesJSON   = new JSONArray();
+		JSONArray  machinesJSON     = new JSONArray();
 		
 		
 		
@@ -489,6 +489,8 @@ public class Functions {
 		
         final JSONObject jsonObject = new JSONObject(JSON);
 		final JSONArray machines = jsonObject.getJSONArray("machines");
+		final List<JSONObject> filtederMachines = new ArrayList<JSONObject>();
+		
 		for (int i = 0; i < machines.length(); i++) {
 			final JSONObject machine = machines.getJSONObject(i);
 			b  = machine.getInt("b");
@@ -499,6 +501,7 @@ public class Functions {
 			po = machine.getInt("po");
 			sn = machine.getString("sn");
 			
+			machineElement = new JSONObject();
 			machineElement.put("b", b);
 			machineElement.put("g", g);
 			machineElement.put("j", j);
@@ -506,11 +509,14 @@ public class Functions {
 			machineElement.put("pi", pi);
 			machineElement.put("po", po);
 			machineElement.put("sn", sn);
-		
-			machinesJSON.put(machineElement);
+			/*elements = machineJSON.get("machineElements")
+					elements.add(element)*/
+			filtederMachines.add(i, machineElement);
+			
+			//slotPeriodicBody.append("machines", machineElement);
 		}
 			
-		slotPeriodicBody.put("machines", machinesJSON);
+		slotPeriodicBody.put("machines", filtederMachines);
 		
 		return slotPeriodicBody;
 	}
