@@ -58,7 +58,7 @@ public class Processing extends Thread {
 			
 			//upisuje bodi koji je poslat u bazu
 			//
-			String apiJsonQuery = "UPDATE public.transactions SET api_json=" + TransactionBody.toString() + " WHERE transaction_id = "+ TransactionId +";";
+			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
 			db.executeQuery(apiJsonQuery, lConn);
 			// Kreira httpClient
 			//

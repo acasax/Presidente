@@ -53,7 +53,7 @@ public class spProcessing extends Thread {
 
 			//upisuje bodi koji je poslat u bazu
 			//
-			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json=" + slotPeriodicBody.toString() + " WHERE report_index = "+ reportIndex +";";
+			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json='" + slotPeriodicBody.toString() + "' WHERE report_index = '"+ reportIndex +"';";
 			db.executeQuery(apiJsonQuery, lConn);
 			// Kreira httpClient
 			//
