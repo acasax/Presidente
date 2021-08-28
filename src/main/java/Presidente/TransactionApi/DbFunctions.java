@@ -70,6 +70,20 @@ public class DbFunctions {
 		return "";
 		
 	}
+	
+	public String executeQuery(String procedureSQL, Connection connection) throws SecurityException, IOException {
+		 
+		 try {
+		        Statement stmnt = null;
+		        stmnt = connection.createStatement();
+		        stmnt.executeUpdate(procedureSQL);
+		        return "";
+		    } catch (SQLException e) {
+		    	fun.createLog(e.getMessage());
+	            return e.getMessage();
+		    }
+
+	}
 		
 	
 }

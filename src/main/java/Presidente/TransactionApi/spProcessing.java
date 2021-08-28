@@ -51,6 +51,10 @@ public class spProcessing extends Thread {
 		
 		try {
 
+			//upisuje bodi koji je poslat u bazu
+			//
+			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json=" + slotPeriodicBody.toString() + " WHERE report_index = "+ reportIndex +";";
+			db.executeQuery(apiJsonQuery, lConn);
 			// Kreira httpClient
 			//
 			CloseableHttpClient httpClient = HttpClients.createDefault();
