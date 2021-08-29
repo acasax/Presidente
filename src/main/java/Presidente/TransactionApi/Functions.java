@@ -458,12 +458,12 @@ public class Functions {
 	//
 	public JSONObject checkSpJSONforSend(String JSON) throws SecurityException, IOException {
 
-		int b;
-		int g;
-		int j;
-		int w;
-		int pi;
-		int po;
+		long b;
+		long g;
+		long j;
+		long w;
+		long pi;
+		long po;
 		String sn;
 		// Uzimanje podataka iz JSON-a
 		//
@@ -493,12 +493,12 @@ public class Functions {
 		
 		for (int i = 0; i < machines.length(); i++) {
 			final JSONObject machine = machines.getJSONObject(i);
-			b  = machine.getInt("b");
-			g  = machine.getInt("g");
-			j  = machine.getInt("j");
-			w  = machine.getInt("w");
-			pi = machine.getInt("pi");
-			po = machine.getInt("po");
+			b  = machine.getLong("b");
+			g  = machine.getLong("g");
+			j  = machine.getLong("j");
+			w  = machine.getLong("w");
+			pi = machine.getLong("pi");
+			po = machine.getLong("po");
 			sn = machine.getString("sn");
 			
 			machineElement = new JSONObject();
