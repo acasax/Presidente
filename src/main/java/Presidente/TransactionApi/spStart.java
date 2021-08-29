@@ -58,7 +58,6 @@ public class spStart extends Thread {
 		while(true) {
 			try {
 
-				
 				//Slanje zahteva na putanju slot-periodic
 				//
 				fun.sendSlotPeriodicWithStatus0(lConn, reportIndex, db, lista);
