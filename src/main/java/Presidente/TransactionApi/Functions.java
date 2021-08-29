@@ -503,12 +503,13 @@ public class Functions {
 			
 			//Sklanjanje " da bi mogli bilo koji brojevi da prodju 
 			//
-			b  = b.substring(1, b.length() - 1);
-			g  = g.substring(1, g.length() - 1);
-			j  = j.substring(1, j.length() - 1);
-			w  = w.substring(1, w.length() - 1);
-			pi = pi.substring(1, pi.length() - 1);
-			po = po.substring(1, po.length() - 1);
+			
+			b  = b.substring(0, b.length());
+			g  = g.substring(0, g.length());
+		    j  = j.substring(0, j.length());
+			w  = w.substring(0, w.length());
+			pi = pi.substring(0, pi.length());
+			po = po.substring(0, po.length());
 			
 			machineElement = new JSONObject();
 			machineElement.put("b", b);
@@ -518,11 +519,9 @@ public class Functions {
 			machineElement.put("pi", pi);
 			machineElement.put("po", po);
 			machineElement.put("sn", sn);
-			/*elements = machineJSON.get("machineElements")
-					elements.add(element)*/
+			
 			filtederMachines.add(i, machineElement);
 			
-			//slotPeriodicBody.append("machines", machineElement);
 		}
 			
 		slotPeriodicBody.put("machines", filtederMachines);
