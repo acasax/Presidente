@@ -118,6 +118,7 @@ public class App {
 		db.asyconnect(urlL, user, password);
 		lConn = DriverManager.getConnection(urlL, user, password);
 		
+		
 		spStart sp      = new spStart(lConn);
 		Check ck        = new Check(lConn);
 		errorCheck ec   = new errorCheck(lConn);
