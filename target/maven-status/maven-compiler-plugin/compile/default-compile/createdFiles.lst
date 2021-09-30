@@ -5,6 +5,7 @@ Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class
 Presidente\TransactionApi\Check.class
 Presidente\TransactionApi\Functions.class
+Presidente\TransactionApi\Alerts.class
 Presidente\TransactionApi\spErrorCheck.class
 Presidente\TransactionApi\Functions$1.class
 Presidente\TransactionApi\DbFunctions.class
