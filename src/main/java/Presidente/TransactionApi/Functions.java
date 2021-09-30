@@ -37,6 +37,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 public class Functions {
+	
+	private int maxDeposit = 100000;
+	private int maxWithdraw = 500000;
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
@@ -162,6 +165,7 @@ public class Functions {
 			return transactionBody;
 		}
 
+		
 		// Parsiranje podataka u potreban format
 		//
 		Double p_transaction_amount = Double.valueOf(transaction_amount);
@@ -171,6 +175,9 @@ public class Functions {
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
+			if(p_transaction_amount > maxDeposit) {
+				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID:" + transaction_id );
+			}
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
@@ -179,6 +186,9 @@ public class Functions {
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
+			if(p_transaction_amount > maxWithdraw) {
+				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID:" + transaction_id );
+			}
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
@@ -208,7 +218,7 @@ public class Functions {
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
-			//transactionBody.put("rollback_transaction_id", rollback_transaction_id);
+			transactionBody.put("rollback_transaction_id", rollback_transaction_id);
 			return transactionBody;
 		/*
 		 * case "imports/slot-periodic": break; case "casino": break;

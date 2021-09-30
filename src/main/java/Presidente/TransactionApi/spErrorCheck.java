@@ -7,7 +7,7 @@ public class spErrorCheck extends Thread {
 		while(true) {
 			fun.checkIsLogExist("logs");
 			try {
-				Thread.sleep(1800000);
+				Thread.sleep(7200000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -119,11 +119,22 @@ public class App {
 		lConn = DriverManager.getConnection(urlL, user, password);
 		
 		
-		spStart sp      = new spStart(lConn);
-		Check ck        = new Check(lConn);
-		errorCheck ec   = new errorCheck(lConn);
+		spStart sp       = new spStart(lConn);
+		Check ck         = new Check(lConn);
+		errorCheck ec    = new errorCheck(lConn);
+		locationCheck lc = new locationCheck(lConn);
+		machineCheck  mc = new machineCheck(lConn);
+		
+		//Provera da li svi automati salju podatke
+		//
+		mc.start();
+		
+		//Provera da li sve lokacije salju podatke 
+		//
+		lc.start();
 		
 		//Proverava da li ima log fajlova
+		//
 		ec.start();
 	
 		//SlotPeriodic

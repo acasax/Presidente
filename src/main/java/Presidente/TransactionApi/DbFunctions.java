@@ -34,6 +34,20 @@ public class DbFunctions {
 		}
 	}
 	
+	public String executeQuery(String procedureSQL, Connection connection) throws SecurityException, IOException {
+		 
+		 try {
+		        Statement stmnt = null;
+		        stmnt = connection.createStatement();
+		        stmnt.executeUpdate(procedureSQL);
+		        return "";
+		    } catch (SQLException e) {
+		    	fun.createLog(e.getMessage());
+	            return e.getMessage();
+		    }
+
+	}
+	
 	
 	public String executeProcedure(String procedureSQL, Connection connection) throws SecurityException, IOException {
 		 String result = "";
@@ -71,13 +85,26 @@ public class DbFunctions {
 		
 	}
 	
-	public String executeQuery(String procedureSQL, Connection connection) throws SecurityException, IOException {
+	public String executeQuery1(String SQL, Connection connection, String message, String[] params) throws SecurityException, IOException {
 		 
+		String returnMsg = "";
 		 try {
 		        Statement stmnt = null;
 		        stmnt = connection.createStatement();
-		        stmnt.executeUpdate(procedureSQL);
-		        return "";
+		   
+		    	ResultSet resultSet = stmnt.executeQuery(SQL);
+				if(resultSet != null /*resultSet != "0#]}"*/) {
+					while (resultSet.next()) {
+						for(int i = 0; i < params.length; i++) {
+							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]);
+						}
+					}
+					resultSet.close();
+					stmnt.cancel();
+					return returnMsg;
+				}else {
+					return message;
+				}
 		    } catch (SQLException e) {
 		    	fun.createLog(e.getMessage());
 	            return e.getMessage();
