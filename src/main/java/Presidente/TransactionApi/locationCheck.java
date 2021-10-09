@@ -12,7 +12,7 @@ public class locationCheck extends Thread {
 	static Connection lConn;
 	static String msg;
 	static String sql = "select * from slot_clubs where not slot_club_id in (SELECT distinct slot_club_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '2 HOURS' AND NOW())";
-	static String[] columns = {"slot_club_id", "adresa", "opsitina", "mesto", "slot_club_sid"};
+	static String[] columns = {"slot_club_id", "adresa", "opstina", "mesto", "slot_club_sid"};
 	
 	public locationCheck(Connection lConn) {
 		super();
