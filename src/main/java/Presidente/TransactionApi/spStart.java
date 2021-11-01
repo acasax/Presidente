@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 public class spStart extends Thread {
-
-	
 	
 	static Object pgconn;
 	static Connection lConn;
@@ -21,7 +19,11 @@ public class spStart extends Thread {
 	Functions fun  = new Functions();
 	DbFunctions db = new DbFunctions();
 	
-	spErrorCheck er = new spErrorCheck();
+	
+	public spStart(Connection lConn) {
+		super();
+		this.lConn = lConn;
+	}
 	
 	// Da li postoji proces sa zadatim report index koji radi
 	public static spProcessing nadjiProcessing(int reportIndex) {
@@ -40,21 +42,12 @@ public class spStart extends Thread {
 		p.interrupt();
 	}
 
-	public spStart(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
-	
 	@Override
 	public void run() {
 		//Startuje proveru za slot periodic
 		//
 		spCheck sk     = new spCheck(lConn);
 		sk.start();
-		//Kron error provera
-		//
-		er.start();
 		while(true) {
 			try {
 

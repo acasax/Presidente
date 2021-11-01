@@ -21,9 +21,14 @@ class Listener extends Thread {
    Listener(Connection conn) throws SQLException {
 		this.conn = conn;
 		this.pgconn = (org.postgresql.PGConnection)conn;
-		Statement stmt = conn.createStatement();
-		stmt.execute("LISTEN row_updated");
-		stmt.close();
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.execute("LISTEN row_updated");
+			stmt.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void run() {

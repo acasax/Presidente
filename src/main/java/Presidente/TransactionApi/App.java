@@ -33,7 +33,8 @@ public class App {
 	static String transactionJSONError;
 
 	static DbFunctions db = new DbFunctions();
-	static Functions fun = new Functions();
+	static Functions fun  = new Functions();
+	static constError ce  = new constError(); 
 	
 	
 	
@@ -78,7 +79,7 @@ public class App {
 
 			}
 		} catch (SecurityException | IOException e) {
-			fun.createLog(e.getMessage());
+			fun.createLog(ce.sendTransaction);
 		}
 	}
 
@@ -108,7 +109,7 @@ public class App {
 				}
 			}
 		} catch (SQLException | SecurityException | IOException e) {
-			fun.createLog(e.getMessage());
+			fun.createLog(ce.sendTransactionWithStatus0);
 		}
 	}
 
@@ -121,17 +122,7 @@ public class App {
 		
 		spStart sp       = new spStart(lConn);
 		Check ck         = new Check(lConn);
-		errorCheck ec    = new errorCheck(lConn);
-		locationCheck lc = new locationCheck(lConn);
-		machineCheck  mc = new machineCheck(lConn);
-		
-		//Provera da li svi automati salju podatke
-		//
-		mc.start();
-		
-		//Provera da li sve lokacije salju podatke 
-		//
-		lc.start();
+		ErrorCheck ec    = new ErrorCheck(lConn);
 		
 		//Proverava da li ima log fajlova
 		//

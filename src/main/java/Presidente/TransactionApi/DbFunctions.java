@@ -24,13 +24,14 @@ import java.sql.Connection;
 public class DbFunctions {
 	
 	Functions fun = new Functions();
+	constError ce = new constError();
 	
 	public void asyconnect(String url, String user, String password) throws SecurityException, IOException {
 		
 		try(Connection connection = DriverManager.getConnection(url, user, password);) {
 			
 		} catch (SQLException e) {
-			 fun.createLog(e.getMessage());
+			 fun.createLog(ce.asyconnect);
 		}
 	}
 	
@@ -42,7 +43,7 @@ public class DbFunctions {
 		        stmnt.executeUpdate(procedureSQL);
 		        return "";
 		    } catch (SQLException e) {
-		    	fun.createLog(e.getMessage());
+		    	fun.createLog(ce.executeQuery + procedureSQL);
 	            return e.getMessage();
 		    }
 
@@ -57,7 +58,7 @@ public class DbFunctions {
 	            properCase.execute();
 	            return result;
 	        } catch (SQLException e) {
-	            fun.createLog(e.getMessage());
+	        	fun.createLog(ce.executeProcedure + procedureSQL);
 	            return e.getMessage();
 	        } 
 	}
@@ -78,7 +79,7 @@ public class DbFunctions {
 				return "0";
 			}
 		} catch (SQLException e) {
-			fun.createLog(e.getMessage());
+			fun.createLog(ce.executeFunction + SQL);
             return e.getMessage();
         }
 		return "";
@@ -93,7 +94,7 @@ public class DbFunctions {
 		        stmnt = connection.createStatement();
 		   
 		    	ResultSet resultSet = stmnt.executeQuery(SQL);
-				if(resultSet != null /*resultSet != "0#]}"*/) {
+				if(resultSet != null) {
 					while (resultSet.next()) {
 						for(int i = 0; i < params.length; i++) {
 							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]);
@@ -106,7 +107,7 @@ public class DbFunctions {
 					return message;
 				}
 		    } catch (SQLException e) {
-		    	fun.createLog(e.getMessage());
+		    	fun.createLog(ce.executeQuery1 + SQL);
 	            return e.getMessage();
 		    }
 

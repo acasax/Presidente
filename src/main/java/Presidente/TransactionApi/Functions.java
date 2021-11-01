@@ -38,6 +38,7 @@ import java.io.FilenameFilter;
 
 public class Functions {
 	
+	constError ce = new constError();
 	private int maxDeposit = 100000;
 	private int maxWithdraw = 500000;
 
@@ -116,7 +117,7 @@ public class Functions {
 				paramValueD = obj.getDouble(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
-				createLog(e.getMessage());
+				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
 				return null;
 			}
 		case "transaction_withdraw_amount":
@@ -124,7 +125,7 @@ public class Functions {
 				paramValueD = obj.getDouble(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
-				createLog(e.getMessage());
+				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
 				return null;
 			}
 		default:
@@ -133,7 +134,7 @@ public class Functions {
 				return paramValue;
 			} catch (JSONException e) {
 				if (!Param.equals("error")) {
-					createLog(e.getMessage());
+					createLog(ce.getParamFromJson + "JSON" + JSON + "Parametar" + Param);
 				}
 				return null;
 			}
@@ -567,7 +568,7 @@ public class Functions {
 				}
 			}
 		} catch (SQLException | SecurityException | IOException e) {
-			createLog(e.getMessage());
+			createLog(ce.sendSlotPeriodicWithStatus0);
 		}
 	}
 	
