@@ -33,11 +33,10 @@ public class spProcessing extends Thread {
 
 	// Konsturktor osnovne klase
 	//
-	public spProcessing(int reportIndex, JSONObject slotPeriodicBody, Connection lConn) {
+	public spProcessing(int reportIndex, JSONObject slotPeriodicBody) {
 		super();
 		this.reportIndex      = reportIndex;
 		this.slotPeriodicBody = slotPeriodicBody;
-		this.lConn            = lConn;
 	}
 
 	// geterr za report index
@@ -54,7 +53,7 @@ public class spProcessing extends Thread {
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json='" + slotPeriodicBody.toString() + "' WHERE report_index = '"+ reportIndex +"';";
-			db.executeQuery(apiJsonQuery, lConn);
+			db.executeQuery(apiJsonQuery);
 			
 			fun.checkSpJSONforSend(slotPeriodicBody.toString());
 			// Kreira httpClient
@@ -98,7 +97,7 @@ public class spProcessing extends Thread {
 				if (Status == 201) {
 
 					db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex
-							+ "','" + api_uid + "')", lConn);
+							+ "','" + api_uid + "')");
 					response.close();
 					httpClient.close();
 				} else {
@@ -139,14 +138,13 @@ public class spProcessing extends Thread {
 							}
 
 							if (Status == 201) {
-								db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex
-										+ "','" + api_uid + "')", lConn);
+								db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
 								response.close();
 								httpClient.close();
 								return;
 							} else {
 								db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex
-										+ "','" + response_text + "'," + String.valueOf(Status) + "')", lConn);
+										+ "','" + response_text + "'," + String.valueOf(Status) + "')");
 							}
 							request = null;
 						} else {

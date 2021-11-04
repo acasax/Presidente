@@ -39,12 +39,11 @@ public class Processing extends Thread {
 	static Connection lConn;
 
 	// Konsturktor osnovne klase
-	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody, Connection lConn) {
+	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody) {
 		super();
 		this.TransactionId   = TransactionId;
 		this.TransactionPath = TransactionPath;
 		this.TransactionBody = TransactionBody;
-		this.lConn           = lConn;
 	}
 
 	public String getTransactionId() {
@@ -59,7 +58,7 @@ public class Processing extends Thread {
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
-			db.executeQuery(apiJsonQuery, lConn);
+			db.executeQuery(apiJsonQuery);
 			// Kreira httpClient
 			//
 			CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -101,8 +100,7 @@ public class Processing extends Thread {
 				if (Status == 201) {
 
 					db.executeProcedure(
-							"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')",
-							lConn);
+							"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
 					response.close();
 					httpClient.close();
 				} else {
@@ -115,7 +113,7 @@ public class Processing extends Thread {
 							
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getApiCounter(TransactionId, db, lConn);
+							threadSleep = fun.getApiCounter(TransactionId, db);
 							Thread.sleep(Long.parseLong(threadSleep));
 							
 
@@ -146,13 +144,13 @@ public class Processing extends Thread {
 
 							if (Status == 201) {
 								db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId
-										+ "','" + api_uid + "')", lConn);
+										+ "','" + api_uid + "')");
 								response.close();
 								httpClient.close();
 								return;
 							}else {
 								db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"
-										+ response_text + "', '" + String.valueOf(Status) + "')", lConn);
+										+ response_text + "', '" + String.valueOf(Status) + "')");
 							}
 							request = null;
 						}else {

@@ -14,11 +14,6 @@ public class spErrorCheck extends Thread {
 	static int reportIndex;
 	static String spWorkStatus;
 
-	public spErrorCheck(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
 	public void run() {
 		while (true) {
 			try {

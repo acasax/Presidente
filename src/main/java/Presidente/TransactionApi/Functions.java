@@ -232,11 +232,10 @@ public class Functions {
 
 	// Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public String getApiCounter(String transaction_id, DbFunctions db, Connection con)
+	public String getApiCounter(String transaction_id, DbFunctions db)
 			throws SecurityException, IOException {
 		try {
-			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')", con,
-					"get_api_counter");
+			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')", "get_api_counter");
 			if (Integer.parseInt(apiCounter) < 3) {
 				return "60000";
 			} else {
@@ -249,11 +248,10 @@ public class Functions {
 		}
 	}
 
-	public String getWorkStatus(String transaction_id, DbFunctions db, Connection con)
+	public String getWorkStatus(String transaction_id, DbFunctions db)
 			throws SecurityException, IOException {
 		try {
-			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')",
-					con, "get_transaction_exe_status");
+			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')", "get_transaction_exe_status");
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("work status nije kako treba" + e.getMessage());
@@ -544,11 +542,10 @@ public class Functions {
 	// bazi
 	// i koja ima status 0
 	//
-	public void sendSlotPeriodicWithStatus0(Connection lConn, int reportIndex, DbFunctions db,
+	public void sendSlotPeriodicWithStatus0(int reportIndex, DbFunctions db,
 			ArrayList<spProcessing> lista) throws SQLException, SecurityException, IOException {
 		try {
-			String spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", lConn,
-					"get_json_sp_by_status");
+			String spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
 
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
@@ -558,13 +555,12 @@ public class Functions {
 					createLog(slotPeriodicJSONError); // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")", lConn);
+					db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
 					// Pokretanje procesa za odredjeni transaction id
-					spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody, lConn);
+					spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
 					lista.add(newProcess);
 					newProcess.start();
-					spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", lConn,
-							"get_json_sp_by_status");
+					spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
 				}
 			}
 		} catch (SQLException | SecurityException | IOException e) {
@@ -577,8 +573,7 @@ public class Functions {
 	public String getSpWorkStatus(int reportIndex, DbFunctions db, Connection con)
 			throws SecurityException, IOException {
 		try {
-			String workStatus = db.executeFunction("SELECT public.get_sp_report_exe_status(" + reportIndex + ")",
-					con, "get_sp_report_exe_status");
+			String workStatus = db.executeFunction("SELECT public.get_sp_report_exe_status(" + reportIndex + ")", "get_sp_report_exe_status");
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("work status nije kako treba" + e.getMessage());
@@ -591,8 +586,7 @@ public class Functions {
 		public String getSpApiCounter(int reportIndex, DbFunctions db, Connection con)
 				throws SecurityException, IOException {
 			try {
-				String apiCounter = db.executeFunction("SELECT public.get_sp_api_counter(" + reportIndex + ")", con,
-						"get_sp_api_counter");
+				String apiCounter = db.executeFunction("SELECT public.get_sp_api_counter(" + reportIndex + ")", "get_sp_api_counter");
 				if (Integer.parseInt(apiCounter) < 3) {
 					return "60000";
 				} else {
@@ -609,8 +603,7 @@ public class Functions {
 		public String getCronError( DbFunctions db, Connection con)
 				throws SecurityException, IOException {
 			try {
-				String workStatus = db.executeFunction("SELECT public.get_sp_cron_job_error_counter()",
-						con, "get_sp_cron_job_error_counter");
+				String workStatus = db.executeFunction("SELECT public.get_sp_cron_job_error_counter()", "get_sp_cron_job_error_counter");
 				return workStatus;
 			} catch (SQLException e) {
 				createLog("get_sp_cron_job_error_counter nije kako treba" + e.getMessage());

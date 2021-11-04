@@ -7,22 +7,16 @@ public class ErrorCheck extends Thread {
 
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
 	static String msg;
 	static String sql = "select * from slot_clubs where not slot_club_id in (SELECT distinct slot_club_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '2 HOURS' AND NOW())";
 	static String[] columns = {"slot_club_id", "adresa", "opstina", "mesto", "slot_club_sid"};
-	
-	public ErrorCheck(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
 	
 	@Override
 	public void run() {
 		while(true) {
 			fun.checkIsLogExist("logs");
 			try {
-				msg = db.executeQuery1(sql, lConn, "Sve lokacije salju podatke", columns);
+				msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
 			} catch (SecurityException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

@@ -14,16 +14,11 @@ public class locationCheck extends Thread {
 	static String sql = "select * from slot_clubs where not slot_club_id in (SELECT distinct slot_club_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '2 HOURS' AND NOW())";
 	static String[] columns = {"slot_club_id", "adresa", "opstina", "mesto", "slot_club_sid"};
 	
-	public locationCheck(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
 	public void run() {
 		while (true) {
 			try {
 				try {
-					msg = db.executeQuery1(sql, lConn, "Sve lokacije salju podatke", columns);
+					msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
 					fun.sendEmail(msg);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

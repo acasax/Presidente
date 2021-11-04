@@ -1,12 +1,12 @@
 Presidente\TransactionApi\spCheck.class
 Presidente\TransactionApi\Listener.class
-Presidente\TransactionApi\errorCheck.class
 Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class
+Presidente\TransactionApi\constError.class
+Presidente\TransactionApi\ErrorCheck.class
 Presidente\TransactionApi\machineCheck.class
 Presidente\TransactionApi\Check.class
 Presidente\TransactionApi\Functions.class
-Presidente\TransactionApi\Alerts.class
 Presidente\TransactionApi\spErrorCheck.class
 Presidente\TransactionApi\Functions$1.class
 Presidente\TransactionApi\DbFunctions.class

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
+import org.postgresql.ds.PGPoolingDataSource;
 
 import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.api.jdbc.PGNotificationListener;
@@ -19,10 +20,6 @@ public class App {
 	static Listener listener = null;
 	static ArrayList<Processing> lista = new ArrayList<>();
 	static String notifyTransaction;
-	static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; //sa lokaln emasine
-	//static String url = "jdbc:postgresql://localhost:1521/accounting";
-	static String user = "presidente";
-	static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 	
 	static Object pgconn;
 	static String transactionWithStatus0;
@@ -36,9 +33,6 @@ public class App {
 	static Functions fun  = new Functions();
 	static constError ce  = new constError(); 
 	
-	
-	
-	static Connection lConn;
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
 	public static Processing nadjiProcessing(String transactionId) {
@@ -70,9 +64,9 @@ public class App {
 					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
 					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 					lista.add(newProcess);
 					newProcess.start();
 				}
@@ -88,8 +82,7 @@ public class App {
 	//
 	public static void sendTransactionWithStatus0() throws SQLException, SecurityException, IOException {
 		try {
-			transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
-					"get_json_by_status");
+			transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
 			while (transactionWithStatus0 != null) {
 				transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
@@ -99,13 +92,12 @@ public class App {
 					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
 					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
+					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 					lista.add(newProcess);
 					newProcess.start();
-					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", lConn,
-							"get_json_by_status");
+					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
 				}
 			}
 		} catch (SQLException | SecurityException | IOException e) {
@@ -115,14 +107,12 @@ public class App {
 
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
-	
-		db.asyconnect(urlL, user, password);
-		lConn = DriverManager.getConnection(urlL, user, password);
+
+		Connection lConn = db.asyconnect();
 		
-		
-		spStart sp       = new spStart(lConn);
-		Check ck         = new Check(lConn);
-		ErrorCheck ec    = new ErrorCheck(lConn);
+		spStart sp       = new spStart();
+		Check ck         = new Check();
+		ErrorCheck ec    = new ErrorCheck();
 		
 		//Proverava da li ima log fajlova
 		//

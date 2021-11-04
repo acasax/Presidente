@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import org.postgresql.ds.PGPoolingDataSource;
+
 import com.impossibl.postgres.jdbc.PGDriver;
 import com.impossibl.postgres.jdbc.PGDataSource;
 import com.impossibl.postgres.api.jdbc.PGConnection;
@@ -26,21 +28,41 @@ public class DbFunctions {
 	Functions fun = new Functions();
 	constError ce = new constError();
 	
-	public void asyconnect(String url, String user, String password) throws SecurityException, IOException {
+	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; //sa lokalne masine
+	//static String url = "jdbc:postgresql://localhost:1521/accounting";
+	private static String user = "presidente";
+	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
+	
+	/*static Connection lConn;
+	
+	lConn = DriverManager.getConnection(urlL, user, password);*/
+	
+	@SuppressWarnings("deprecation")
+	public Connection asyconnect() throws SecurityException, IOException {
 		
-		try(Connection connection = DriverManager.getConnection(url, user, password);) {
-			
+		try{
+			PGPoolingDataSource source = new PGPoolingDataSource();
+			source.setServerNames(new String[] {"93.87.76.139:1521"});
+			source.setDatabaseName("accounting");
+			source.setUser("presidente");
+			source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
+			source.setMaxConnections(30);
+			Connection connection = source.getConnection();
+			return connection;
 		} catch (SQLException e) {
 			 fun.createLog(ce.asyconnect);
 		}
+		return null;
 	}
 	
-	public String executeQuery(String procedureSQL, Connection connection) throws SecurityException, IOException {
+	public String executeQuery(String procedureSQL) throws SecurityException, IOException {
 		 
 		 try {
+			    Connection lConn = DriverManager.getConnection(urlL, user, password);
 		        Statement stmnt = null;
-		        stmnt = connection.createStatement();
+		        stmnt = lConn.createStatement();
 		        stmnt.executeUpdate(procedureSQL);
+		        lConn.close();
 		        return "";
 		    } catch (SQLException e) {
 		    	fun.createLog(ce.executeQuery + procedureSQL);
@@ -50,12 +72,15 @@ public class DbFunctions {
 	}
 	
 	
-	public String executeProcedure(String procedureSQL, Connection connection) throws SecurityException, IOException {
+	public String executeProcedure(String procedureSQL) throws SecurityException, IOException {
+		
 		 String result = "";
 	        try {
-	            CallableStatement properCase = connection.prepareCall(procedureSQL);
+	        	Connection lConn = DriverManager.getConnection(urlL, user, password);
+	            CallableStatement properCase = lConn.prepareCall(procedureSQL);
 	            //properCase.setString(1, procedureName);
 	            properCase.execute();
+	            lConn.close();
 	            return result;
 	        } catch (SQLException e) {
 	        	fun.createLog(ce.executeProcedure + procedureSQL);
@@ -65,17 +90,18 @@ public class DbFunctions {
 	
 	
 	
-	public String executeFunction(String SQL, Connection connection, String functionName ) throws SQLException, SecurityException, IOException {
+	public String executeFunction(String SQL, String functionName ) throws SQLException, SecurityException, IOException {
 		try {
-			String notSendtransaction;
-			Statement statement = connection.createStatement();
-
+			Connection lConn = DriverManager.getConnection(urlL, user, password);
+			Statement statement = lConn.createStatement();
 			ResultSet resultSet = statement.executeQuery(SQL);
 			if(resultSet != null /*resultSet != "0#]}"*/) {
 				while (resultSet.next()) {
-					return notSendtransaction = resultSet.getString(functionName);
+					lConn.close();
+					return resultSet.getString(functionName);
 				}
 			}else {
+				lConn.close();
 				return "0";
 			}
 		} catch (SQLException e) {
@@ -86,13 +112,13 @@ public class DbFunctions {
 		
 	}
 	
-	public String executeQuery1(String SQL, Connection connection, String message, String[] params) throws SecurityException, IOException {
+	public String executeQuery1(String SQL, String message, String[] params) throws SecurityException, IOException {
 		 
 		String returnMsg = "";
 		 try {
+			    Connection lConn = DriverManager.getConnection(urlL, user, password);
 		        Statement stmnt = null;
-		        stmnt = connection.createStatement();
-		   
+		        stmnt = lConn.createStatement();
 		    	ResultSet resultSet = stmnt.executeQuery(SQL);
 				if(resultSet != null) {
 					while (resultSet.next()) {
@@ -102,8 +128,10 @@ public class DbFunctions {
 					}
 					resultSet.close();
 					stmnt.cancel();
+					lConn.close();
 					return returnMsg;
 				}else {
+					lConn.close();
 					return message;
 				}
 		    } catch (SQLException e) {

@@ -14,18 +14,11 @@ public class spCheck extends Thread {
 	static int reportIndex;
 	static String spWorkStatus;
 
-	
-	public spCheck(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
 	public void run() {
 		while (true) {
 			try {
 				// proverava da li u bazi ima izvestaja sa statusom 11
-				spWithStatus11 = db.executeFunction("SELECT public.get_json_sp_by_status(11)", lConn,
-						"get_json_sp_by_status");
+				spWithStatus11 = db.executeFunction("SELECT public.get_json_sp_by_status(11)", "get_json_sp_by_status");
 				//kreira parametre
 				if (spWithStatus11 != null ) {
 					reportIndex = fun.getReportIndex(spWithStatus11, "s"); // uzima reportindex za taj

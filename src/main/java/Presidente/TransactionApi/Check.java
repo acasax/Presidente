@@ -16,23 +16,17 @@ public class Check extends Thread {
 	static String transactionId;
 	static String transactionWorkStatus;
 
-	public Check(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
 	@Override
 	public void run() {
 		while (true) {
 
 			try {
 				// proverava da li u bazi ima transakcija sa statusom 11
-				transactionWithStatus11 = db.executeFunction("SELECT public.get_json_by_status(11)", lConn,
-						"get_json_by_status");
+				transactionWithStatus11 = db.executeFunction("SELECT public.get_json_by_status(11)", "get_json_by_status");
 				//kreira parametre
 				if(transactionWithStatus11 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus11, "s"); // uzima transaction_id za taj
-					transactionWorkStatus = fun.getWorkStatus(transactionId, db, lConn);
+					transactionWorkStatus = fun.getWorkStatus(transactionId, db);
 				}
 				//ubija los proces
 				if (transactionWithStatus11 != null && Integer.parseInt(transactionWorkStatus) == 1) {

@@ -20,11 +20,6 @@ public class spStart extends Thread {
 	DbFunctions db = new DbFunctions();
 	
 	
-	public spStart(Connection lConn) {
-		super();
-		this.lConn = lConn;
-	}
-	
 	// Da li postoji proces sa zadatim report index koji radi
 	public static spProcessing nadjiProcessing(int reportIndex) {
 		for (int i = 0; i < lista.size(); i++) {
@@ -46,14 +41,14 @@ public class spStart extends Thread {
 	public void run() {
 		//Startuje proveru za slot periodic
 		//
-		spCheck sk     = new spCheck(lConn);
+		spCheck sk     = new spCheck();
 		sk.start();
 		while(true) {
 			try {
 
 				//Slanje zahteva na putanju slot-periodic
 				//
-				fun.sendSlotPeriodicWithStatus0(lConn, reportIndex, db, lista);
+				fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
 
 			} catch (SecurityException | IOException e) {
 				// TODO Auto-generated catch block
