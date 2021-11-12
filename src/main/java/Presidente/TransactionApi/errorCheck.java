@@ -2,6 +2,7 @@ package Presidente.TransactionApi;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ErrorCheck extends Thread {
 
@@ -16,7 +17,12 @@ public class ErrorCheck extends Thread {
 		while(true) {
 			fun.checkIsLogExist("logs");
 			try {
-				msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+				try {
+					msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} catch (SecurityException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

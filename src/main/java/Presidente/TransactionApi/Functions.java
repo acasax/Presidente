@@ -48,23 +48,28 @@ public class Functions {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
-
+			String transactionId = "";
 			try {
 				JSONObject obj = new JSONObject(jsonString);
-				String transactionId = obj.getString("transaction_id");
-				return transactionId;
+				if(obj.isNull("transaction_id")) {
+					return transactionId; 
+				}
+				return transactionId = obj.getString("transaction_id");
 			} catch (JSONException e) {
 				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
 			}
 
 		} else {
+			String transactionId = "";
 			try {
 				String str = JSON.substring(JSON.indexOf("{"));
 				String jsonString = str;
 				JSONObject obj = new JSONObject(jsonString);
-				String transactionId = obj.getString("transaction_id");
-				return transactionId;
+				if(obj.isNull("transaction_id")) {
+					return transactionId; 
+				}
+				return transactionId = obj.getString("transaction_id");
 			} catch (JSONException e) {
 				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
@@ -79,22 +84,28 @@ public class Functions {
 		// Status s stiglo iz baze samo json
 		if (Status == "s") {
 			String jsonString = JSON;
+			String transactionPath = "";
 			try {
 				JSONObject obj = new JSONObject(jsonString);
-				String transactionPath = obj.getString("path");
-				return transactionPath;
+				if(obj.isNull("path")) {
+					return transactionPath;
+				}
+				return transactionPath = obj.getString("path");
 			} catch (JSONException e) {
 				createLog("U ovom JSON-u nema polja path" + e.getMessage());
 				return "U ovom JSON-u nema polja path";
 			}
 
 		} else {
+			String transactionPath = "";
 			try {
 				String str = JSON.substring(JSON.indexOf("{"));
 				String jsonString = str;
 				JSONObject obj = new JSONObject(jsonString);
-				String transactionPath = obj.getString("path");
-				return transactionPath;
+				if(obj.isNull("path")) {
+					return transactionPath;
+				}
+				return transactionPath = obj.getString("path");
 			} catch (JSONException e) {
 				createLog("U ovom JSON-u nema polja path" + e.getMessage());
 				return "U ovom JSON-u nema polja path";
@@ -114,6 +125,9 @@ public class Functions {
 		switch (Param) {
 		case "transaction_amount":
 			try {
+				if(obj.isNull(Param)) {
+					return null;
+				}
 				paramValueD = obj.getDouble(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
@@ -122,6 +136,9 @@ public class Functions {
 			}
 		case "transaction_withdraw_amount":
 			try {
+				if(obj.isNull(Param)) {
+					return null;
+				}
 				paramValueD = obj.getDouble(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
@@ -130,6 +147,9 @@ public class Functions {
 			}
 		default:
 			try {
+				if(obj.isNull(Param)) {
+					return null;
+				}
 				paramValue = obj.getString(Param);
 				return paramValue;
 			} catch (JSONException e) {
@@ -275,8 +295,26 @@ public class Functions {
 		logger.addHandler(handler);
 
 		logger.warning(msg);
-		
+	
+	}
+	
+	// Funkcija koja kreira log fajlove sa greskom za bazu
+	//
+	public void createLogDb(String msg) throws SecurityException, IOException {
+		String path = "logsDb";
+		// Creating a File object
+		File file = new File(path);
+	      //Creating the directory
+	     file.mkdir();
+		DateFormat FileNameFormat = new SimpleDateFormat("dd-M-yyyy_hh-mm-ss");
+		Date FileName = new Date();
+		FileHandler handler = new FileHandler("logsDb/" + "log_" + FileNameFormat.format(FileName) + ".log");
 
+		Logger logger = Logger.getLogger("ResivoJe");
+		logger.addHandler(handler);
+
+		logger.warning(msg);
+	
 	}
 
 	// Funkcija za slanje e-mail
@@ -430,9 +468,10 @@ public class Functions {
 	//
 	public int getReportIndex(String JSON, String Status) throws SecurityException, IOException {
 		// Status s stiglo iz baze samo json
+		int report_index = 0;
 		if (Status == "s") {
 			String jsonString = JSON;
-			int report_index = 0;
+			
 			try {
 
 				final JSONObject jsonObject = new JSONObject(jsonString);
@@ -451,11 +490,15 @@ public class Functions {
 			try {
 				String str = JSON.substring(JSON.indexOf("{"));
 				String jsonString = str;
-				JSONObject obj = new JSONObject(jsonString);
-				String transactionId = obj.getString("transaction_id");
-				return 1;
+				final JSONObject jsonObject = new JSONObject(jsonString);
+				final JSONArray machines = jsonObject.getJSONArray("machines");
+				for (int i = 0; i < machines.length(); i++) {
+					final JSONObject machine = machines.getJSONObject(i);
+					report_index = machine.getInt("report_index");
+				}
+				return report_index;
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
+				createLog("U ovom JSON-u nema polja report index" + e.getMessage());
 				return 0;
 			}
 
@@ -550,18 +593,12 @@ public class Functions {
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
-				String slotPeriodicJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
-				if (slotPeriodicJSONError != null) {
-					createLog(slotPeriodicJSONError); // kreira log fajl sa greskom o parametrima
-				} else {
-					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
-					// Pokretanje procesa za odredjeni transaction id
-					spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
-					lista.add(newProcess);
-					newProcess.start();
-					spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
-				}
+			    db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
+				// Pokretanje procesa za odredjeni transaction id
+				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
+				lista.add(newProcess);
+				newProcess.start();
+				spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
 			}
 		} catch (SQLException | SecurityException | IOException e) {
 			createLog(ce.sendSlotPeriodicWithStatus0);

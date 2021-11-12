@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-11T18:36:15.726399100Z</date>
+  <millis>1636655775726</millis>
+  <nanos>399100</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:36:42.602891300Z</date>
+  <millis>1636655802602</millis>
+  <nanos>891300</nanos>
+  <sequence>1</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>17</thread>
+  <message></message>
+</record>

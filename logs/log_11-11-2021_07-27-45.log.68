@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-11T18:27:45.784001100Z</date>
+  <millis>1636655265784</millis>
+  <nanos>1100</nanos>
+  <sequence>68</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.785995600Z</date>
+  <millis>1636655265785</millis>
+  <nanos>995600</nanos>
+  <sequence>69</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.789986300Z</date>
+  <millis>1636655265789</millis>
+  <nanos>986300</nanos>
+  <sequence>70</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.791979900Z</date>
+  <millis>1636655265791</millis>
+  <nanos>979900</nanos>
+  <sequence>71</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.793974600Z</date>
+  <millis>1636655265793</millis>
+  <nanos>974600</nanos>
+  <sequence>72</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.796966700Z</date>
+  <millis>1636655265796</millis>
+  <nanos>966700</nanos>
+  <sequence>73</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.799959100Z</date>
+  <millis>1636655265799</millis>
+  <nanos>959100</nanos>
+  <sequence>74</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.801953Z</date>
+  <millis>1636655265801</millis>
+  <nanos>953000</nanos>
+  <sequence>75</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.804945600Z</date>
+  <millis>1636655265804</millis>
+  <nanos>945600</nanos>
+  <sequence>76</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.806940100Z</date>
+  <millis>1636655265806</millis>
+  <nanos>940100</nanos>
+  <sequence>77</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.809932200Z</date>
+  <millis>1636655265809</millis>
+  <nanos>932200</nanos>
+  <sequence>78</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.812924400Z</date>
+  <millis>1636655265812</millis>
+  <nanos>924400</nanos>
+  <sequence>79</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.814918700Z</date>
+  <millis>1636655265814</millis>
+  <nanos>918700</nanos>
+  <sequence>80</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.817911600Z</date>
+  <millis>1636655265817</millis>
+  <nanos>911600</nanos>
+  <sequence>81</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.820904100Z</date>
+  <millis>1636655265820</millis>
+  <nanos>904100</nanos>
+  <sequence>82</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.823894800Z</date>
+  <millis>1636655265823</millis>
+  <nanos>894800</nanos>
+  <sequence>83</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.825889700Z</date>
+  <millis>1636655265825</millis>
+  <nanos>889700</nanos>
+  <sequence>84</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.828881100Z</date>
+  <millis>1636655265828</millis>
+  <nanos>881100</nanos>
+  <sequence>85</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.831873100Z</date>
+  <millis>1636655265831</millis>
+  <nanos>873100</nanos>
+  <sequence>86</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.834865800Z</date>
+  <millis>1636655265834</millis>
+  <nanos>865800</nanos>
+  <sequence>87</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.837857600Z</date>
+  <millis>1636655265837</millis>
+  <nanos>857600</nanos>
+  <sequence>88</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.841847400Z</date>
+  <millis>1636655265841</millis>
+  <nanos>847400</nanos>
+  <sequence>89</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.844838600Z</date>
+  <millis>1636655265844</millis>
+  <nanos>838600</nanos>
+  <sequence>90</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.847830800Z</date>
+  <millis>1636655265847</millis>
+  <nanos>830800</nanos>
+  <sequence>91</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.850822900Z</date>
+  <millis>1636655265850</millis>
+  <nanos>822900</nanos>
+  <sequence>92</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.852817200Z</date>
+  <millis>1636655265852</millis>
+  <nanos>817200</nanos>
+  <sequence>93</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.855809700Z</date>
+  <millis>1636655265855</millis>
+  <nanos>809700</nanos>
+  <sequence>94</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.858803300Z</date>
+  <millis>1636655265858</millis>
+  <nanos>803300</nanos>
+  <sequence>95</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.861793Z</date>
+  <millis>1636655265861</millis>
+  <nanos>793000</nanos>
+  <sequence>96</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.864785600Z</date>
+  <millis>1636655265864</millis>
+  <nanos>785600</nanos>
+  <sequence>97</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.867777500Z</date>
+  <millis>1636655265867</millis>
+  <nanos>777500</nanos>
+  <sequence>98</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.870769200Z</date>
+  <millis>1636655265870</millis>
+  <nanos>769200</nanos>
+  <sequence>99</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>
+<record>
+  <date>2021-11-11T18:27:45.873761600Z</date>
+  <millis>1636655265873</millis>
+  <nanos>761600</nanos>
+  <sequence>100</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message></message>
+</record>

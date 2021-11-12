@@ -53,7 +53,15 @@ public class spProcessing extends Thread {
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json='" + slotPeriodicBody.toString() + "' WHERE report_index = '"+ reportIndex +"';";
-			db.executeQuery(apiJsonQuery);
+			try {
+				db.executeQuery(apiJsonQuery);
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			fun.checkSpJSONforSend(slotPeriodicBody.toString());
 			// Kreira httpClient
@@ -96,8 +104,15 @@ public class spProcessing extends Thread {
 				//
 				if (Status == 201) {
 
-					db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex
-							+ "','" + api_uid + "')");
+					try {
+						db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					response.close();
 					httpClient.close();
 				} else {
@@ -138,13 +153,28 @@ public class spProcessing extends Thread {
 							}
 
 							if (Status == 201) {
-								db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
+								try {
+									db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								response.close();
 								httpClient.close();
 								return;
 							} else {
-								db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex
-										+ "','" + response_text + "'," + String.valueOf(Status) + "')");
+								try {
+									db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex + "','" + response_text + "'," + String.valueOf(Status) + "')");
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 							request = null;
 						} else {

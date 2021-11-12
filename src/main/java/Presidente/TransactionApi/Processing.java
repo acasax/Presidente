@@ -58,7 +58,15 @@ public class Processing extends Thread {
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
-			db.executeQuery(apiJsonQuery);
+			try {
+				db.executeQuery(apiJsonQuery);
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			// Kreira httpClient
 			//
 			CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -99,8 +107,16 @@ public class Processing extends Thread {
 				//
 				if (Status == 201) {
 
-					db.executeProcedure(
-							"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
+					try {
+						db.executeProcedure(
+								"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					response.close();
 					httpClient.close();
 				} else {
@@ -143,14 +159,28 @@ public class Processing extends Thread {
 							}
 
 							if (Status == 201) {
-								db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId
-										+ "','" + api_uid + "')");
+								try {
+									db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								response.close();
 								httpClient.close();
 								return;
 							}else {
-								db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"
-										+ response_text + "', '" + String.valueOf(Status) + "')");
+								try {
+									db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"	+ response_text + "', '" + String.valueOf(Status) + "')");
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 							request = null;
 						}else {

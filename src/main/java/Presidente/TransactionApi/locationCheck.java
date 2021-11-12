@@ -18,7 +18,12 @@ public class locationCheck extends Thread {
 		while (true) {
 			try {
 				try {
-					msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+					try {
+						msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					fun.sendEmail(msg);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

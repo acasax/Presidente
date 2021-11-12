@@ -53,7 +53,7 @@ public class App {
 
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
 	//
-	public static void sendTransaction(String transaction) throws SecurityException, IOException {
+	public static void sendTransaction(String transaction) throws SecurityException, IOException, SQLException {
 		try {
 			if (transaction != null) {
 				transactionId = fun.getTransansactionId(transaction, "s");
@@ -115,7 +115,7 @@ public class App {
 		ErrorCheck ec    = new ErrorCheck();
 		
 		//Proverava da li ima log fajlova
-		//
+		
 		ec.start();
 	
 		//SlotPeriodic
@@ -132,6 +132,7 @@ public class App {
 		// Cekanje notify-a
 		Listener listener = new Listener(lConn);
 		listener.start();
+		
 
 	}
 }

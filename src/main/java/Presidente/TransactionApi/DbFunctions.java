@@ -50,40 +50,40 @@ public class DbFunctions {
 			Connection connection = source.getConnection();
 			return connection;
 		} catch (SQLException e) {
-			 fun.createLog(ce.asyconnect);
+			 fun.createLogDb(ce.asyconnect);
 		}
 		return null;
 	}
 	
-	public String executeQuery(String procedureSQL) throws SecurityException, IOException {
-		 
+	public String executeQuery(String procedureSQL) throws SecurityException, IOException, SQLException {
+		Connection lConn = DriverManager.getConnection(urlL, user, password);
 		 try {
-			    Connection lConn = DriverManager.getConnection(urlL, user, password);
 		        Statement stmnt = null;
 		        stmnt = lConn.createStatement();
 		        stmnt.executeUpdate(procedureSQL);
 		        lConn.close();
 		        return "";
 		    } catch (SQLException e) {
-		    	fun.createLog(ce.executeQuery + procedureSQL);
+		    	lConn.close();
+		    	fun.createLogDb(ce.executeQuery + procedureSQL);
 	            return e.getMessage();
 		    }
 
 	}
 	
 	
-	public String executeProcedure(String procedureSQL) throws SecurityException, IOException {
-		
+	public String executeProcedure(String procedureSQL) throws SecurityException, IOException, SQLException {
+		 Connection lConn = DriverManager.getConnection(urlL, user, password);
 		 String result = "";
 	        try {
-	        	Connection lConn = DriverManager.getConnection(urlL, user, password);
 	            CallableStatement properCase = lConn.prepareCall(procedureSQL);
 	            //properCase.setString(1, procedureName);
 	            properCase.execute();
 	            lConn.close();
 	            return result;
 	        } catch (SQLException e) {
-	        	fun.createLog(ce.executeProcedure + procedureSQL);
+	        	lConn.close();
+	        	fun.createLogDb(ce.executeProcedure + procedureSQL);
 	            return e.getMessage();
 	        } 
 	}
@@ -91,11 +91,11 @@ public class DbFunctions {
 	
 	
 	public String executeFunction(String SQL, String functionName ) throws SQLException, SecurityException, IOException {
+		Connection lConn = DriverManager.getConnection(urlL, user, password);
 		try {
-			Connection lConn = DriverManager.getConnection(urlL, user, password);
 			Statement statement = lConn.createStatement();
 			ResultSet resultSet = statement.executeQuery(SQL);
-			if(resultSet != null /*resultSet != "0#]}"*/) {
+			if(resultSet != null) {
 				while (resultSet.next()) {
 					lConn.close();
 					return resultSet.getString(functionName);
@@ -105,18 +105,18 @@ public class DbFunctions {
 				return "0";
 			}
 		} catch (SQLException e) {
-			fun.createLog(ce.executeFunction + SQL);
+			lConn.close();
+			fun.createLogDb(ce.executeFunction + SQL);
             return e.getMessage();
         }
 		return "";
 		
 	}
 	
-	public String executeQuery1(String SQL, String message, String[] params) throws SecurityException, IOException {
-		 
+	public String executeQuery1(String SQL, String message, String[] params) throws SecurityException, IOException, SQLException {
+		Connection lConn = DriverManager.getConnection(urlL, user, password);
 		String returnMsg = "";
 		 try {
-			    Connection lConn = DriverManager.getConnection(urlL, user, password);
 		        Statement stmnt = null;
 		        stmnt = lConn.createStatement();
 		    	ResultSet resultSet = stmnt.executeQuery(SQL);
@@ -135,7 +135,8 @@ public class DbFunctions {
 					return message;
 				}
 		    } catch (SQLException e) {
-		    	fun.createLog(ce.executeQuery1 + SQL);
+		    	lConn.close();
+		    	fun.createLogDb(ce.executeQuery1 + SQL);
 	            return e.getMessage();
 		    }
 
