@@ -24,7 +24,7 @@ public class locationCheck extends Thread {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					fun.sendEmail(msg);
+					//fun.sendEmail(msg);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

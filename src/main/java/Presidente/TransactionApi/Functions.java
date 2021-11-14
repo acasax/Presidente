@@ -196,23 +196,26 @@ public class Functions {
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
-			if(p_transaction_amount > maxDeposit) {
-				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID:" + transaction_id );
-			}
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
+			
+			if(p_transaction_amount > maxDeposit) {
+				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika uplata" );
+				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika uplata");
+			}
 			return transactionBody;
 		case "slot/withdraw":
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
-			if(p_transaction_amount > maxWithdraw) {
-				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID:" + transaction_id );
-			}
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
+			if(p_transaction_amount > maxWithdraw) {
+				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika isplata" );
+				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika isplata" );
+			}
 			return transactionBody;
 		case "slot/jackpot":
 			// Ovde je zato sto postoji samo za ovu rutu
@@ -228,6 +231,8 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
+			sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
+			sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
 			return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu
@@ -319,9 +324,9 @@ public class Functions {
 
 	// Funkcija za slanje e-mail
 	//
-	public void sendEmail(String msg) {
+	public void sendEmail(String msg, String emailTo, String subject) {
 		// Recipient's email ID needs to be mentioned.
-		String to = "resivojee@gmail.com";
+		String to = emailTo;
 
 		// Sender's email ID needs to be mentioned
 		String from = "prezidentplay1@gmail.com";
@@ -363,7 +368,7 @@ public class Functions {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 			// Set Subject: header field
-			message.setSubject("Postoji greska na sistemu");
+			message.setSubject(subject);
 
 			// Now set the actual message
 			message.setText(msg);
@@ -454,12 +459,12 @@ public class Functions {
 					flag = 1;
 				}
 			}
-			sendEmail(msg);
+			sendEmail(msg, "resivojee@gmail.com", "Greska");
 		}
 
 		if (flag == 0) {
 			msg = "Nema pronadjenih log fajlova";
-			sendEmail(msg);
+			sendEmail(msg, "resivojee@gmail.com", "Sve ok je bre!!!");
 		}
 
 	}
@@ -593,6 +598,10 @@ public class Functions {
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
+				String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
+				if(transactionJSONError.equals("")) {
+					return;
+				}
 			    db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
 				// Pokretanje procesa za odredjeni transaction id
 				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);

@@ -30,7 +30,7 @@ public class ErrorCheck extends Thread {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			fun.sendEmail(msg);
+			fun.sendEmail(msg, "resivojee@gmail.com", "Lokacije koje nisu slale podatke");
 			try {
 				Thread.sleep(7200000);
 			} catch (InterruptedException e) {

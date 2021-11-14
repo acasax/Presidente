@@ -60,7 +60,7 @@ public class App {
 				transactionPath = fun.getTransansactionPath(transaction, "s");
 				transactionBody = fun.checkJSONforSend(transaction, transactionPath);
 				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
+				if (transactionJSONError.equals("")) {
 					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
@@ -88,7 +88,7 @@ public class App {
 				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
 				transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
 				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
+				if (transactionJSONError.equals("")) {
 					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
