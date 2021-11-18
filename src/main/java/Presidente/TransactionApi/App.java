@@ -15,6 +15,7 @@ import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 
 import Presidente.TransactionApi.*;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class App {
 	static Listener listener = null;
@@ -60,8 +61,8 @@ public class App {
 				transactionPath = fun.getTransansactionPath(transaction, "s");
 				transactionBody = fun.checkJSONforSend(transaction, transactionPath);
 				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError.equals("")) {
-					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
+				if (transactionJSONError != null) {
+					return; // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
 					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -88,8 +89,8 @@ public class App {
 				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
 				transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
 				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError.equals("")) {
-					fun.createLog(transactionJSONError); // kreira log fajl sa greskom o parametrima
+				if (transactionJSONError != null) {
+					return; // kreira log fajl sa greskom o parametrima
 				} else {
 					// Procedura Set Status 10
 					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -113,16 +114,27 @@ public class App {
 		spStart sp       = new spStart();
 		Check ck         = new Check();
 		ErrorCheck ec    = new ErrorCheck();
+		locationCheck lc = new locationCheck();
+		
+		
+		//Email za proveru aplikacije
+		//
+		fun.sendEmail("Aplikacija se startovala u: " +  LocalDateTime.now(), "resivojee@gmail.com", "Pokretanje aplikacije");
+		
 		
 		//Proverava da li ima log fajlova
-		
+		//
 		ec.start();
 	
+		//Provera lokacija u poslednja dva sata
+		//
+		lc.start();
 		//SlotPeriodic
 		//
 		sp.start();
 			
 		// Proveri da nije null
+		//
 		sendTransactionWithStatus0();
 		
 		//Provera da li ima nekih koje ne rade kako treba
@@ -130,6 +142,7 @@ public class App {
 		ck.start();
 		
 		// Cekanje notify-a
+		//
 		Listener listener = new Listener(lConn);
 		listener.start();
 		

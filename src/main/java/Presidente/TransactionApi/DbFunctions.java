@@ -102,14 +102,14 @@ public class DbFunctions {
 				}
 			}else {
 				lConn.close();
-				return "0";
+				return null;
 			}
 		} catch (SQLException e) {
 			lConn.close();
 			fun.createLogDb(ce.executeFunction + SQL);
             return e.getMessage();
         }
-		return "";
+		return null;
 		
 	}
 	

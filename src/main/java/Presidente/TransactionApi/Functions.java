@@ -599,9 +599,9 @@ public class Functions {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
 				String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
-				if(transactionJSONError.equals("")) {
-					return;
-				}
+				
+				// if(transactionJSONError != null) { return; }
+				 
 			    db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
 				// Pokretanje procesa za odredjeni transaction id
 				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
