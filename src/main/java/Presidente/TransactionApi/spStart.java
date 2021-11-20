@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
@@ -39,50 +40,57 @@ public class spStart extends Thread {
 
 	@Override
 	public void run() {
-		//Startuje proveru za slot periodic
-		//
-		spCheck sk     = new spCheck();
-		sk.start();
-		while(true) {
-			try {
-
-				//Slanje zahteva na putanju slot-periodic
+		try {
+			if(fun.workTime()) {
+				//Startuje proveru za slot periodic
 				//
-				fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
+				spCheck sk     = new spCheck();
+				sk.start();
+				while(true) {
+					try {
 
-			} catch (SecurityException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				try {
-					fun.createLog(e.getMessage());
-				} catch (SecurityException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				try {
-					fun.createLog(e.getMessage());
-				} catch (SecurityException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+						//Slanje zahteva na putanju slot-periodic
+						//
+						fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
+
+					} catch (SecurityException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						try {
+							fun.createLog(e.getMessage());
+						} catch (SecurityException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						try {
+							fun.createLog(e.getMessage());
+						} catch (SecurityException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					
+					try {
+						//cekaj 5 minuta pa uradi ponovo
+						//
+						Thread.sleep(300000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						try {
+							fun.createLog(e.getMessage());
+						} catch (SecurityException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
 				}
 			}
-			
-			try {
-				//cekaj 5 minuta pa uradi ponovo
-				//
-				Thread.sleep(300000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				try {
-					fun.createLog(e.getMessage());
-				} catch (SecurityException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

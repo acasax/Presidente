@@ -3,6 +3,7 @@ package Presidente.TransactionApi;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class ErrorCheck extends Thread {
 	
@@ -10,10 +11,17 @@ public class ErrorCheck extends Thread {
 	@Override
 	public void run() {
 		while(true) {
-			fun.checkIsLogExist("logs");
 			try {
-				Thread.sleep(7200000);
-			} catch (InterruptedException e) {
+				if(fun.workTime()) {
+					fun.checkIsLogExist("logs");
+					try {
+						Thread.sleep(7200000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

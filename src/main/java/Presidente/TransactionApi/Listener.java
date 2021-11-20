@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -17,6 +18,7 @@ class Listener extends Thread {
    private final org.postgresql.PGConnection pgconn;
    public String transaction;
    private long startMilis = 0;
+   Functions fun = new Functions();
    
    Listener(Connection conn) throws SQLException {
 		this.conn = conn;
@@ -32,54 +34,64 @@ class Listener extends Thread {
 	}
 
 	public void run() {
-		while (true) {
-			try {
-				notifyWaiter();
-		         long millis=System.currentTimeMillis();  
-		         if (startMilis == 0) {
-		        	 startMilis = millis;
-		         }
-		         else {
-		        	 if (millis > startMilis + 60000) { // vreme za proveru statusa 0
-		        		 new Thread(new Runnable() {
-		        			 public void run() {
-		        				 try {
-									App.sendTransactionWithStatus0();
-									//U log fajlu da li se ovo desava
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (SecurityException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-		        			 }
-		        		 }).start();
-		        		 startMilis = millis;
-		        	 }
-		         }
-				// wait a while before checking again for new
-				// notifications
-				Thread.sleep(500);
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-			} catch (InterruptedException ie) {
-				ie.printStackTrace();
-			} catch (SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+		try {
+			if(fun.workTime()) {
+				while (true) {
+					try {
+						notifyWaiter();
+				         long millis=System.currentTimeMillis();  
+				         if (startMilis == 0) {
+				        	 startMilis = millis;
+				         }
+				         else {
+				        	 if (millis > startMilis + 300000) { // vreme za proveru statusa 0
+				        		 new Thread(new Runnable() {
+				        			 public void run() {
+				        				 try {
+											App.sendTransactionWithStatus0();
+											//U log fajlu da li se ovo desava
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (SecurityException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (ParseException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+				        			 }
+				        		 }).start();
+				        		 startMilis = millis;
+				        	 }
+				         }
+						// wait a while before checking again for new
+						// notifications
+						Thread.sleep(500);
+					} catch (SQLException sqle) {
+						sqle.printStackTrace();
+					} catch (InterruptedException ie) {
+						ie.printStackTrace();
+					} catch (SecurityException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
    
-   public void notifyWaiter() throws SQLException, SecurityException, IOException {
+   public void notifyWaiter() throws SQLException, SecurityException, IOException, ParseException {
 	   org.postgresql.PGNotification[] notifications = pgconn.getNotifications();
        if (Objects.nonNull(notifications)) {
           for (org.postgresql.PGNotification notification : notifications) {

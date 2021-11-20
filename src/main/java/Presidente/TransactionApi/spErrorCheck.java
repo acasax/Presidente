@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class spErrorCheck extends Thread {
 	DbFunctions db = new DbFunctions();
@@ -15,24 +16,32 @@ public class spErrorCheck extends Thread {
 	static String spWorkStatus;
 
 	public void run() {
-		while (true) {
-			try {
-				cronError = fun.getCronError(db, lConn);
-				if (cronError.equals("1")) {
-					// proverava da li u bazi ima sn izvestaja sa statusom 1
-					fun.sendEmail("cron error je 1", "resivojee@gmail.com", "report index, slot preiodic error");
-				}
-			} catch (SecurityException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			if(fun.workTime()) {
+				while (true) {
+					try {
+						cronError = fun.getCronError(db, lConn);
+						if (cronError.equals("1")) {
+							// proverava da li u bazi ima sn izvestaja sa statusom 1
+							fun.sendEmail("cron error je 1", "resivojee@gmail.com", "report index, slot preiodic error");
+						}
+					} catch (SecurityException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-			try {
-				Thread.sleep(60000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					try {
+						Thread.sleep(60000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 }

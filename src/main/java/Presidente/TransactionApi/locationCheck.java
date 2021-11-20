@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class locationCheck extends Thread {
 
@@ -14,19 +15,27 @@ public class locationCheck extends Thread {
 	static String[] columns = { "slot_club_id", "adresa", "opstina", "mesto", "slot_club_sid" };
 
 	public void run() {
-		while (true) {
-			try {
-				msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
-				fun.sendEmail(msg, "resivojee@gmail.com", "Lokacije koje nisu slale podatke");	
-				try {
-					Thread.sleep(7200000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		try {
+			if(fun.workTime()) {
+				while (true) {
+					try {
+						msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+						fun.sendEmail(msg, "resivojee@gmail.com", "Lokacije koje nisu slale podatke");	
+						try {
+							Thread.sleep(7200000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}catch(Exception e) {
-				e.printStackTrace();
 			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 }

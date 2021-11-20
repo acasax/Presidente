@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -441,6 +443,7 @@ public class Functions {
 	// Funkcija koja proverava da li postoji folder sa logovima
 	//
 	public void checkIsLogExist(String path) {
+		
 		String newLine = System.getProperty("line.separator");
 		String msg;
 		File directory = new File(path);
@@ -610,7 +613,7 @@ public class Functions {
 				spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
 			}
 		} catch (SQLException | SecurityException | IOException e) {
-			createLog(ce.sendSlotPeriodicWithStatus0);
+			createLog(ce.sendSlotPeriodicWithStatus0 + "Greska :" + e);
 		}
 	}
 	
@@ -655,6 +658,22 @@ public class Functions {
 				createLog("get_sp_cron_job_error_counter nije kako treba" + e.getMessage());
 				return "get_sp_cron_job_error_counter nije kako treba";
 			}
+		}
+		
+		//Provera vremena i zaustavljanje aplikacije
+		//
+		public boolean workTime() throws ParseException {
+			
+			LocalTime now = LocalTime.now();
+			
+
+		    if(now.isAfter(LocalTime.parse("02:15:00")) && now.isBefore(LocalTime.parse("06:45:00")))
+			{
+			    return false;
+			}else{
+			    return true;
+			}
+			
 		}
 
 }

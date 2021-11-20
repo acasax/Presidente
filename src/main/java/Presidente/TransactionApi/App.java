@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
@@ -54,60 +55,65 @@ public class App {
 
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
 	//
-	public static void sendTransaction(String transaction) throws SecurityException, IOException, SQLException {
-		try {
-			if (transaction != null) {
-				transactionId = fun.getTransansactionId(transaction, "s");
-				transactionPath = fun.getTransansactionPath(transaction, "s");
-				transactionBody = fun.checkJSONforSend(transaction, transactionPath);
-				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
-					return; // kreira log fajl sa greskom o parametrima
-				} else {
-					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-					lista.add(newProcess);
-					newProcess.start();
-				}
+	public static void sendTransaction(String transaction) throws SecurityException, IOException, SQLException, ParseException {
+		if(fun.workTime()) {
+			try {
+				if (transaction != null) {
+					transactionId = fun.getTransansactionId(transaction, "s");
+					transactionPath = fun.getTransansactionPath(transaction, "s");
+					transactionBody = fun.checkJSONforSend(transaction, transactionPath);
+					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+					if (transactionJSONError != null) {
+						return; // kreira log fajl sa greskom o parametrima
+					} else {
+						// Procedura Set Status 10
+						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+						// Pokretanje procesa za odredjeni transaction id
+						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+						lista.add(newProcess);
+						newProcess.start();
+					}
 
+				}
+			} catch (SecurityException | IOException e) {
+				fun.createLog(ce.sendTransaction);
 			}
-		} catch (SecurityException | IOException e) {
-			fun.createLog(ce.sendTransaction);
 		}
 	}
 
 	// Funkcija koja kreira novi processing od transakcija koja je pronadjena u bazi
 	// i koja ima status 0
 	//
-	public static void sendTransactionWithStatus0() throws SQLException, SecurityException, IOException {
-		try {
-			transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
-			while (transactionWithStatus0 != null) {
-				transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-				transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
-				transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
-				transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-				if (transactionJSONError != null) {
-					return; // kreira log fajl sa greskom o parametrima
-				} else {
-					// Procedura Set Status 10
-					db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-					// Pokretanje procesa za odredjeni transaction id
-					Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-					lista.add(newProcess);
-					newProcess.start();
-					transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
+	public static void sendTransactionWithStatus0() throws SQLException, SecurityException, IOException, ParseException {
+		if(fun.workTime()) {
+			try {
+				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
+				while (transactionWithStatus0 != null) {
+					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
+					transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
+					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
+					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+					if (transactionJSONError != null) {
+						return; // kreira log fajl sa greskom o parametrima
+					} else {
+						// Procedura Set Status 10
+						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+						// Pokretanje procesa za odredjeni transaction id
+						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+						lista.add(newProcess);
+						newProcess.start();
+						transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)", "get_json_by_status");
+					}
 				}
+			} catch (SQLException | SecurityException | IOException e) {
+				fun.createLog(ce.sendTransactionWithStatus0 + " Transaction id: " + transactionId + "  Transaction path: "
+			                   + transactionPath + "Transaction body : " + transactionBody + "Greska :" + e);
 			}
-		} catch (SQLException | SecurityException | IOException e) {
-			fun.createLog(ce.sendTransactionWithStatus0);
 		}
 	}
 
 	public static void main(String[] args)
-			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException {
+			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException, ParseException {
 
 		Connection lConn = db.asyconnect();
 		
@@ -116,7 +122,7 @@ public class App {
 		ErrorCheck ec    = new ErrorCheck();
 		locationCheck lc = new locationCheck();
 		
-		
+		System.out.print("Pokrenuto");
 		//Email za proveru aplikacije
 		//
 		fun.sendEmail("Aplikacija se startovala u: " +  LocalDateTime.now(), "resivojee@gmail.com", "Pokretanje aplikacije");
@@ -140,6 +146,10 @@ public class App {
 		//Provera da li ima nekih koje ne rade kako treba
 		//
 		ck.start();
+		
+		//Garbage collector
+		//
+		System.gc();
 		
 		// Cekanje notify-a
 		//
