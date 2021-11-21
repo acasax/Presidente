@@ -1,20 +1,13 @@
 package Presidente.TransactionApi;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
-import org.postgresql.ds.PGPoolingDataSource;
 
-import com.impossibl.postgres.api.jdbc.PGConnection;
-import com.impossibl.postgres.api.jdbc.PGNotificationListener;
-
-import Presidente.TransactionApi.*;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 

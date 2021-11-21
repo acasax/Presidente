@@ -15,17 +15,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import org.json.*;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -36,7 +31,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
 public class Functions {
 	
@@ -203,7 +197,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			
 			if(p_transaction_amount > maxDeposit) {
-				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika uplata" );
+				//sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika uplata" );
 				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika uplata");
 			}
 			return transactionBody;
@@ -215,7 +209,7 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			if(p_transaction_amount > maxWithdraw) {
-				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika isplata" );
+				//sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika isplata" );
 				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika isplata" );
 			}
 			return transactionBody;
@@ -234,7 +228,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
 			sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
-			sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
+			//sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
 			return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu

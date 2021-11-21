@@ -3,23 +3,11 @@ import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 
 import org.postgresql.ds.PGPoolingDataSource;
-
-import com.impossibl.postgres.jdbc.PGDriver;
-import com.impossibl.postgres.jdbc.PGDataSource;
-import com.impossibl.postgres.api.jdbc.PGConnection;
-import com.impossibl.postgres.api.jdbc.PGNotificationListener;
-import com.impossibl.postgres.jdbc.PGConnectionPoolDataSource;
-import com.impossibl.postgres.jdbc.xa.PGXADataSource;
-
-
-import java.sql.Connection;
 
 
 

@@ -41,12 +41,9 @@
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/fluent-hc-4.5.13.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-cache-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-osgi-4.5.13.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-win-4.5.13.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpcore-4.4.13.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpmime-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/jna-4.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/jna-platform-4.5.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>

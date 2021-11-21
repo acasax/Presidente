@@ -1,4 +1,5 @@
 Presidente\TransactionApi\spCheck.class
+Presidente\TransactionApi\paymentCheck.class
 Presidente\TransactionApi\Listener.class
 Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class

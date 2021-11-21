@@ -2,11 +2,9 @@ package Presidente.TransactionApi;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import org.json.JSONObject;
 
 public class Check extends Thread {
 	DbFunctions db = new DbFunctions();

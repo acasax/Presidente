@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-20T16:47:25.338324800Z</date>
+  <millis>1637426845338</millis>
+  <nanos>324800</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: cdb59ea2-d5c6-45aa-a55a-aecdb41adedb  Transaction path: slot/depositTransaction body : {"transaction_id":"cdb59ea2-d5c6-45aa-a55a-aecdb41adedb","slot_club_id":"127000015","transaction_amount":500,"transaction_time":"2021-11-20T14:33:57.148834+01:00","transaction_type":"deposit","sticker_no":"0127002075"} Greska :org.postgresql.util.PSQLException: An I/O error occurred while sending to the backend.</message>
+</record>
