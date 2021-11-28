@@ -7,7 +7,6 @@ import java.text.ParseException;
 public class spErrorCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
 	
 	static String cronError;
 	static int reportIndex;
@@ -18,7 +17,7 @@ public class spErrorCheck extends Thread {
 			if(fun.workTime()) {
 				while (true) {
 					try {
-						cronError = fun.getCronError(db, lConn);
+						cronError = fun.getCronError(db);
 						if (cronError.equals("1")) {
 							// proverava da li u bazi ima sn izvestaja sa statusom 1
 							fun.sendEmail("cron error je 1", "resivojee@gmail.com", "report index, slot preiodic error");

@@ -24,7 +24,6 @@ public class spProcessing extends Thread {
 	private String TransactionPath = "slot-periodic";
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
 	private int Status;
 	static String api_uid;
 	static String response_text;
@@ -123,7 +122,7 @@ public class spProcessing extends Thread {
 
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getSpApiCounter(reportIndex, db, lConn);
+							threadSleep = fun.getSpApiCounter(reportIndex, db);
 							Thread.sleep(Long.parseLong(threadSleep));
 
 							request = new HttpPost(URL + TransactionPath);

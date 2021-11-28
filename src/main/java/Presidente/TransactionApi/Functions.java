@@ -613,7 +613,7 @@ public class Functions {
 	
 	//Funkcija koja proverava da li ima spProcesa koji ne rade kako treba
 	//
-	public String getSpWorkStatus(int reportIndex, DbFunctions db, Connection con)
+	public String getSpWorkStatus(int reportIndex, DbFunctions db)
 			throws SecurityException, IOException {
 		try {
 			String workStatus = db.executeFunction("SELECT public.get_sp_report_exe_status(" + reportIndex + ")", "get_sp_report_exe_status");
@@ -626,7 +626,7 @@ public class Functions {
 	
 	// Funkcija za proveru cekanja do sledeceg slanja
 		//
-		public String getSpApiCounter(int reportIndex, DbFunctions db, Connection con)
+		public String getSpApiCounter(int reportIndex, DbFunctions db)
 				throws SecurityException, IOException {
 			try {
 				String apiCounter = db.executeFunction("SELECT public.get_sp_api_counter(" + reportIndex + ")", "get_sp_api_counter");
@@ -643,7 +643,7 @@ public class Functions {
 		}
 		
 		//Cron error 
-		public String getCronError( DbFunctions db, Connection con)
+		public String getCronError( DbFunctions db)
 				throws SecurityException, IOException {
 			try {
 				String workStatus = db.executeFunction("SELECT public.get_sp_cron_job_error_counter()", "get_sp_cron_job_error_counter");
@@ -661,7 +661,7 @@ public class Functions {
 			LocalTime now = LocalTime.now();
 			
 
-		    if(now.isAfter(LocalTime.parse("02:15:00")) && now.isBefore(LocalTime.parse("06:45:00")))
+		    if(now.isAfter(LocalTime.parse("03:00:00")) && now.isBefore(LocalTime.parse("06:45:00")))
 			{
 			    return false;
 			}else{

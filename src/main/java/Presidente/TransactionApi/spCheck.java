@@ -2,14 +2,12 @@ package Presidente.TransactionApi;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 public class spCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
 	
 	static String spWithStatus11;
 	static int reportIndex;
@@ -25,7 +23,7 @@ public class spCheck extends Thread {
 						//kreira parametre
 						if (spWithStatus11 != null ) {
 							reportIndex = fun.getReportIndex(spWithStatus11, "s"); // uzima reportindex za taj
-							spWorkStatus = fun.getSpWorkStatus(reportIndex, db, lConn); // proveraba procedurom da li ima procesinga
+							spWorkStatus = fun.getSpWorkStatus(reportIndex, db); // proveraba procedurom da li ima procesinga
 						}
 						
 						// ubija koji nerade kako treba

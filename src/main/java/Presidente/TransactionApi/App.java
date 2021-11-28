@@ -108,46 +108,36 @@ public class App {
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException, ParseException {
 
-		Connection lConn = db.asyconnect();
+		/*
+		 * updateMachines um = new updateMachines();
+		 * 
+		 * um.start();
+		 */
 		
-		spStart sp       = new spStart();
-		Check ck         = new Check();
-		ErrorCheck ec    = new ErrorCheck();
-		locationCheck lc = new locationCheck();
-		
-		System.out.print("Pokrenuto");
-		//Email za proveru aplikacije
-		//
-		fun.sendEmail("Aplikacija se startovala u: " +  LocalDateTime.now(), "resivojee@gmail.com", "Pokretanje aplikacije");
-		
-		
-		//Proverava da li ima log fajlova
-		//
-		ec.start();
-	
-		//Provera lokacija u poslednja dva sata
-		//
-		lc.start();
-		//SlotPeriodic
-		//
-		sp.start();
-			
-		// Proveri da nije null
-		//
-		sendTransactionWithStatus0();
-		
-		//Provera da li ima nekih koje ne rade kako treba
-		//
-		ck.start();
-		
-		//Garbage collector
-		//
-		System.gc();
-		
-		// Cekanje notify-a
-		//
-		Listener listener = new Listener(lConn);
-		listener.start();
+		 Connection lConn = db.asyconnect();
+		  
+		 spStart sp = new spStart(); Check ck = new Check(); ErrorCheck ec = new
+		 ErrorCheck(); locationCheck lc = new locationCheck();
+		 
+		 System.out.print("Pokrenuto"); //Email za proveru aplikacije //
+		 fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
+		 "resivojee@gmail.com", "Pokretanje aplikacije");
+		  
+		 
+		 //Proverava da li ima log fajlova // ec.start();
+		 
+		 //Provera lokacija u poslednja dva sata // lc.start(); //SlotPeriodic //
+		 sp.start();
+		 
+		 // Proveri da nije null // sendTransactionWithStatus0();
+		 
+		 //Provera da li ima nekih koje ne rade kako treba // ck.start();
+		 
+		 //Garbage collector // System.gc();
+		 
+		 // Cekanje notify-a // Listener listener = new Listener(lConn);
+		  listener.start();
+		 
 		
 
 	}

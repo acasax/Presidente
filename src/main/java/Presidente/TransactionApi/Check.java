@@ -9,7 +9,6 @@ import java.text.ParseException;
 public class Check extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
 
 	static String transactionWithStatus11;
 	static String transactionId;
