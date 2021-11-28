@@ -1,6 +1,7 @@
 package Presidente.TransactionApi;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -668,6 +669,15 @@ public class Functions {
 			    return true;
 			}
 			
+		}
+		
+		//String moze da koristi cirilicna slova 
+		//
+		public String setUTF8(String str) {
+			byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+			String strUtf8 = new String(bytes, StandardCharsets.UTF_8);
+			
+			return strUtf8;
 		}
 
 }

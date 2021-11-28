@@ -108,11 +108,13 @@ public class App {
 	public static void main(String[] args)
 			throws SQLException, InterruptedException, ExecutionException, SecurityException, IOException, ParseException {
 
+		
 		/*
 		 * updateMachines um = new updateMachines();
 		 * 
 		 * um.start();
 		 */
+		 
 		
 		 Connection lConn = db.asyconnect();
 		  

@@ -111,8 +111,9 @@ public class DbFunctions {
 				if(resultSet != null) {
 					while (resultSet.next()) {
 						for(int i = 0; i < params.length; i++) {
-							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]);
+							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]) + " ";
 						}
+						returnMsg = returnMsg + "\r\n";
 					}
 					resultSet.close();
 					stmnt.cancel();

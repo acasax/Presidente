@@ -35,13 +35,14 @@ public class updateMachines extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				File file = new File("C:\\Users\\KORISNIK\\Desktop\\prezident\\machine.xlsx"); // creating a new file
+				File file = new File("C:\\Users\\KORISNIK\\Desktop\\prezident\\automati.xlsx"); // creating a new file
 																								// instance
 				FileInputStream fis = new FileInputStream(file); // obtaining bytes from the file
 				// creating Workbook instance that refers to .xlsx file
 				XSSFWorkbook wb = new XSSFWorkbook(fis);
 				XSSFSheet sheet = wb.getSheetAt(0); // creating a Sheet object to retrieve object
 				Iterator<Row> itr = sheet.iterator(); // iterating over excel file
+				int j = 0;
 				while (itr.hasNext()) {
 					Row row = itr.next();
 					Iterator<Cell> cellIterator = row.cellIterator(); // iterating over each column
@@ -65,10 +66,12 @@ public class updateMachines extends Thread {
 						}
 						i++;
 					}
+					j++;
 					updateMachineQuery = "UPDATE public.machines SET sticker_number = '" + sticker_number + "' WHERE machine_id_number= '" + id_number + "';";
 					db.executeQuery(updateMachineQuery);
 					System.out.println("");
 				}
+				System.out.println(j);
 				System.out.println("Kraj");
 			} catch (Exception e) {
 				e.printStackTrace();
