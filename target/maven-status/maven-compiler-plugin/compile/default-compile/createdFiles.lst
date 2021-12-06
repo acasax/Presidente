@@ -3,6 +3,7 @@ Presidente\TransactionApi\paymentCheck.class
 Presidente\TransactionApi\Listener.class
 Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class
+Presidente\TransactionApi\shitsHapend.class
 Presidente\TransactionApi\constError.class
 Presidente\TransactionApi\ErrorCheck.class
 Presidente\TransactionApi\machineCheck.class
@@ -10,6 +11,7 @@ Presidente\TransactionApi\Check.class
 Presidente\TransactionApi\Functions.class
 Presidente\TransactionApi\spErrorCheck.class
 Presidente\TransactionApi\Functions$1.class
+Presidente\TransactionApi\updateMachines.class
 Presidente\TransactionApi\DbFunctions.class
 Presidente\TransactionApi\spProcessing.class
 Presidente\TransactionApi\spStart.class

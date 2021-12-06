@@ -30,7 +30,7 @@ public class DbFunctions {
 		
 		try{
 			PGPoolingDataSource source = new PGPoolingDataSource();
-			source.setServerNames(new String[] {"93.87.76.139:1521"});
+			source.setServerNames(new String[] {"trendplay.dyndns.org:1521"});
 			source.setDatabaseName("accounting");
 			source.setUser("presidente");
 			source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
@@ -111,7 +111,7 @@ public class DbFunctions {
 				if(resultSet != null) {
 					while (resultSet.next()) {
 						for(int i = 0; i < params.length; i++) {
-							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]) + " ";
+							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]) + " " + "\r\n";
 						}
 						returnMsg = returnMsg + "\r\n";
 					}

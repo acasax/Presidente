@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-30T22:57:07.343779700Z</date>
+  <millis>1638313027343</millis>
+  <nanos>779700</nanos>
+  <sequence>1</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>17</thread>
+  <message>Funkcija sendSlotPeriodicWithStatus0 nije uspešno izvršenaGreska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2021-11-30T22:57:07.346771900Z</date>
+  <millis>1638313027346</millis>
+  <nanos>771900</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: null  Transaction path: nullTransaction body : nullGreska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

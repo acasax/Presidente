@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-28T16:29:02.332109400Z</date>
+  <millis>1638116942332</millis>
+  <nanos>109400</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>16</thread>
+  <message>Funkcija executeQuery nije uspešno izvršenaUPDATE public.machines SET sticker_number = '019876' WHERE machine_id_number= '0127002861';</message>
+</record>
+<record>
+  <date>2021-11-28T16:29:02.466362100Z</date>
+  <millis>1638116942466</millis>
+  <nanos>362100</nanos>
+  <sequence>3</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>16</thread>
+  <message>Funkcija executeQuery nije uspešno izvršenaUPDATE public.machines SET sticker_number = '019877' WHERE machine_id_number= '0127002859';</message>
+</record>

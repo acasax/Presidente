@@ -118,29 +118,59 @@ public class App {
 		
 		 Connection lConn = db.asyconnect();
 		  
-		 spStart sp = new spStart(); Check ck = new Check(); ErrorCheck ec = new
-		 ErrorCheck(); locationCheck lc = new locationCheck();
+		 spStart sp = new spStart(); 
+		 Check ck = new Check();
+		 ErrorCheck ec = new ErrorCheck();
+		 locationCheck lc = new locationCheck();
+		 shitsHapend sh = new shitsHapend();
+		 spErrorCheck spec = new spErrorCheck();
+		 paymentCheck pc   = new paymentCheck();
 		 
 		 System.out.print("Pokrenuto"); //Email za proveru aplikacije //
 		 fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
 		 "resivojee@gmail.com", "Pokretanje aplikacije");
 		  
+		 //Proverava da li ima log fajlova
+		 //
+		 ec.start();
 		 
-		 //Proverava da li ima log fajlova // ec.start();
+		 //Provera lokacija u poslednja dva sata 
+		 // 
+		 lc.start(); 
 		 
-		 //Provera lokacija u poslednja dva sata // lc.start(); //SlotPeriodic //
+		 //SlotPeriodic
+		 //
 		 sp.start();
 		 
-		 // Proveri da nije null // sendTransactionWithStatus0();
+		 // Proveri da nije null 
+		 //
+		 sendTransactionWithStatus0();
 		 
-		 //Provera da li ima nekih koje ne rade kako treba // ck.start();
+		 //Provera da li ima nekih koje ne rade kako treba 
+		 // 
+		 ck.start();
 		 
-		 //Garbage collector // System.gc();
+		 //Garbage collector 
+		 // 
+		 System.gc();
 		 
-		 // Cekanje notify-a // Listener listener = new Listener(lConn);
-		  listener.start();
+		 //Provera da li ima pristiglih uplata u poslednjih 15 minuta
+		 //
+		 sh.start();
 		 
-		
+		 //Provera slot periodic
+		 //
+		 spec.start();
+		 
+		 //Kreiranje izvestaja uvek u isto vreme
+		 //
+		 fun.startPaymentCheck();
+		 
+		 // Cekanje notify-a 
+		 // 
+		 Listener listener = new Listener(lConn);
+		 listener.start();
+		 
 
 	}
 }

@@ -15,10 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
+import java.util.Timer;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -199,7 +200,7 @@ public class Functions {
 			
 			if(p_transaction_amount > maxDeposit) {
 				//sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika uplata" );
-				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika uplata");
+				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika uplata");
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -211,7 +212,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			if(p_transaction_amount > maxWithdraw) {
 				//sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "presidente.ks@gmail.com", "Velika isplata" );
-				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika isplata" );
+				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " +  sticker_no, "resivojee@gmail.com", "Velika isplata" );
 			}
 			return transactionBody;
 		case "slot/jackpot":
@@ -220,7 +221,6 @@ public class Functions {
 			//String transaction_withdraw_amount = getParamFromJson(JSON, "transaction_withdraw_amount");
 			//Double p_transaction_withdraw_amount = Double.valueOf(transaction_withdraw_amount); // Konvertovanje u
 																								// potrebni tip
-
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
@@ -228,7 +228,7 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
-			sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
+			sendEmail("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
 			//sendEmail("Slot klub id: " + slot_club_id + "Aparat: " +  sticker_no + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
 			return transactionBody;
 		case "slot/rollback":
@@ -306,8 +306,9 @@ public class Functions {
 		String path = "logsDb";
 		// Creating a File object
 		File file = new File(path);
-	      //Creating the directory
-	     file.mkdir();
+	    //Creating the directory
+	    file.mkdir();
+	    
 		DateFormat FileNameFormat = new SimpleDateFormat("dd-M-yyyy_hh-mm-ss");
 		Date FileName = new Date();
 		FileHandler handler = new FileHandler("logsDb/" + "log_" + FileNameFormat.format(FileName) + ".log");
@@ -661,7 +662,6 @@ public class Functions {
 			
 			LocalTime now = LocalTime.now();
 			
-
 		    if(now.isAfter(LocalTime.parse("03:00:00")) && now.isBefore(LocalTime.parse("06:45:00")))
 			{
 			    return false;
@@ -679,5 +679,27 @@ public class Functions {
 			
 			return strUtf8;
 		}
+		
+		//Startuje funkciju u isto vreme za paymentCheck
+		//
+		public void startPaymentCheck() {
+			Timer timer = new Timer();
+	        Calendar date = Calendar.getInstance();
+	        date.set(
+	                Calendar.DAY_OF_WEEK,
+	                Calendar.SATURDAY
+	        );
+	        date.set(Calendar.HOUR, 02);
+	        date.set(Calendar.MINUTE, 30);
+	        date.set(Calendar.SECOND, 0);
+	        date.set(Calendar.MILLISECOND, 0);
+	        timer.schedule(
+	        		new paymentCheck(),
+	                date.getTime(),
+	                1000 * 60 * 60 * 24 * 7
+	        );
+			
+		}
+		
 
 }

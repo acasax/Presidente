@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-27T23:22:50.353322Z</date>
+  <millis>1638055370353</millis>
+  <nanos>322000</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>16</thread>
+  <message>Funkcija executeQuery nije uspešno izvršenaUPDATE public.machines SET sticker_number = '801345' WHERE machine_id_number= '0127000797';</message>
+</record>
