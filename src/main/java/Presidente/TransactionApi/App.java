@@ -162,9 +162,9 @@ public class App {
 		 //
 		 spec.start();
 		 
-		 //Kreiranje izvestaja uvek u isto vreme
+		 //Izvestaj dnevni
 		 //
-		 fun.startPaymentCheck();
+		 pc.start();
 		 
 		 // Cekanje notify-a 
 		 // 

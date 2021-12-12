@@ -18,6 +18,7 @@ public class locationCheck extends Thread {
 						msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
 						msg = fun.setUTF8(msg);
 						fun.sendEmail(msg, "resivojee@gmail.com", "Lokacije koje nisu slale podatke");
+						fun.sendEmail(msg, "pedjabg@gmail.com", "Lokacije koje nisu slale podatke");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
