@@ -7,7 +7,7 @@ public class paymentCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT SUM(transaction_amount) as ukupno, slot_club_id, transaction_types FROM public.transactions WHERE DATE(transaction_time) = CURRENT_DATE GROUP BY slot_club_id,  transaction_types";
+	static String sql = "SELECT SUM(transaction_amount) as ukupno, slot_club_id, transaction_types FROM public.transactions WHERE transaction_time BETWEEN CURRENT_DATE - INTEGER '1' + TIME '06:45:59' AND CURRENT_DATE + TIME '03:59:59' GROUP BY slot_club_id,  transaction_types";
 	static String[] columns = { "ukupno", "slot_club_id", "transaction_types" };
 
 	public void run() {

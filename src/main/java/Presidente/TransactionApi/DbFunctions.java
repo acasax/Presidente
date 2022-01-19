@@ -130,6 +130,36 @@ public class DbFunctions {
 		    }
 
 	}
+	
+	public String executeQuery2(String SQL, String message, String[] params) throws SecurityException, IOException, SQLException {
+		Connection lConn = DriverManager.getConnection(urlL, user, password);
+		String returnMsg = "";
+		 try {
+		        Statement stmnt = null;
+		        stmnt = lConn.createStatement();
+		    	ResultSet resultSet = stmnt.executeQuery(SQL);
+				if(resultSet != null) {
+					while (resultSet.next()) {
+						for(int i = 0; i < params.length; i++) {
+							returnMsg = returnMsg + resultSet.getString(params[i]);
+						}
+						returnMsg = returnMsg + "\r\n";
+					}
+					resultSet.close();
+					stmnt.cancel();
+					lConn.close();
+					return returnMsg;
+				}else {
+					lConn.close();
+					return message;
+				}
+		    } catch (SQLException e) {
+		    	lConn.close();
+		    	fun.createLogDb(ce.executeQuery1 + SQL);
+	            return e.getMessage();
+		    }
+
+	}
 		
 	
 }
