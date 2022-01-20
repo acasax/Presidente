@@ -16,7 +16,7 @@ public class slotPeriodicCheck extends Thread {
 			try {
 				if(!fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sql, "Nije bilo uplata celog dana", columns);
+						msg = db.executeQuery2(sql, "Brojaci", columns);
 						msg = fun.setUTF8(msg);
 						fun.slotPriodicCheckString(msg);
 						fun.sendEmail(msg, "resivojee@gmail.com", "Poslednji brojaci");
