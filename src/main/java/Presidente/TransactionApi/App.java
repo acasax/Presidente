@@ -54,17 +54,19 @@ public class App {
 				if (transaction != null) {
 					transactionId = fun.getTransansactionId(transaction, "s");
 					transactionPath = fun.getTransansactionPath(transaction, "s");
-					transactionBody = fun.checkJSONforSend(transaction, transactionPath);
+					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null) {
 						return; // kreira log fajl sa greskom o parametrima
 					} else {
-						// Procedura Set Status 10
-						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-						// Pokretanje procesa za odredjeni transaction id
-						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-						lista.add(newProcess);
-						newProcess.start();
+						if (fun.sendingStatus(transactionWithStatus0)) {
+							// Procedura Set Status 10
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							// Pokretanje procesa za odredjeni transaction id
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							lista.add(newProcess);
+							newProcess.start();
+						}
 					}
 
 				}
@@ -86,19 +88,21 @@ public class App {
 				while (transactionWithStatus0 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
-					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath);
+					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null) {
 						return; // kreira log fajl sa greskom o parametrima
 					} else {
-						// Procedura Set Status 10
-						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-						// Pokretanje procesa za odredjeni transaction id
-						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-						lista.add(newProcess);
-						newProcess.start();
-						transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
-								"get_json_by_status");
+						if (fun.sendingStatus(transactionWithStatus0)) {
+							// Procedura Set Status 10
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							// Pokretanje procesa za odredjeni transaction id
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							lista.add(newProcess);
+							newProcess.start();
+							transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
+									"get_json_by_status");
+						}
 					}
 				}
 			} catch (SQLException | SecurityException | IOException e) {
@@ -170,11 +174,10 @@ public class App {
 		// Izvestaj dnevni
 		//
 		pc.start();
-		
+
 		// Slot period brojac na kraju dana
 		//
 		spc.start();
-		
 
 		// Cekanje notify-a
 		//

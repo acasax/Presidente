@@ -33,8 +33,6 @@ import java.io.File;
 public class Functions {
 
 	constError ce = new constError();
-	private int maxDeposit = 100000;
-	private int maxWithdraw = 500000;
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
@@ -159,7 +157,7 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path) throws SecurityException, IOException {
+	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db) throws SecurityException, IOException {
 
 		// Uzimanje podataka iz JSON-a
 		//
@@ -193,12 +191,13 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 
-			if (p_transaction_amount > maxDeposit) {
-				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no,
+			if (p_transaction_amount > ce.maxDeposit) {
+				String macAddress = getMacAddressOfMachines(sticker_no, db);
+				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
+						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
 						"resivojee@gmail.com", "Velika uplata");
-				sendEmail("Postoji uplata veca od " + String.valueOf(maxDeposit) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no,
+				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
+						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
 						"pedjabg@gmail.com", "Velika uplata");
 			}
 			return transactionBody;
@@ -209,12 +208,13 @@ public class Functions {
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
-			if (p_transaction_amount > maxWithdraw) {
-				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no,
+			if (p_transaction_amount > ce.maxWithdraw) {
+				String macAddress = getMacAddressOfMachines(sticker_no, db);
+				sendEmail("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
+						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
 						"pedjabg@gmail.com", "Velika isplata");
-				sendEmail("Postoji isplata veca od " + String.valueOf(maxWithdraw) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no,
+				sendEmail("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
+						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
 						"resivojee@gmail.com", "Velika isplata");
 			}
 			return transactionBody;
@@ -233,10 +233,11 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
+			String macAddress = getMacAddressOfMachines(sticker_no, db);
 			sendEmail("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-					+ "Aparat: " + sticker_no + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
+					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
 			sendEmail("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-					+ "Aparat: " + sticker_no + "Iznos: " + p_transaction_amount, "pedjabg@gmail.com", "Jackpot");
+					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "pedjabg@gmail.com", "Jackpot");
 			return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu
@@ -256,6 +257,18 @@ public class Functions {
 		default:
 			transactionBody.put("error", "Putanja koju ste poslali u funkciju nije dobra");
 			return transactionBody;
+		}
+	}
+	
+	//Provera da li je uplata za slanje
+	//
+	public Boolean sendingStatus(String JSON) throws SecurityException, IOException {
+		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
+		String path = getParamFromJson(JSON, "path");
+		if(Double.parseDouble(transaction_amount) > ce.maxDeposit && path == "slot/deposit" || Double.parseDouble(transaction_amount) > ce.maxWithdraw && path == "slot/withdraw" ) {
+			return false;
+		}else {
+			return true;
 		}
 	}
 
@@ -603,9 +616,7 @@ public class Functions {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
 				String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
-
 				// if(transactionJSONError != null) { return; }
-
 				db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
 				// Pokretanje procesa za odredjeni transaction id
 				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
@@ -650,6 +661,7 @@ public class Functions {
 	}
 
 	// Cron error
+	//
 	public String getCronError(DbFunctions db) throws SecurityException, IOException {
 		try {
 			String workStatus = db.executeFunction("SELECT public.get_sp_cron_job_error_counter()",
@@ -695,16 +707,31 @@ public class Functions {
 		JSONArray arr = obj.getJSONArray("machines"); // notice that `"posts": [...]`
 		for (int i = 0; i < arr.length(); i++) {
 			String sn = arr.getJSONObject(i).getString("sn");
-			String b = arr.getJSONObject(i).getString("b");
-			String g = arr.getJSONObject(i).getString("g");
-			String w = arr.getJSONObject(i).getString("w");
+			String b  = arr.getJSONObject(i).getString("b");
+			String g  = arr.getJSONObject(i).getString("g");
+			String w  = arr.getJSONObject(i).getString("w");
 			String pi = arr.getJSONObject(i).getString("pi");
-			String j = arr.getJSONObject(i).getString("j");
+			String j  = arr.getJSONObject(i).getString("j");
 			String po = arr.getJSONObject(i).getString("po");
 			msg = msg + "sn: " + sn + " b: " + b +  " g: " + g +  " w: " + w +  " pi: " + pi +  " j: " + j +  " po: " + po + "\r\n";
 		}
 
 		return msg;
+	}
+	
+	//Uzimanje mac adrese aparata 
+	//
+	public String getMacAddressOfMachines(String sn, DbFunctions db) throws SecurityException, IOException {
+		String macAddress = "";
+		try {
+			String sql = "SELECT * FROM public.machines WHERE sticker_number = " + sn;
+			String[] columns = { "sticker_number" };
+			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
+			return macAddress;
+		} catch (SQLException e) {
+			createLog("getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
+			return "macAddress nije kako treba";
+		}
 	}
 
 }

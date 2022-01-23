@@ -39,8 +39,10 @@ public class constError {
 		  case "127000016":
 			    return "13";
 		  default:
-		    return "Nema u abzi pristiglog sid-a";
-		}
-		
+		    return "Nema u bazi pristiglog sid-a";
+		}	
 	}
+	
+	public int maxDeposit = 100000;
+	public int maxWithdraw = 500000;
 }
