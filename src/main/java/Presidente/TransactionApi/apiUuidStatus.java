@@ -2,13 +2,12 @@ package Presidente.TransactionApi;
 
 import java.text.ParseException;
 
-public class slotPeriodicCheck extends Thread {
-
+public class apiUuidStatus extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT * FROM public.slot_periodic_h ORDER BY report_index DESC LIMIT 1";
-	static String[] columns = { "api_json" };
+	static String sql = "SELECT * FROM public.transactions WHERE api_uuid is null ORDER BY transaction_time DESC limit 1 ";
+	static String[] columns = { "transaction_id" };
 
 	public void run() {
 	
@@ -16,11 +15,11 @@ public class slotPeriodicCheck extends Thread {
 			try {
 				if(!fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sql, "Brojaci", columns);
-						msg = fun.setUTF8(msg);
-						msg = fun.slotPriodicCheckString(msg);
-						fun.sendEmail(msg, "resivojee@gmail.com", "Poslednji brojaci");
-						fun.sendEmail(msg, "presidente.ks@gmail.com", "Poslednji brojaci");
+						msg = db.executeQuery2(sql, "Slanje ka upravi je prestalo", columns);
+						if(msg == "Slanje ka upravi je prestalo") {
+							msg = fun.setUTF8(msg);
+							fun.sendEmail(msg, "resivojee@gmail.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -30,7 +29,7 @@ public class slotPeriodicCheck extends Thread {
 				e.printStackTrace();
 			}
 			try {
-				Thread.sleep(21600000);
+				Thread.sleep(300000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

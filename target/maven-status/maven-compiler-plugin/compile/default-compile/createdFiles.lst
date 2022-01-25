@@ -9,6 +9,7 @@ Presidente\TransactionApi\constError.class
 Presidente\TransactionApi\ErrorCheck.class
 Presidente\TransactionApi\machineCheck.class
 Presidente\TransactionApi\Check.class
+Presidente\TransactionApi\apiUuidStatus.class
 Presidente\TransactionApi\Functions.class
 Presidente\TransactionApi\spErrorCheck.class
 Presidente\TransactionApi\Functions$1.class

@@ -23,6 +23,7 @@ public class App {
 	static String transactionWithtransactionId;
 	static JSONObject transactionBody;
 	static String transactionJSONError;
+	static String transactionSendingStatus;
 
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
@@ -56,17 +57,22 @@ public class App {
 					transactionPath = fun.getTransansactionPath(transaction, "s");
 					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-					if (transactionJSONError != null) {
+					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
+					if (transactionJSONError != null || transactionSendingStatus != null) {
+						if(transactionJSONError != null) {
+							fun.createLog(transactionJSONError);
+						} else {
+							fun.createLog(transactionSendingStatus);
+						}
 						return; // kreira log fajl sa greskom o parametrima
 					} else {
-						if (fun.sendingStatus(transactionWithStatus0)) {
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
 							// Pokretanje procesa za odredjeni transaction id
 							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 							lista.add(newProcess);
 							newProcess.start();
-						}
+						
 					}
 
 				}
@@ -89,11 +95,15 @@ public class App {
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
-					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-					if (transactionJSONError != null) {
+					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
+					if (transactionJSONError != null || transactionSendingStatus != null) {
+						if(transactionJSONError != null) {
+							fun.createLog(transactionJSONError);
+						} else {
+							fun.createLog(transactionSendingStatus);
+						}
 						return; // kreira log fajl sa greskom o parametrima
 					} else {
-						if (fun.sendingStatus(transactionWithStatus0)) {
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
 							// Pokretanje procesa za odredjeni transaction id
@@ -102,7 +112,6 @@ public class App {
 							newProcess.start();
 							transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
 									"get_json_by_status");
-						}
 					}
 				}
 			} catch (SQLException | SecurityException | IOException e) {
@@ -132,6 +141,7 @@ public class App {
 		shitsHapend sh = new shitsHapend();
 		spErrorCheck spec = new spErrorCheck();
 		paymentCheck pc = new paymentCheck();
+		apiUuidStatus aus = new apiUuidStatus();
 
 		System.out.print("Pokrenuto");
 		// Email za proveru aplikacije
@@ -178,6 +188,10 @@ public class App {
 		// Slot period brojac na kraju dana
 		//
 		spc.start();
+		
+		// Proverava da li slanje ka upravi radi
+		//
+		aus.start();
 
 		// Cekanje notify-a
 		//

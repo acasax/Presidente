@@ -190,8 +190,8 @@ public class Functions {
 			transactionBody.put("transaction_type", transaction_type);
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
-
 			if (p_transaction_amount > ce.maxDeposit) {
+				transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
 				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
 						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
@@ -209,6 +209,7 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			if (p_transaction_amount > ce.maxWithdraw) {
+				transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
 				sendEmail("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
 						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
@@ -251,24 +252,24 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("rollback_transaction_id", rollback_transaction_id);
 			return transactionBody;
-		/*
-		 * case "imports/slot-periodic": break; case "casino": break;
-		 */
 		default:
-			transactionBody.put("error", "Putanja koju ste poslali u funkciju nije dobra");
+			transactionBody.put("error", "Putanja koju ste poslali u funkciju nije dobra. Putanja: " + path);
 			return transactionBody;
 		}
 	}
 	
-	//Provera da li je uplata za slanje
+	//Uzimanje mac adrese aparata 
 	//
-	public Boolean sendingStatus(String JSON) throws SecurityException, IOException {
-		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
-		String path = getParamFromJson(JSON, "path");
-		if(Double.parseDouble(transaction_amount) > ce.maxDeposit && path == "slot/deposit" || Double.parseDouble(transaction_amount) > ce.maxWithdraw && path == "slot/withdraw" ) {
-			return false;
-		}else {
-			return true;
+	public String getMacAddressOfMachines(String sn, DbFunctions db) throws SecurityException, IOException {
+		String macAddress = "";
+		try {
+			String sql = "SELECT * FROM public.machines WHERE sticker_number = " + "'" + sn + "'";
+			String[] columns = { "sticker_number" };
+			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
+			return macAddress;
+		} catch (SQLException e) {
+			createLog("getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
+			return "macAddress nije kako treba";
 		}
 	}
 
@@ -719,19 +720,6 @@ public class Functions {
 		return msg;
 	}
 	
-	//Uzimanje mac adrese aparata 
-	//
-	public String getMacAddressOfMachines(String sn, DbFunctions db) throws SecurityException, IOException {
-		String macAddress = "";
-		try {
-			String sql = "SELECT * FROM public.machines WHERE sticker_number = " + sn;
-			String[] columns = { "sticker_number" };
-			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
-			return macAddress;
-		} catch (SQLException e) {
-			createLog("getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
-			return "macAddress nije kako treba";
-		}
-	}
+
 
 }

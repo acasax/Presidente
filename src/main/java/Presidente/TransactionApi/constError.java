@@ -43,6 +43,6 @@ public class constError {
 		}	
 	}
 	
-	public int maxDeposit = 100000;
-	public int maxWithdraw = 500000;
+	public Double maxDeposit = 100000.00;
+	public Double maxWithdraw = 500000.00;
 }
