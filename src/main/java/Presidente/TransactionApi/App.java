@@ -64,7 +64,6 @@ public class App {
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
-						return; // kreira log fajl sa greskom o parametrima
 					} else {
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -102,7 +101,6 @@ public class App {
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
-						return; // kreira log fajl sa greskom o parametrima
 					} else {
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");

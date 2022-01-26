@@ -13,7 +13,7 @@ public class apiUuidStatus extends Thread {
 	
 		while(true) {
 			try {
-				if(!fun.workTime()) {
+				if(fun.workTime()) {
 					try {
 						msg = db.executeQuery2(sql, "Slanje ka upravi je prestalo", columns);
 						if(msg == "Slanje ka upravi je prestalo") {
