@@ -264,7 +264,7 @@ public class Functions {
 		String macAddress = "";
 		try {
 			String sql = "SELECT * FROM public.machines WHERE sticker_number = " + "'" + sn + "'";
-			String[] columns = { "sticker_number" };
+			String[] columns = { "id_number" };
 			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
 			return macAddress;
 		} catch (SQLException e) {
@@ -680,7 +680,7 @@ public class Functions {
 
 		LocalTime now = LocalTime.now();
 
-		if (now.isAfter(LocalTime.parse("04:00:00")) && now.isBefore(LocalTime.parse("06:45:00"))) {
+		if (now.isAfter(LocalTime.parse("02:00:00")) && now.isBefore(LocalTime.parse("07:15:00"))) {
 			return false;
 		} else {
 			return true;
