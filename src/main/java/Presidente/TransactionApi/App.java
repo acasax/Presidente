@@ -59,19 +59,19 @@ public class App {
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
-						if(transactionJSONError != null) {
+						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
 					} else {
-							// Procedura Set Status 10
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-							lista.add(newProcess);
-							newProcess.start();
-						
+						// Procedura Set Status 10
+						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+						// Pokretanje procesa za odredjeni transaction id
+						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+						lista.add(newProcess);
+						newProcess.start();
+
 					}
 
 				}
@@ -96,20 +96,20 @@ public class App {
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
-						if(transactionJSONError != null) {
+						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
 					} else {
-							// Procedura Set Status 10
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-							lista.add(newProcess);
-							newProcess.start();
-							transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
-									"get_json_by_status");
+						// Procedura Set Status 10
+						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+						// Pokretanje procesa za odredjeni transaction id
+						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+						lista.add(newProcess);
+						newProcess.start();
+						transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
+								"get_json_by_status");
 					}
 				}
 			} catch (SQLException | SecurityException | IOException e) {
@@ -128,73 +128,47 @@ public class App {
 		 * 
 		 * um.start();
 		 */
-
-		Connection lConn = db.asyconnect();
-
-		slotPeriodicCheck spc = new slotPeriodicCheck();
-		spStart sp = new spStart();
-		Check ck = new Check();
-		ErrorCheck ec = new ErrorCheck();
-		locationCheck lc = new locationCheck();
-		shitsHapend sh = new shitsHapend();
-		spErrorCheck spec = new spErrorCheck();
-		paymentCheck pc = new paymentCheck();
-		apiUuidStatus aus = new apiUuidStatus();
-
-		System.out.print("Pokrenuto");
-		// Email za proveru aplikacije
-		//
-		fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(), "resivojee@gmail.com",
-				"Pokretanje aplikacije");
-
-		// Proverava da li ima log fajlova
-		//
-		ec.start();
-
-		// Provera lokacija u poslednja dva sata
-		//
-		lc.start();
-
-		// SlotPeriodic
-		//
-		sp.start();
-
-		// Proveri da nije null
-		//
-		sendTransactionWithStatus0();
-
-		// Provera da li ima nekih koje ne rade kako treba
-		//
-		ck.start();
-
-		// Garbage collector
-		//
-		System.gc();
-
-		// Provera da li ima pristiglih uplata u poslednjih 15 minuta
-		//
-		sh.start();
-
-		// Provera slot periodic
-		//
-		spec.start();
-
-		// Izvestaj dnevni
-		//
-		pc.start();
-
-		// Slot period brojac na kraju dana
-		//
-		spc.start();
 		
-		// Proverava da li slanje ka upravi radi
-		//
-		aus.start();
-
-		// Cekanje notify-a
-		//
-		Listener listener = new Listener(lConn);
-		listener.start();
+		stickerNumberFromExel snfx = new stickerNumberFromExel();
+		snfx.start();
+		/*
+		 * Connection lConn = db.asyconnect();
+		 * 
+		 * slotPeriodicCheck spc = new slotPeriodicCheck(); spStart sp = new spStart();
+		 * Check ck = new Check(); ErrorCheck ec = new ErrorCheck(); locationCheck lc =
+		 * new locationCheck(); shitsHapend sh = new shitsHapend(); spErrorCheck spec =
+		 * new spErrorCheck(); paymentCheck pc = new paymentCheck(); apiUuidStatus aus =
+		 * new apiUuidStatus();
+		 * 
+		 * System.out.print("Pokrenuto"); // Email za proveru aplikacije //
+		 * fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
+		 * "resivojee@gmail.com", "Pokretanje aplikacije");
+		 * 
+		 * // Proverava da li ima log fajlova // ec.start();
+		 * 
+		 * // Provera lokacija u poslednja dva sata // lc.start();
+		 * 
+		 * // SlotPeriodic // sp.start();
+		 * 
+		 * // Proveri da nije null // sendTransactionWithStatus0();
+		 * 
+		 * // Provera da li ima nekih koje ne rade kako treba // ck.start();
+		 * 
+		 * // Garbage collector // System.gc();
+		 * 
+		 * // Provera da li ima pristiglih uplata u poslednjih 15 minuta // sh.start();
+		 * 
+		 * // Provera slot periodic // spec.start();
+		 * 
+		 * // Izvestaj dnevni // pc.start();
+		 * 
+		 * // Slot period brojac na kraju dana // spc.start();
+		 * 
+		 * // Proverava da li slanje ka upravi radi // aus.start();
+		 * 
+		 * // Cekanje notify-a // Listener listener = new Listener(lConn);
+		 * listener.start();
+		 */
 
 	}
 }
