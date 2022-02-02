@@ -7,9 +7,10 @@ public class paymentCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT SUM(transaction_amount) as ukupno, slot_club_id, transaction_types FROM public.transactions WHERE transaction_time BETWEEN CURRENT_DATE - INTEGER '1' + TIME '06:45:59' AND CURRENT_DATE + TIME '03:59:59' GROUP BY slot_club_id,  transaction_types";
-	static String[] columns = { "ukupno", "slot_club_id", "transaction_types" };
+	static String sql = "SELECT SUM(public.transactions.transaction_amount) as suma, count(public.transactions.transaction_id) as brojUplata, public.transactions.slot_club_id, public.transaction_types.path FROM public.transactions INNER JOIN public.transaction_types ON public.transactions.transaction_types = public.transaction_types.transaction_types WHERE public.transactions.transaction_time BETWEEN CURRENT_DATE - INTEGER '1' + TIME '06:45:59' AND CURRENT_DATE + TIME '03:59:59' GROUP BY public.transactions.slot_club_id, public.transaction_types.path";
+	static String[] columns = { "suma", "slot_club_id", "brojUplata", "path" };
 
+	
 	public void run() {
 		while(true) {
 			try {
