@@ -199,6 +199,7 @@ public class Functions {
 				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
 						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
 						"pedjabg@gmail.com", "Velika uplata");
+				
 			}
 			return transactionBody;
 		case "slot/withdraw":

@@ -24,27 +24,26 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/postgresql-42.2.22.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/postgresql-42.2.22.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/json-20210307.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.10">
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/json-20210307.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.14">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/commons-codec-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/fluent-hc-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-cache-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpclient-win-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpcore-4.4.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/httpmime-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/activation-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KORISNIK/eclipse-workspace/TransactionApi/lib/javax.mail-1.6.2.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/httpclient-4.5.13.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/httpclient-cache-4.5.13.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/httpclient-win-4.5.13.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/httpcore-4.4.13.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/httpmime-4.5.13.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/javaProjekti/Presidente/lib/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

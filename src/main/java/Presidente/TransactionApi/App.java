@@ -63,6 +63,7 @@ public class App {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
+							db.executeQuery("DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
 						// Procedura Set Status 10
@@ -129,46 +130,79 @@ public class App {
 		 * um.start();
 		 */
 		
-		stickerNumberFromExel snfx = new stickerNumberFromExel();
-		snfx.start();
 		/*
-		 * Connection lConn = db.asyconnect();
-		 * 
-		 * slotPeriodicCheck spc = new slotPeriodicCheck(); spStart sp = new spStart();
-		 * Check ck = new Check(); ErrorCheck ec = new ErrorCheck(); locationCheck lc =
-		 * new locationCheck(); shitsHapend sh = new shitsHapend(); spErrorCheck spec =
-		 * new spErrorCheck(); paymentCheck pc = new paymentCheck(); apiUuidStatus aus =
-		 * new apiUuidStatus();
-		 * 
-		 * System.out.print("Pokrenuto"); // Email za proveru aplikacije //
-		 * fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
-		 * "resivojee@gmail.com", "Pokretanje aplikacije");
-		 * 
-		 * // Proverava da li ima log fajlova // ec.start();
-		 * 
-		 * // Provera lokacija u poslednja dva sata // lc.start();
-		 * 
-		 * // SlotPeriodic // sp.start();
-		 * 
-		 * // Proveri da nije null // sendTransactionWithStatus0();
-		 * 
-		 * // Provera da li ima nekih koje ne rade kako treba // ck.start();
-		 * 
-		 * // Garbage collector // System.gc();
-		 * 
-		 * // Provera da li ima pristiglih uplata u poslednjih 15 minuta // sh.start();
-		 * 
-		 * // Provera slot periodic // spec.start();
-		 * 
-		 * // Izvestaj dnevni // pc.start();
-		 * 
-		 * // Slot period brojac na kraju dana // spc.start();
-		 * 
-		 * // Proverava da li slanje ka upravi radi // aus.start();
-		 * 
-		 * // Cekanje notify-a // Listener listener = new Listener(lConn);
-		 * listener.start();
+		 * stickerNumberFromExel snfx = new stickerNumberFromExel(); snfx.start();
 		 */
+		
+		
+		  Connection lConn = db.asyconnect();
+		  
+		  slotPeriodicCheck spc = new slotPeriodicCheck(); 
+		  spStart sp = new spStart();
+		  Check ck = new Check();
+		  ErrorCheck ec = new ErrorCheck();
+		  locationCheck lc = new locationCheck(); 
+		  shitsHapend sh = new shitsHapend();
+		  spErrorCheck spec = new spErrorCheck();
+		  paymentCheck pc = new paymentCheck(); 
+		  apiUuidStatus aus = new apiUuidStatus();
+		  
+		  System.out.print("Pokrenuto"); 
+		  
+		  // Email za proveru aplikacije 
+		  //
+		  fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
+		  "resivojee@gmail.com", "Pokretanje aplikacije");
+		  
+		  // Proverava da li ima log fajlova 
+		  // 
+		  ec.start();
+		  
+		  // Provera lokacija u poslednja dva sata 
+		  // 
+		  lc.start();
+		  
+		  // SlotPeriodic 
+		  // 
+		  sp.start();
+		  
+		  // Proveri da nije null 
+		  // 
+		  sendTransactionWithStatus0();
+		  
+		  // Provera da li ima nekih koje ne rade kako treba 
+		  // 
+		  ck.start();
+		  
+		  // Garbage collector 
+		  // 
+		  System.gc();
+		  
+		  // Provera da li ima pristiglih uplata u poslednjih 15 minuta 
+		  // 
+		  sh.start();
+		  
+		  // Provera slot periodic 
+		  // 
+		  spec.start();
+		  
+		  // Izvestaj dnevni 
+		  // 
+		  pc.start();
+		  
+		  // Slot period brojac na kraju dana 
+		  // 
+		  spc.start();
+		  
+		  // Proverava da li slanje ka upravi radi 
+		  // 
+		  aus.start();
+		  
+		  // Cekanje notify-a 
+		  // 
+		  Listener listener = new Listener(lConn);
+		  listener.start();
+		 
 
 	}
 }

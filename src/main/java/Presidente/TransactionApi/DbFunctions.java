@@ -27,7 +27,6 @@ public class DbFunctions {
 	
 	@SuppressWarnings("deprecation")
 	public Connection asyconnect() throws SecurityException, IOException {
-		
 		try{
 			PGPoolingDataSource source = new PGPoolingDataSource();
 			source.setServerNames(new String[] {"93.87.76.139:1521"});
@@ -39,6 +38,7 @@ public class DbFunctions {
 			return connection;
 		} catch (SQLException e) {
 			 fun.createLogDb(ce.asyconnect);
+			 fun.sendEmail("konekcija na bazu je prekinuta", "resivojee@gmail.com", "Nema konekcije na bazu");
 		}
 		return null;
 	}
