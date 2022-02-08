@@ -1,6 +1,6 @@
 package Presidente.TransactionApi;
 
-public class constError {
+public class ConstError {
 
 	public String sendTransactionWithStatus0   = "Funkcija sendTransactionWithStatus0 nije uspešno izvršena";
 	public String sendTransaction              = "Funkcija sendTransaction nije uspešno izvršena";

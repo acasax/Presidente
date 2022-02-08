@@ -14,7 +14,7 @@ import org.postgresql.ds.PGPoolingDataSource;
 public class DbFunctions {
 	
 	Functions fun = new Functions();
-	constError ce = new constError();
+	ConstError ce = new ConstError();
 	
 	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; //sa lokalne masine
 	//static String url = "jdbc:postgresql://localhost:1521/accounting";

@@ -27,7 +27,7 @@ public class App {
 
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
-	static constError ce = new constError();
+	static ConstError ce = new ConstError();
 
 	// Da li postoji proces sa zadatim transaction_id koji radi
 	public static Processing nadjiProcessing(String transactionId) {

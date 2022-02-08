@@ -32,7 +32,7 @@ import java.io.File;
 
 public class Functions {
 
-	constError ce = new constError();
+	ConstError ce = new ConstError();
 
 	// Funkcija koja uzima iz JSON-a samo transaction_id
 	//
@@ -681,7 +681,7 @@ public class Functions {
 
 		LocalTime now = LocalTime.now();
 
-		if (now.isAfter(LocalTime.parse("02:00:00")) && now.isBefore(LocalTime.parse("07:15:00"))) {
+		if (now.isAfter(LocalTime.parse("03:00:00")) && now.isBefore(LocalTime.parse("07:00:00"))) {
 			return false;
 		} else {
 			return true;
