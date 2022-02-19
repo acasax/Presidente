@@ -72,7 +72,6 @@ public class App {
 						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 						lista.add(newProcess);
 						newProcess.start();
-
 					}
 
 				}
