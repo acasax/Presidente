@@ -100,6 +100,7 @@ public class App {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
+							db.executeQuery("DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
 						// Procedura Set Status 10

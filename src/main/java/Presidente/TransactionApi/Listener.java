@@ -23,8 +23,7 @@ class Listener extends Thread {
 			stmt.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 
 	public void run() {

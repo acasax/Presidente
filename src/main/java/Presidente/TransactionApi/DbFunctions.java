@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 
 import org.postgresql.ds.PGPoolingDataSource;
 
@@ -26,20 +27,22 @@ public class DbFunctions {
 	lConn = DriverManager.getConnection(urlL, user, password);*/
 	
 	@SuppressWarnings("deprecation")
-	public Connection asyconnect() throws SecurityException, IOException {
-		try{
-			PGPoolingDataSource source = new PGPoolingDataSource();
-			source.setServerNames(new String[] {"93.87.76.139:1521"});
-			source.setDatabaseName("accounting");
-			source.setUser("presidente");
-			source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
-			source.setMaxConnections(100);
-			Connection connection = source.getConnection();
-			return connection;
-		} catch (SQLException e) {
-			 fun.createLogDb(ce.asyconnect);
+	public Connection asyconnect() throws SecurityException, IOException, ParseException {
+		if(fun.workTime()) {
+			try{
+				PGPoolingDataSource source = new PGPoolingDataSource();
+				source.setServerNames(new String[] {"93.87.76.139:1521"});
+				source.setDatabaseName("accounting");
+				source.setUser("presidente");
+				source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
+				source.setMaxConnections(100);
+				Connection connection = source.getConnection();
+				return connection;
+			} catch (SQLException e) {
+				 fun.createLogDb(ce.asyconnect);
+				 fun.sendEmail("konekcija na bazu je prekinuta", "resivojee@gmail.com", "Nema konekcije na bazu");
+			}
 		}
-		fun.sendEmail("konekcija na bazu je prekinuta", "resivojee@gmail.com", "Nema konekcije na bazu");
 		return null;
 	}
 	
