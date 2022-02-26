@@ -63,7 +63,8 @@ public class App {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
-							db.executeQuery("DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
+							db.executeQuery(
+									"DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
 						// Procedura Set Status 10
@@ -100,7 +101,8 @@ public class App {
 							fun.createLog(transactionJSONError);
 						} else {
 							fun.createLog(transactionSendingStatus);
-							db.executeQuery("DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
+							db.executeQuery(
+									"DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
 						// Procedura Set Status 10
@@ -124,38 +126,35 @@ public class App {
 	public static void main(String[] args) throws SQLException, InterruptedException, ExecutionException,
 			SecurityException, IOException, ParseException {
 
+		
 		/*
 		 * updateMachines um = new updateMachines();
 		 * 
 		 * um.start();
 		 */
-		
+		 
+
 		/*
 		 * stickerNumberFromExel snfx = new stickerNumberFromExel(); snfx.start();
 		 */
-		
+
 		
 		  Connection lConn = db.asyconnect();
 		  
-		  slotPeriodicCheck spc = new slotPeriodicCheck(); 
-		  spStart sp = new spStart();
-		  Check ck = new Check();
-		  ErrorCheck ec = new ErrorCheck();
-		  locationCheck lc = new locationCheck(); 
-		  shitsHapend sh = new shitsHapend();
-		  spErrorCheck spec = new spErrorCheck();
-		  paymentCheck pc = new paymentCheck(); 
-		  apiUuidStatus aus = new apiUuidStatus();
+		  slotPeriodicCheck spc = new slotPeriodicCheck(); spStart sp = new spStart();
+		  Check ck = new Check(); ErrorCheck ec = new ErrorCheck(); locationCheck lc =
+		  new locationCheck(); shitsHapend sh = new shitsHapend(); spErrorCheck spec =
+		  new spErrorCheck(); paymentCheck pc = new paymentCheck(); apiUuidStatus aus =
+		  new apiUuidStatus();
 		  
-		  System.out.print("Pokrenuto"); 
+		  System.out.print("Pokrenuto");
 		  
-		  // Email za proveru aplikacije 
-		  //
+		  // Email za proveru aplikacije //
 		  fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
 		  "resivojee@gmail.com", "Pokretanje aplikacije");
 		  
 		  // Proverava da li ima log fajlova 
-		  // 
+		  //
 		  ec.start();
 		  
 		  // Provera lokacija u poslednja dva sata 

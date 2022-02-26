@@ -25,6 +25,7 @@ public class updateMachines extends Thread {
 	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 
 	String sticker_number;
+	int machine_number;
 	String id_number;
 
 	String selectMachineQuery = "SELECT sticker_number FROM public.machines where machine_id_number is null limit 1";
@@ -35,7 +36,7 @@ public class updateMachines extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				File file = new File("C:\\Users\\KORISNIK\\Desktop\\prezident\\automati.xlsx"); // creating a new file
+				File file = new File("C:\\Users\\acasa\\OneDrive\\Radna površina\\presidente\\locationMachineNumber.xlsx"); // creating a new file
 																								// instance
 				FileInputStream fis = new FileInputStream(file); // obtaining bytes from the file
 				// creating Workbook instance that refers to .xlsx file
@@ -61,13 +62,15 @@ public class updateMachines extends Thread {
 							break;
 						case Cell.CELL_TYPE_NUMERIC: // field that represents number cell type
 							System.out.print(cell.getNumericCellValue());
+							machine_number = (int) cell.getNumericCellValue();
+							sticker_number = String.valueOf(machine_number);
 							break;
 						default:
 						}
 						i++;
 					}
 					j++;
-					updateMachineQuery = "UPDATE public.machines SET sticker_number = '" + sticker_number + "' WHERE machine_id_number= '" + id_number + "';";
+					updateMachineQuery = "UPDATE public.machines SET location_machine_number = " + sticker_number + " WHERE machine_id_number= '" + id_number + "';";
 					db.executeQuery(updateMachineQuery);
 					System.out.println("");
 				}
