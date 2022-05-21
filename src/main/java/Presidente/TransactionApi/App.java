@@ -141,11 +141,15 @@ public class App {
 		
 		  Connection lConn = db.asyconnect();
 		  
-		  slotPeriodicCheck spc = new slotPeriodicCheck(); spStart sp = new spStart();
-		  Check ck = new Check(); ErrorCheck ec = new ErrorCheck(); locationCheck lc =
-		  new locationCheck(); shitsHapend sh = new shitsHapend(); spErrorCheck spec =
-		  new spErrorCheck(); paymentCheck pc = new paymentCheck(); apiUuidStatus aus =
-		  new apiUuidStatus();
+		  slotPeriodicCheck spc = new slotPeriodicCheck(); 
+		  spStart sp = new spStart();
+		  Check ck = new Check();
+		  ErrorCheck ec = new ErrorCheck();
+		  locationCheck lc = new locationCheck(); 
+		  shitsHapend sh = new shitsHapend();
+		  spErrorCheck spec = new spErrorCheck();
+		  paymentCheck pc = new paymentCheck();
+		  apiUuidStatus aus = new apiUuidStatus();
 		  
 		  System.out.print("Pokrenuto");
 		  

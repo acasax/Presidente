@@ -19,6 +19,7 @@ public class locationCheck extends Thread {
 						msg = fun.setUTF8(msg);
 						fun.sendEmail(msg, "resivojee@gmail.com", "Lokacije koje nisu slale podatke");
 						fun.sendEmail(msg, "pedjabg@gmail.com", "Lokacije koje nisu slale podatke");
+						fun.sendEmail(msg, "presidente.ks@gmail.com", "Lokacije koje nisu slale podatke");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
