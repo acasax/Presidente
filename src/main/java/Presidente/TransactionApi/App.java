@@ -154,8 +154,8 @@ public class App {
 		  System.out.print("Pokrenuto");
 		  
 		  // Email za proveru aplikacije //
-		  fun.sendEmail("Aplikacija se startovala u: " + LocalDateTime.now(),
-		  "resivojee@gmail.com", "Pokretanje aplikacije");
+		  fun.sendEmailYahho("Aplikacija se startovala u: " + LocalDateTime.now(),
+				  "presidenteapp@yahoo.com", "Pokretanje aplikacije");
 		  
 		  // Proverava da li ima log fajlova 
 		  //

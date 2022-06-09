@@ -17,7 +17,7 @@ public class shitsHapend extends Thread {
 						msg = db.executeQuery1(sql, "Sranje neko je pocelo", columns);
 						if(msg == "Sranje neko je pocelo") {
 							msg = fun.setUTF8(msg);
-							fun.sendEmail(msg, "resivojee@gmail.com", "SRANJE SE DESAVA NEKO");
+							fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO");
 						}
 						try {
 							Thread.sleep(1500000);

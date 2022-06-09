@@ -40,7 +40,7 @@ public class DbFunctions {
 				return connection;
 			} catch (SQLException e) {
 				 fun.createLogDb(ce.asyconnect);
-				 fun.sendEmail("konekcija na bazu je prekinuta", "resivojee@gmail.com", "Nema konekcije na bazu");
+				 fun.sendEmailYahho("konekcija na bazu je prekinuta", "presidenteapp@yahoo.com", "Nema konekcije na bazu");
 			}
 		}
 		return null;

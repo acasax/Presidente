@@ -19,8 +19,8 @@ public class slotPeriodicCheck extends Thread {
 						msg = db.executeQuery2(sql, "Brojaci", columns);
 						msg = fun.setUTF8(msg);
 						msg = fun.slotPriodicCheckString(msg);
-						fun.sendEmail(msg, "resivojee@gmail.com", "Poslednji brojaci");
-						fun.sendEmail(msg, "presidente.ks@gmail.com", "Poslednji brojaci");
+						fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "Poslednji brojaci");
+						fun.sendEmailYahho(msg, "presidente.ks@yahoo.com", "Poslednji brojaci");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

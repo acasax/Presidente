@@ -193,13 +193,9 @@ public class Functions {
 			if (p_transaction_amount > ce.maxDeposit) {
 				transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
+				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
 						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
-						"resivojee@gmail.com", "Velika uplata");
-				sendEmail("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
-						"pedjabg@gmail.com", "Velika uplata");
-				
+						"presidenteapp@yahoo.com", "Velika uplata");
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -212,12 +208,9 @@ public class Functions {
 			if (p_transaction_amount > ce.maxWithdraw) {
 				transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmail("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
+				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
 						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
-						"pedjabg@gmail.com", "Velika isplata");
-				sendEmail("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
-						"resivojee@gmail.com", "Velika isplata");
+						"presidenteapp@yahoo.com", "Velika isplata");
 			}
 			return transactionBody;
 		case "slot/jackpot":
@@ -236,11 +229,9 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
 			String macAddress = getMacAddressOfMachines(sticker_no, db);
-			sendEmail("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "resivojee@gmail.com", "Jackpot");
-			sendEmail("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "pedjabg@gmail.com", "Jackpot");
-			return transactionBody;
+			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
+					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidenteapp@yahoo.com", "Jackpot");
+				return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu
 			//
@@ -402,12 +393,12 @@ public class Functions {
 
 	// Funkcija za slanje e-mail Saletu
 	//
-	public void sendEmailYahho(String msg) {
+	public void sendEmailYahho(String msg, String emailTo, String subject) {
 		// Recipient's email ID needs to be mentioned.
-		String to = "miladinovicsasa@yahoo.com";
+		String to = emailTo;
 
 		// Sender's email ID needs to be mentioned
-		String from = "prezidentplay1@gmail.com";
+		String from = "mrsax23@yahoo.com";
 
 		// Assuming you are sending email from through gmails smtp
 		String host = "smtp.mail.yahoo.com";
@@ -426,7 +417,7 @@ public class Functions {
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("prezidentplay1@gmail.com", "igrajdabidobio");
+				return new PasswordAuthentication("mrsax23@yahoo.com", "whwsifdwrnxxqump");
 
 			}
 
@@ -446,7 +437,7 @@ public class Functions {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 			// Set Subject: header field
-			message.setSubject("Postoji cron greska na sistemu Trend Play");
+			message.setSubject(subject);
 
 			// Now set the actual message
 			message.setText(msg);
@@ -480,12 +471,12 @@ public class Functions {
 					flag = 1;
 				}
 			}
-			sendEmail(msg, "resivojee@gmail.com", "Greska");
+			sendEmailYahho(msg, "presidenteapp@yahoo.com", "Greska");
 		}
 
 		if (flag == 0) {
 			msg = "Nema pronadjenih log fajlova";
-			sendEmail(msg, "resivojee@gmail.com", "Sve ok je bre!!!");
+			sendEmailYahho(msg, "presidenteapp@yahoo.com", "Sve ok je bre!!!");
 		}
 
 	}
