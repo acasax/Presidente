@@ -20,7 +20,7 @@ public class slotPeriodicCheck extends Thread {
 						msg = fun.setUTF8(msg);
 						msg = fun.slotPriodicCheckString(msg);
 						fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "Poslednji brojaci");
-						fun.sendEmailYahho(msg, "presidente.ks@yahoo.com", "Poslednji brojaci");
+						fun.sendEmailYahho(msg, "presidente.ks@gmail.com", "Poslednji brojaci");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

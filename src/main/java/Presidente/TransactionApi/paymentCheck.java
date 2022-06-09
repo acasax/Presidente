@@ -19,7 +19,7 @@ public class paymentCheck extends Thread {
 						msg = db.executeQuery1(sql, "Nije bilo uplata celog dana", columns);
 						msg = fun.setUTF8(msg);
 						fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "Sumarno po lokacijama i tipu");
-						fun.sendEmailYahho(msg, "presidente.ks@yahoo.com", "Sumarno po lokacijama i tipu");
+						fun.sendEmailYahho(msg, "presidente.ks@gmail.com", "Sumarno po lokacijama i tipu");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
