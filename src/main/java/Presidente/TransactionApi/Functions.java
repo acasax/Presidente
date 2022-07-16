@@ -3,11 +3,14 @@ package Presidente.TransactionApi;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -175,6 +178,32 @@ public class Functions {
 		if (transaction_time == null || transaction_id == null || transaction_amount == null || transaction_type == null
 				|| slot_club_id == null || sticker_no == null) {
 			transactionBody.put("error", "JSON koji je stigao u aplikaciju nema sve potrebne elemente za slanja");
+			return transactionBody;
+		}
+		
+		//Provera da li je vreme kako treba 
+		//
+		//Date date = new Date();
+		Timestamp timestamp1 = null;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		LocalDate datel = LocalDate.now().minusYears(1);
+		String date = df.format(Date.from(datel.atStartOfDay(defaultZoneId).toInstant()));
+		System.out.print("vreme");
+		System.out.print(date);
+		Timestamp timestamp2  = Timestamp.valueOf(date);
+		
+		try {
+			Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(transaction_time);
+			String transactionTime = df.format(date1);
+			timestamp1 = Timestamp.valueOf(transactionTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
+		if(timestamp1.before(timestamp2) ) {
+			transactionBody.put("error", "Vreme za slanje nije dobro. transaction id" + transaction_id + "lokacija: " + slot_club_id);
 			return transactionBody;
 		}
 
@@ -672,7 +701,7 @@ public class Functions {
 
 		LocalTime now = LocalTime.now();
 
-		if (now.isAfter(LocalTime.parse("03:00:00")) && now.isBefore(LocalTime.parse("07:00:00"))) {
+		if (now.isAfter(LocalTime.parse("04:00:00")) && now.isBefore(LocalTime.parse("07:00:00"))) {
 			return false;
 		} else {
 			return true;

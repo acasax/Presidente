@@ -61,6 +61,8 @@ public class App {
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
+							fun.sendEmailYahho(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
+							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
 							db.executeQuery(
@@ -96,9 +98,12 @@ public class App {
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
+					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
+							fun.sendEmailYahho(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
+							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
 							db.executeQuery(
