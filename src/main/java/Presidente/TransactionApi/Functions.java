@@ -73,40 +73,26 @@ public class Functions {
 		}
 	}
 
-	// Funkcija koja uzima iz JSON-a samo path
+	// Funkcija koja uzima path na osnovu tipa
 	//
-	public String getTransansactionPath(String JSON, String Status) throws SecurityException, IOException {
-		// Status s stiglo iz baze samo json
-		if (Status == "s") {
-			String jsonString = JSON;
-			String transactionPath = "";
-			try {
-				JSONObject obj = new JSONObject(jsonString);
-				if (obj.isNull("path")) {
-					return transactionPath;
-				}
-				return transactionPath = obj.getString("path");
-			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja path" + e.getMessage());
-				return "U ovom JSON-u nema polja path";
-			}
-
-		} else {
-			String transactionPath = "";
-			try {
-				String str = JSON.substring(JSON.indexOf("{"));
-				String jsonString = str;
-				JSONObject obj = new JSONObject(jsonString);
-				if (obj.isNull("path")) {
-					return transactionPath;
-				}
-				return transactionPath = obj.getString("path");
-			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja path" + e.getMessage());
-				return "U ovom JSON-u nema polja path";
-			}
-
+	public String getTransansactionPath(String JSON, DbFunctions db) throws SecurityException, IOException{
+		String transaction_type = getParamFromJson(JSON, "transaction_types");
+		String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
+		String[] columns = {"path"};
+		String path = null;
+		try {
+			path = db.executeQuery3(pathQuery, columns);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return path;
 	}
 
 	// Funkcija koja uzima odredjeni parametar iz JSON-a
@@ -140,6 +126,17 @@ public class Functions {
 				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
 				return null;
 			}
+		case "transaction_types":
+			try {
+				if (obj.isNull(Param)) {
+					return null;
+				}
+				paramValueD = obj.getInt(Param);
+				return String.valueOf(f.format(paramValueD));
+			} catch (JSONException e) {
+				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
+				return null;
+			}
 		default:
 			try {
 				if (obj.isNull(Param)) {
@@ -160,16 +157,20 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db) throws SecurityException, IOException {
+	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db) throws SecurityException, IOException, SQLException {
 
 		// Uzimanje podataka iz JSON-a
 		//
 		String transaction_time = getParamFromJson(JSON, "transaction_time");
 		String transaction_id = getParamFromJson(JSON, "transaction_id");
 		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
-		String transaction_type = getParamFromJson(JSON, "transaction_type");
+		String transaction_type = getParamFromJson(JSON, "transaction_types");
 		String slot_club_id = getParamFromJson(JSON, "slot_club_id");
-		String sticker_no = getParamFromJson(JSON, "sticker_number");
+		String machine_id_number = getParamFromJson(JSON, "machine_num_id");
+		String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" + machine_id_number.trim() + "'";
+		String[] columns = {"sticker_number"};
+		
+		String sticker_no = db.executeQuery3(strickerNumberQuery, columns);
 
 		JSONObject transactionBody = new JSONObject();
 
@@ -189,8 +190,6 @@ public class Functions {
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		LocalDate datel = LocalDate.now().minusYears(1);
 		String date = df.format(Date.from(datel.atStartOfDay(defaultZoneId).toInstant()));
-		System.out.print("vreme");
-		System.out.print(date);
 		Timestamp timestamp2  = Timestamp.valueOf(date);
 		
 		try {

@@ -1,6 +1,7 @@
 package Presidente.TransactionApi;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -54,7 +55,7 @@ public class App {
 			try {
 				if (transaction != null) {
 					transactionId = fun.getTransansactionId(transaction, "s");
-					transactionPath = fun.getTransansactionPath(transaction, "s");
+					transactionPath = fun.getTransansactionPath(transaction, db);
 					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
@@ -65,18 +66,18 @@ public class App {
 							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
-							db.executeQuery(
-									"DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
-						// Procedura Set Status 10
-						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-						// Pokretanje procesa za odredjeni transaction id
-						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-						lista.add(newProcess);
-						newProcess.start();
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 25) {
+							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
+							// Procedura Set Status 10
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							// Pokretanje procesa za odredjeni transaction id
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							lista.add(newProcess);
+							newProcess.start();
+						}
 					}
-
 				}
 			} catch (SecurityException | IOException e) {
 				fun.createLog(ce.sendTransaction);
@@ -87,6 +88,7 @@ public class App {
 	// Funkcija koja kreira novi processing od transakcija koja je pronadjena u bazi
 	// i koja ima status 0
 	//
+	
 	public static void sendTransactionWithStatus0()
 			throws SQLException, SecurityException, IOException, ParseException {
 		if (fun.workTime()) {
@@ -95,7 +97,7 @@ public class App {
 						"get_json_by_status");
 				while (transactionWithStatus0 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-					transactionPath = fun.getTransansactionPath(transactionWithStatus0, "s");
+					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db);
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
@@ -106,18 +108,19 @@ public class App {
 							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
-							db.executeQuery(
-									"DELETE FROM public.transactions WHERE transaction_id = '" + transactionId + "'");
 						}
 					} else {
-						// Procedura Set Status 10
-						db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
-						// Pokretanje procesa za odredjeni transaction id
-						Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
-						lista.add(newProcess);
-						newProcess.start();
-						transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
-								"get_json_by_status");
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 25) {
+							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
+							// Procedura Set Status 10
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							// Pokretanje procesa za odredjeni transaction id
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							lista.add(newProcess);
+							newProcess.start();
+							transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
+									"get_json_by_status");
+						}
 					}
 				}
 			} catch (SQLException | SecurityException | IOException e) {
@@ -142,7 +145,6 @@ public class App {
 		/*
 		 * stickerNumberFromExel snfx = new stickerNumberFromExel(); snfx.start();
 		 */
-
 		
 		  Connection lConn = db.asyconnect();
 		  
@@ -155,8 +157,8 @@ public class App {
 		  spErrorCheck spec = new spErrorCheck();
 		  paymentCheck pc = new paymentCheck();
 		  apiUuidStatus aus = new apiUuidStatus();
+		  badTransactions bt = new badTransactions();
 		  
-		  System.out.print("Pokrenuto");
 		  
 		  // Email za proveru aplikacije //
 		  fun.sendEmailYahho("Aplikacija se startovala u: " + LocalDateTime.now(),
@@ -173,10 +175,6 @@ public class App {
 		  // SlotPeriodic 
 		  // 
 		  sp.start();
-		  
-		  // Proveri da nije null 
-		  // 
-		  sendTransactionWithStatus0();
 		  
 		  // Provera da li ima nekih koje ne rade kako treba 
 		  // 
@@ -206,11 +204,18 @@ public class App {
 		  // 
 		  aus.start();
 		  
+		  // Proverava da li ima losih transakcija
+		  //
+		  bt.start();
+		  
+		  // Proveri da nije null 
+		  // 
+		  sendTransactionWithStatus0();
+		  
 		  // Cekanje notify-a 
 		  // 
 		  Listener listener = new Listener(lConn);
-		  listener.start();
-		 
+		  listener.start(); 
 
 	}
 }

@@ -2,6 +2,7 @@ Presidente\TransactionApi\stickerNumberFromExel.class
 Presidente\TransactionApi\ConstError.class
 Presidente\TransactionApi\slotPeriodicCheck.class
 Presidente\TransactionApi\spCheck.class
+Presidente\TransactionApi\badTransactions.class
 Presidente\TransactionApi\paymentCheck.class
 Presidente\TransactionApi\Listener.class
 Presidente\TransactionApi\Listener$1.class

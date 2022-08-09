@@ -38,6 +38,8 @@ public class ConstError {
 			    return "12";
 		  case "127000016":
 			    return "13";
+		  case "127000018":
+			    return "14";
 		  default:
 		    return "Nema u bazi pristiglog sid-a";
 		}	

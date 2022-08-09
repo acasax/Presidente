@@ -50,7 +50,12 @@ public class Processing extends Thread {
 	public void run() {	
 
 		try {
-			
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";

@@ -16,7 +16,7 @@ public class apiUuidStatus extends Thread {
 				if(fun.workTime()) {
 					try {
 						msg = db.executeQuery2(sql, "Slanje ka upravi je prestalo", columns);
-						if(msg == "Slanje ka upravi je prestalo") {
+						if(msg != "Slanje ka upravi je prestalo") {
 							msg = fun.setUTF8(msg);
 							fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
 						}
