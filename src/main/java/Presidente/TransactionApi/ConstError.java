@@ -45,6 +45,34 @@ public class ConstError {
 		}	
 	}
 	
+	public Integer transactionTybeByString(String type, String path) {
+		if(type.equals("deposit") && path.equals("slot/deposit")) {
+			return 1;
+		}
+		if(type.equals("witdraw") && path.equals("slot/withdraw")) {
+			return 2;
+		}
+		if(type.equals("jackpot") && path.equals("slot/jackpot")) {
+			return 3;
+		}
+		if(type.equals("rollback") && path.equals("slot/rollback")) {
+			return 4;
+		}
+		if(type.equals("deposit") && path.equals("slot/deposit")) {
+			return 5;
+		}
+		if(type.equals("deposit_bills") && path.equals("slot/deposit")) {
+			return 6;
+		}
+		if(type.equals("deposit_ticket_in") && path.equals("slot/deposit")) {
+			return 7;
+		}
+		if(type.equals("deposit") && path.equals("slot/deposit")) {
+			return 8;
+		}
+		return 0;
+	}
+	
 	public Double maxDeposit = 100000.00;
 	public Double maxWithdraw = 500000.00;
 }

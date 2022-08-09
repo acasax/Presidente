@@ -75,22 +75,26 @@ public class Functions {
 
 	// Funkcija koja uzima path na osnovu tipa
 	//
-	public String getTransansactionPath(String JSON, DbFunctions db) throws SecurityException, IOException{
-		String transaction_type = getParamFromJson(JSON, "transaction_types");
-		String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
-		String[] columns = {"path"};
+	public String getTransansactionPath(String JSON, DbFunctions db, Boolean status) throws SecurityException, IOException{
 		String path = null;
-		try {
-			path = db.executeQuery3(pathQuery, columns);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(status) {
+			String transaction_type = getParamFromJson(JSON, "transaction_types");
+			String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
+			String[] columns = {"path"};
+			try {
+				path = db.executeQuery3(pathQuery, columns);
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			path = getParamFromJson(JSON, "path");
 		}
 		return path;
 	}
@@ -157,20 +161,32 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db) throws SecurityException, IOException, SQLException {
+	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status) throws SecurityException, IOException, SQLException {
 
 		// Uzimanje podataka iz JSON-a
 		//
 		String transaction_time = getParamFromJson(JSON, "transaction_time");
 		String transaction_id = getParamFromJson(JSON, "transaction_id");
 		String transaction_amount = getParamFromJson(JSON, "transaction_amount");
-		String transaction_type = getParamFromJson(JSON, "transaction_types");
+		String transaction_type = null;
+		if(status) {
+			transaction_type = getParamFromJson(JSON, "transaction_types");
+		} else {
+			transaction_type = ce.transactionTybeByString(getParamFromJson(JSON, "transaction_type"), getParamFromJson(JSON, "path")).toString();
+		}
 		String slot_club_id = getParamFromJson(JSON, "slot_club_id");
-		String machine_id_number = getParamFromJson(JSON, "machine_num_id");
-		String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" + machine_id_number.trim() + "'";
-		String[] columns = {"sticker_number"};
-		
-		String sticker_no = db.executeQuery3(strickerNumberQuery, columns);
+		String sticker_no = null;
+		if(status) {
+			String machine_id_number = getParamFromJson(JSON, "machine_num_id");
+			if(machine_id_number != null || machine_id_number != "") {
+				String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" + machine_id_number.trim() + "'";
+				String[] columns = {"sticker_number"};
+				
+				sticker_no = db.executeQuery3(strickerNumberQuery, columns);
+			} 
+		} else {
+			sticker_no = getParamFromJson(JSON, "sticker_number");
+		}
 
 		JSONObject transactionBody = new JSONObject();
 

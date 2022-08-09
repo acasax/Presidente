@@ -55,8 +55,8 @@ public class App {
 			try {
 				if (transaction != null) {
 					transactionId = fun.getTransansactionId(transaction, "s");
-					transactionPath = fun.getTransansactionPath(transaction, db);
-					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db);
+					transactionPath = fun.getTransansactionPath(transaction, db, false);
+					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db, false);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
@@ -97,8 +97,8 @@ public class App {
 						"get_json_by_status");
 				while (transactionWithStatus0 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db);
-					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db);
+					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
+					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
@@ -208,14 +208,13 @@ public class App {
 		  //
 		  bt.start();
 		  
-		  // Proveri da nije null 
-		  // 
-		  sendTransactionWithStatus0();
-		  
 		  // Cekanje notify-a 
 		  // 
 		  Listener listener = new Listener(lConn);
 		  listener.start(); 
 
+		  // Proveri da nije null 
+		  // 
+		  sendTransactionWithStatus0();
 	}
 }
