@@ -6,8 +6,8 @@ public class apiUuidStatus extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT * FROM public.transactions WHERE api_uuid is null ORDER BY transaction_time DESC limit 1 ";
-	static String[] columns = { "transaction_id" };
+	static String sql = "SELECT count(transaction_id) FROM public.transactions where status = 0";
+	static String[] columns = { "count" };
 
 	public void run() {
 	
@@ -16,7 +16,7 @@ public class apiUuidStatus extends Thread {
 				if(fun.workTime()) {
 					try {
 						msg = db.executeQuery2(sql, "Slanje ka upravi je prestalo", columns);
-						if(msg != "Slanje ka upravi je prestalo") {
+						if(Integer.parseInt(msg) > 25) {
 							msg = fun.setUTF8(msg);
 							fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
 						}

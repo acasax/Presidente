@@ -167,13 +167,17 @@ public class App {
 		  fun.sendEmailYahho("Aplikacija se startovala u: " + LocalDateTime.now(),
 				  "presidenteapp@yahoo.com", "Pokretanje aplikacije");
 		  
+		  // Proverava da li slanje ka upravi radi 
+		  // 
+		  aus.start();
+		  
 		  // Proverava da li ima log fajlova 
 		  //
 		  ec.start();
 		  
 		  // Provera lokacija u poslednja dva sata 
 		  // 
-		  lc.start();
+		  //lc.start();
 		  
 		  // SlotPeriodic 
 		  // 
@@ -203,9 +207,6 @@ public class App {
 		  // 
 		  spc.start();
 		  
-		  // Proverava da li slanje ka upravi radi 
-		  // 
-		  aus.start();
 		  
 		  // Proverava da li ima losih transakcija
 		  //
