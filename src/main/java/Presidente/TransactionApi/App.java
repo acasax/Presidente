@@ -68,7 +68,8 @@ public class App {
 							fun.createLog(transactionSendingStatus);
 						}
 					} else {
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 25) {
+						System.out.println("Pre" + ManagementFactory.getThreadMXBean().getThreadCount());
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 120) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -110,7 +111,8 @@ public class App {
 							fun.createLog(transactionSendingStatus);
 						}
 					} else {
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 25) {
+						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -160,7 +162,8 @@ public class App {
 		  badTransactions bt = new badTransactions();
 		  
 		  
-		  // Email za proveru aplikacije //
+		  // Email za proveru aplikacije 
+		  //
 		  fun.sendEmailYahho("Aplikacija se startovala u: " + LocalDateTime.now(),
 				  "presidenteapp@yahoo.com", "Pokretanje aplikacije");
 		  
@@ -186,7 +189,7 @@ public class App {
 		  
 		  // Provera da li ima pristiglih uplata u poslednjih 15 minuta 
 		  // 
-		  sh.start();
+		  //sh.start();
 		  
 		  // Provera slot periodic 
 		  // 

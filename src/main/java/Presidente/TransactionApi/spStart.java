@@ -70,7 +70,7 @@ public class spStart extends Thread {
 			try {
 				// cekaj 5 minuta pa uradi ponovo
 				//
-				Thread.sleep(0);
+				Thread.sleep(300000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				try {

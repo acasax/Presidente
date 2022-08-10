@@ -73,6 +73,29 @@ public class ConstError {
 		return 0;
 	}
 	
+	public String transactionPathByType(Integer type) {
+		switch(type) {
+		  case 1:
+		    return "slot/deposit";
+		  case 2:
+			    return "slot/withdraw";
+		  case 3:
+			    return "slot/jackpot";
+		  case 4:
+			    return "slot/rollback";
+		  case 5:
+			    return "slot/deposit";
+		  case 6:
+			    return "slot/deposit";
+		  case 7:
+			    return "slot/deposit";
+		  case 8:
+			    return "slot/withdraw";
+		  default:
+		    return "Nema u bazi pristiglog tipa";
+		}	
+	}
+	
 	public Double maxDeposit = 100000.00;
 	public Double maxWithdraw = 500000.00;
 }

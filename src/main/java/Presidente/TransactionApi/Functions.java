@@ -79,20 +79,21 @@ public class Functions {
 		String path = null;
 		if(status) {
 			String transaction_type = getParamFromJson(JSON, "transaction_types");
-			String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
-			String[] columns = {"path"};
-			try {
-				path = db.executeQuery3(pathQuery, columns);
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			path = ce.transactionPathByType(Integer.parseInt(transaction_type));
+//			String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
+//			String[] columns = {"path"};
+//			try {
+//				path = db.executeQuery3(pathQuery, columns);
+//			} catch (SecurityException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		} else {
 			path = getParamFromJson(JSON, "path");
 		}

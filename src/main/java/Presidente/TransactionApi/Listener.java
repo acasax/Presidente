@@ -35,7 +35,7 @@ class Listener extends Thread {
 				if (startMilis == 0) {
 					startMilis = millis;
 				} else {
-					if (millis > startMilis + 30000) { // vreme za proveru statusa 0
+					if (millis > startMilis + 300000) { // vreme za proveru statusa 0
 						new Thread(new Runnable() {
 							public void run() {
 								try {
