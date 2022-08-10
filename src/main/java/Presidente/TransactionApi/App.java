@@ -177,7 +177,7 @@ public class App {
 		  
 		  // Provera lokacija u poslednja dva sata 
 		  // 
-		  //lc.start();
+		  lc.start();
 		  
 		  // SlotPeriodic 
 		  // 
