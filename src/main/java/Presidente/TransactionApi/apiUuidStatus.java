@@ -15,13 +15,9 @@ public class apiUuidStatus extends Thread {
 			try {
 				if(fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sql, "Slanje ka upravi je prestalo", columns);
-						if(!msg.equals("") && msg != null) {
-							if(Integer.parseInt(msg) > 25) {
-								msg = fun.setUTF8(msg);
-								fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
-							}
-						}
+						msg = db.executeQuery2(sql, "Slanje ka upravi je ok", columns);
+						msg = fun.setUTF8(msg);
+						fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -1,7 +1,7 @@
 package Presidente.TransactionApi;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -11,11 +11,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +26,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import java.io.File;
+import org.apache.commons.io.Charsets;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Functions {
 
@@ -717,7 +715,7 @@ public class Functions {
 
 		LocalTime now = LocalTime.now();
 
-		if (now.isAfter(LocalTime.parse("04:00:00")) && now.isBefore(LocalTime.parse("07:00:00"))) {
+		if (now.isAfter(LocalTime.parse("06:00:00")) && now.isBefore(LocalTime.parse("08:00:00"))) {
 			return false;
 		} else {
 			return true;
@@ -728,8 +726,8 @@ public class Functions {
 	// String moze da koristi cirilicna slova
 	//
 	public String setUTF8(String str) {
-		byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
-		String strUtf8 = new String(bytes, StandardCharsets.UTF_8);
+		byte[] bytes = str.getBytes(Charsets.UTF_8);
+		String strUtf8 = new String(bytes, Charsets.UTF_8);
 
 		return strUtf8;
 	}
