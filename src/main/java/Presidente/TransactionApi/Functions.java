@@ -234,11 +234,11 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			if (p_transaction_amount > ce.maxDeposit) {
-				transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
+				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
-						"presidenteapp@yahoo.com", "Velika uplata");
+				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
+						" presidenteapp@yahoo.com", "Velika uplata");
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -249,10 +249,10 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			if (p_transaction_amount > ce.maxWithdraw) {
-				transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
+				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + "ID: " + transaction_id
-						+ "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + "Aparat: " + sticker_no + "Mak adresa: " + macAddress,
+				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
 						"presidenteapp@yahoo.com", "Velika isplata");
 			}
 			return transactionBody;
