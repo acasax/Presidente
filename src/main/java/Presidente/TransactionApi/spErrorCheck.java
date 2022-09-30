@@ -20,7 +20,7 @@ public class spErrorCheck extends Thread {
 						cronError = fun.getCronError(db);
 						if (cronError.equals("1")) {
 							// proverava da li u bazi ima sn izvestaja sa statusom 1
-							fun.sendEmailYahho("cron error je 1", "presidenteapp@yahoo.com", "report index, slot preiodic error");
+							fun.sendEmail("cron error je 1", "presidenteapp@yahoo.com", "report index, slot preiodic error");
 						}
 					} catch (SecurityException | IOException e) {
 						// TODO Auto-generated catch block

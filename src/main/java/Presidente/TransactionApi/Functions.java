@@ -78,20 +78,6 @@ public class Functions {
 		if(status) {
 			String transaction_type = getParamFromJson(JSON, "transaction_types");
 			path = ce.transactionPathByType(Integer.parseInt(transaction_type));
-//			String pathQuery = "SELECT path FROM public.transaction_types where transaction_types = " + transaction_type;
-//			String[] columns = {"path"};
-//			try {
-//				path = db.executeQuery3(pathQuery, columns);
-//			} catch (SecurityException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		} else {
 			path = getParamFromJson(JSON, "path");
 		}
@@ -383,7 +369,7 @@ public class Functions {
 		String to = emailTo;
 
 		// Sender's email ID needs to be mentioned
-		String from = "prezidentplay1@gmail.com";
+		String from = "acasax@gmail.com";
 
 		// Assuming you are sending email from through gmails smtp
 		String host = "smtp.gmail.com";
@@ -402,7 +388,7 @@ public class Functions {
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("prezidentplay1@gmail.com", "igrajdabidobio");
+				return new PasswordAuthentication("acasax@gmail.com", "cgbjqlhqsylqcmsp");
 
 			}
 
@@ -441,7 +427,7 @@ public class Functions {
 		String to = emailTo;
 
 		// Sender's email ID needs to be mentioned
-		String from = "mrsax23@yahoo.com";
+		String from = "presidentesaxapp@yahoo.com";
 
 		// Assuming you are sending email from through gmails smtp
 		String host = "smtp.mail.yahoo.com";
@@ -514,12 +500,12 @@ public class Functions {
 					flag = 1;
 				}
 			}
-			sendEmailYahho(msg, "presidenteapp@yahoo.com", "Greska");
+			sendEmail(msg, "presidenteapp@yahoo.com", "Greska");
 		}
 
 		if (flag == 0) {
 			msg = "Nema pronadjenih log fajlova";
-			sendEmailYahho(msg, "presidenteapp@yahoo.com", "Sve ok je bre!!!");
+			sendEmail(msg, "presidenteapp@yahoo.com", "Sve ok je bre!!!");
 		}
 
 	}

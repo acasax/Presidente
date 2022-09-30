@@ -17,7 +17,7 @@ public class badTransactions extends Thread {
 						msg = db.executeQuery1(sql, "Losa transakcija", columns);
 						if(msg != "") {
 							msg = fun.setUTF8(msg);
-							fun.sendEmailYahho(msg, "presidenteapp@yahoo.com", "Losa transakcija");
+							fun.sendEmail(msg, "presidenteapp@yahoo.com", "Losa transakcija");
 						}
 						try {
 							Thread.sleep(1500000);

@@ -62,8 +62,8 @@ public class App {
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
-							fun.sendEmailYahho(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
-							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
+							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
+							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
@@ -105,8 +105,8 @@ public class App {
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog(transactionJSONError);
-							fun.sendEmailYahho(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
-							fun.sendEmailYahho(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
+							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
+							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog(transactionSendingStatus);
 						}
