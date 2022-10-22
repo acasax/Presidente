@@ -700,8 +700,11 @@ public class Functions {
 	public boolean workTime() throws ParseException {
 
 		LocalTime now = LocalTime.now();
+		
+		// Radi sve vreme
+		//
 
-		if (now.isAfter(LocalTime.parse("06:00:00")) && now.isBefore(LocalTime.parse("08:00:00"))) {
+		if (now.isAfter(LocalTime.parse("05:00:00")) && now.isBefore(LocalTime.parse("05:00:00"))) {
 			return false;
 		} else {
 			return true;
