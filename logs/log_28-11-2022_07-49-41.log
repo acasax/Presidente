@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-11-28T18:49:41.503411600Z</date>
+  <millis>1669661381503</millis>
+  <nanos>411600</nanos>
+  <sequence>92</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>20</thread>
+  <message>get_sp_cron_job_error_counter nije kako trebaConnection to 93.87.76.139:1521 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.</message>
+</record>
+<record>
+  <date>2022-11-28T18:50:28.767562Z</date>
+  <millis>1669661428767</millis>
+  <nanos>562000</nanos>
+  <sequence>93</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>103</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: c0e9a3d9-b483-4724-9fc2-2248a4237f70  Transaction path: slot/depositTransaction body : {"transaction_id":"c0e9a3d9-b483-4724-9fc2-2248a4237f70","slot_club_id":"03","transaction_amount":500,"transaction_time":"2022-11-27T16:27:02+01:00","transaction_type":"1","sticker_no":"019905"}Greska :org.postgresql.util.PSQLException: Connection to 93.87.76.139:1521 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.</message>
+</record>
+<record>
+  <date>2022-11-28T18:50:43.908015300Z</date>
+  <millis>1669661443908</millis>
+  <nanos>15300</nanos>
+  <sequence>94</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>20</thread>
+  <message>get_sp_cron_job_error_counter nije kako trebaConnection to 93.87.76.139:1521 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.</message>
+</record>

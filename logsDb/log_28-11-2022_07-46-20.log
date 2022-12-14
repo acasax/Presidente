@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-11-28T18:46:20.169751800Z</date>
+  <millis>1669661180169</millis>
+  <nanos>751800</nanos>
+  <sequence>68</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>65</thread>
+  <message>Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_1_by_transaction_id('16578ef8-2302-4791-ae38-45a7ba3b9daf','5d01439d-236f-4580-970f-cc26e7735596')</message>
+</record>

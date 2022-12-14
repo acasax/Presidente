@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-11-28T18:41:19.145640500Z</date>
+  <millis>1669660879145</millis>
+  <nanos>640500</nanos>
+  <sequence>1</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>15</thread>
+  <message>Funkcija executeFunction nije uspešno izvršenaSELECT public.get_json_sp_by_status(0)</message>
+</record>
+<record>
+  <date>2022-11-28T18:41:19.147679900Z</date>
+  <millis>1669660879147</millis>
+  <nanos>679900</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>15</thread>
+  <message>U ovom JSON-u nema polja report indexA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>

@@ -114,7 +114,7 @@ public class DbFunctions {
 				if(resultSet != null) {
 					while (resultSet.next()) {
 						for(int i = 0; i < params.length; i++) {
-							returnMsg = returnMsg + params[i] + " :" + resultSet.getString(params[i]) + " " + "\r\n";
+							returnMsg = returnMsg + params[i] + ": " + resultSet.getString(params[i]) + " " + "\r\n";
 						}
 						returnMsg = returnMsg + "\r\n";
 					}
@@ -191,6 +191,25 @@ public class DbFunctions {
 		    	fun.createLogDb(ce.executeQuery1 + SQL);
 	            return e.getMessage();
 		    }
+
+	}
+	
+	public ResultSet executeQuery4(String SQL) throws SecurityException, IOException, SQLException {
+		Connection lConn = DriverManager.getConnection(urlL, user, password);
+
+		 try {
+		        Statement stmnt = null;
+		        stmnt = lConn.createStatement();
+		    	ResultSet resultSet = stmnt.executeQuery(SQL);
+				//resultSet.close();
+				stmnt.cancel();
+				lConn.close();
+				return resultSet;
+		    } catch (SQLException e) {
+		    	lConn.close();
+		    	fun.createLogDb(ce.executeQuery4 + SQL);
+		    }
+		return null;
 
 	}
 		

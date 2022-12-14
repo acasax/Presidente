@@ -704,7 +704,7 @@ public class Functions {
 		// Radi sve vreme
 		//
 
-		if (now.isAfter(LocalTime.parse("05:00:00")) && now.isBefore(LocalTime.parse("05:00:00"))) {
+		if (now.isAfter(LocalTime.parse("03:30:00")) && now.isBefore(LocalTime.parse("07:30:00"))) {
 			return false;
 		} else {
 			return true;

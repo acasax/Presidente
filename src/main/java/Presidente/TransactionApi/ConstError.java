@@ -9,9 +9,58 @@ public class ConstError {
 	public String executeProcedure             = "Funkcija executeProcedure nije uspešno izvršena";
 	public String executeFunction              = "Funkcija executeFunction nije uspešno izvršena";
 	public String executeQuery1                = "Funkcija executeQuery1 nije uspešno izvršena";
+	public String executeQuery4                = "Funkcija executeQuery4 nije uspešno izvršena";
 	public String getParamFromJsonDuable       = "Parametar koji ste zatrazili nije dabl formata";
 	public String getParamFromJson             = "U jsonu nema unetog parametra";
 	public String sendSlotPeriodicWithStatus0  = "Funkcija sendSlotPeriodicWithStatus0 nije uspešno izvršena";	
+	
+	
+	public String slotClubFromSlotClubid(String sid) {
+		switch(sid) {
+		  case "01":
+		    return "Trg Despota Stefana 30 Krusevac";
+		  case "02":
+			    return "Cara Lazara 193 Krusevac";
+		  case "03":
+			    return "29. Novembra Aleksandrovac";
+		  case "04":
+			    return "Kralja Petra i 42 Brus";
+		  case "07":
+			    return "Vojvode Misica 8 Paracin";
+		  case "08":
+			    return "Bircaninova 10 Krusevac";
+		  case "09":
+			    return "Vidovdanska 233 Krusevac";
+		  case "10":
+			    return "Dimitrija Tucakovica 40 Kraljevo";
+		  case "11":
+			    return "Rasinska 101 Krusevac";
+		  case "12":
+			    return "Zrenjaninski put 155 Borca";
+		  case "13":
+			    return "Trg Kralja Petra I Oslobodioca 3/1 Kraljevo";
+		  case "14":
+			    return "Čolak Antina 17 Kruševac";
+		  default:
+		    return "Nema u bazi pristiglog sid-a";
+		}	
+	}
+	
+	public String transactionTypeByPath(String sid) {
+		switch(sid) {
+		  case "slot/deposit":
+		    return "uplata";
+		  case "slot/withdraw":
+			    return "isplata";
+		  case "slot/jackpot":
+			    return "dzekpot";
+		  case "slot/rollback":
+			    return "storno";
+		  default:
+		    return "Nema u bazi pristiglog sid-a";
+		}	
+	}
+	
 	
 	
 	public String slotClubIdFromSlotClubSid(String sid) {

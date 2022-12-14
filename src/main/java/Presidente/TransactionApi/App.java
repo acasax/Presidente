@@ -160,6 +160,7 @@ public class App {
 		  paymentCheck pc = new paymentCheck();
 		  apiUuidStatus aus = new apiUuidStatus();
 		  badTransactions bt = new badTransactions();
+		  transactionsReport tr = new transactionsReport();
 		  
 		  
 		  // Email za proveru aplikacije 
@@ -217,6 +218,10 @@ public class App {
 		  Listener listener = new Listener(lConn);
 		  listener.start(); 
 
+		  // Slanje stanja na svaka dva sata
+		  //
+		  //tr.start();
+		  
 		  // Proveri da nije null 
 		  // 
 		  sendTransactionWithStatus0();
