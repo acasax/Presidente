@@ -195,7 +195,7 @@ public class Processing extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("Processing NumberFormatException e:" + e.getMessage());
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -205,7 +205,7 @@ public class Processing extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("Processing InterruptedException e:" + e.getMessage());
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -217,7 +217,7 @@ public class Processing extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
-				fun.createLog(e.getMessage());
+				fun.createLog("Processing ClientProtocolException e:" + e.getMessage());
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -225,7 +225,7 @@ public class Processing extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 			try {
-				fun.createLog(e.getMessage());
+				fun.createLog("Processing IOException e:" + e.getMessage());
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

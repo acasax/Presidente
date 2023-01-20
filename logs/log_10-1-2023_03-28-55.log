@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-10T14:28:55.039107800Z</date>
+  <millis>1673360935039</millis>
+  <nanos>107800</nanos>
+  <sequence>110</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>77424</thread>
+  <message>Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connect</message>
+</record>
+<record>
+  <date>2023-01-10T14:30:39.400381800Z</date>
+  <millis>1673361039400</millis>
+  <nanos>381800</nanos>
+  <sequence>111</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>67839</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: 158b50b7-b010-41a4-9ec3-4e35f4f81545  Transaction path: slot/depositTransaction body : {"transaction_id":"158b50b7-b010-41a4-9ec3-4e35f4f81545","slot_club_id":"08","transaction_amount":1000,"transaction_time":"2023-01-09T21:18:51.90833+01:00","transaction_type":"6","sticker_no":"019881"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

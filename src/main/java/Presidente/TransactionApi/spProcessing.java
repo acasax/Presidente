@@ -191,7 +191,7 @@ public class spProcessing extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("spProcessing NumberFormatException e:" + e.getMessage());
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -201,7 +201,7 @@ public class spProcessing extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("spProcessing InterruptedException e:" + e.getMessage());
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -213,7 +213,7 @@ public class spProcessing extends Thread {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 			try {
-				fun.createLog(e2.getMessage());
+				fun.createLog("spProcessing ClientProtocolException e:" + e2.getMessage());
 			} catch (SecurityException | IOException e4) {
 				// TODO Auto-generated catch block
 				e4.printStackTrace();
@@ -221,7 +221,7 @@ public class spProcessing extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 			try {
-				fun.createLog(e.getMessage());
+				fun.createLog("spProcessing IOException e:" + e.getMessage());
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

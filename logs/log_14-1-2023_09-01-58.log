@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-14T20:01:58.239717300Z</date>
+  <millis>1673726518239</millis>
+  <nanos>717300</nanos>
+  <sequence>116</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>25721</thread>
+  <message>Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connect</message>
+</record>
+<record>
+  <date>2023-01-14T20:01:58.459271700Z</date>
+  <millis>1673726518459</millis>
+  <nanos>271700</nanos>
+  <sequence>117</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>25722</thread>
+  <message>Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connect</message>
+</record>
+<record>
+  <date>2023-01-14T20:01:58.630237800Z</date>
+  <millis>1673726518630</millis>
+  <nanos>237800</nanos>
+  <sequence>118</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>25723</thread>
+  <message>Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connect</message>
+</record>

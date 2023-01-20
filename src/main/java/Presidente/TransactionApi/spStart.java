@@ -51,7 +51,7 @@ public class spStart extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("spStart SecurityException | IOException e" + e.getMessage());
 				} catch (SecurityException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -60,7 +60,7 @@ public class spStart extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("spStart SQLException e" + e.getMessage());
 				} catch (SecurityException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -74,7 +74,7 @@ public class spStart extends Thread {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				try {
-					fun.createLog(e.getMessage());
+					fun.createLog("spStart InterruptedException e" + e.getMessage());
 				} catch (SecurityException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

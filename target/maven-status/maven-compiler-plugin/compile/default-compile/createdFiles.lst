@@ -14,6 +14,7 @@ Presidente\TransactionApi\slotPeriodicCheck.class
 Presidente\TransactionApi\badTransactions.class
 Presidente\TransactionApi\Listener$1.class
 Presidente\TransactionApi\Processing.class
+Presidente\TransactionApi\checkCertificate.class
 Presidente\TransactionApi\ErrorCheck.class
 Presidente\TransactionApi\machineCheck.class
 Presidente\TransactionApi\Check.class

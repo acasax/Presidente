@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-09T23:25:33.063504900Z</date>
+  <millis>1673306733063</millis>
+  <nanos>504900</nanos>
+  <sequence>85</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>685</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.062504600Z</date>
+  <millis>1673306733062</millis>
+  <nanos>504600</nanos>
+  <sequence>84</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>6713</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.068505900Z</date>
+  <millis>1673306733068</millis>
+  <nanos>505900</nanos>
+  <sequence>86</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>5035</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.073507Z</date>
+  <millis>1673306733073</millis>
+  <nanos>507000</nanos>
+  <sequence>89</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>5567</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.073507Z</date>
+  <millis>1673306733073</millis>
+  <nanos>507000</nanos>
+  <sequence>90</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>10704</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.071506300Z</date>
+  <millis>1673306733071</millis>
+  <nanos>506300</nanos>
+  <sequence>87</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.075507300Z</date>
+  <millis>1673306733075</millis>
+  <nanos>507300</nanos>
+  <sequence>92</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1985</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.075507300Z</date>
+  <millis>1673306733075</millis>
+  <nanos>507300</nanos>
+  <sequence>91</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1145</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.075507300Z</date>
+  <millis>1673306733075</millis>
+  <nanos>507300</nanos>
+  <sequence>93</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>13405</thread>
+  <message>api.uis.gov.rs</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.072506700Z</date>
+  <millis>1673306733072</millis>
+  <nanos>506700</nanos>
+  <sequence>88</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>4497</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.076507800Z</date>
+  <millis>1673306733076</millis>
+  <nanos>507800</nanos>
+  <sequence>94</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>11806</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.081509Z</date>
+  <millis>1673306733081</millis>
+  <nanos>509000</nanos>
+  <sequence>95</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>3959</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a7cb473a-6a7a-41da-abd8-cdf46443c687  Transaction path: slot/depositTransaction body : {"transaction_id":"a7cb473a-6a7a-41da-abd8-cdf46443c687","slot_club_id":"03","transaction_amount":2000,"transaction_time":"2023-01-07T20:22:38+01:00","transaction_type":"1","sticker_no":"019907"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.081509Z</date>
+  <millis>1673306733081</millis>
+  <nanos>509000</nanos>
+  <sequence>96</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>10176</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: U ovom JSON-u nema polja transaction_id  Transaction path: slot/depositTransaction body : {"transaction_id":"a7cb473a-6a7a-41da-abd8-cdf46443c687","slot_club_id":"03","transaction_amount":2000,"transaction_time":"2023-01-07T20:22:38+01:00","transaction_type":"1","sticker_no":"019907"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.083509300Z</date>
+  <millis>1673306733083</millis>
+  <nanos>509300</nanos>
+  <sequence>98</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>6136</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a7cb473a-6a7a-41da-abd8-cdf46443c687  Transaction path: slot/depositTransaction body : {"transaction_id":"a7cb473a-6a7a-41da-abd8-cdf46443c687","slot_club_id":"03","transaction_amount":2000,"transaction_time":"2023-01-07T20:22:38+01:00","transaction_type":"1","sticker_no":"019907"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.083509300Z</date>
+  <millis>1673306733083</millis>
+  <nanos>509300</nanos>
+  <sequence>99</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1566</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a7cb473a-6a7a-41da-abd8-cdf46443c687  Transaction path: slot/depositTransaction body : {"transaction_id":"a7cb473a-6a7a-41da-abd8-cdf46443c687","slot_club_id":"03","transaction_amount":2000,"transaction_time":"2023-01-07T20:22:38+01:00","transaction_type":"1","sticker_no":"019907"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-09T23:25:33.083509300Z</date>
+  <millis>1673306733083</millis>
+  <nanos>509300</nanos>
+  <sequence>97</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>272</thread>
+  <message>U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>

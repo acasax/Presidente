@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-10T02:53:09.584027800Z</date>
+  <millis>1673319189584</millis>
+  <nanos>27800</nanos>
+  <sequence>33</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>13951</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: 373862a3-034e-4ae5-9a50-74684c9483e1  Transaction path: slot/depositTransaction body : {"transaction_id":"608eb5bb-f58f-475b-826e-4c535259c86a","slot_club_id":"10","transaction_amount":2000,"transaction_time":"2023-01-08T13:02:05+01:00","transaction_type":"1","sticker_no":"019844"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

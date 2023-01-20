@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-09T23:25:41.000510500Z</date>
+  <millis>1673306741000</millis>
+  <nanos>510500</nanos>
+  <sequence>102</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>13409</thread>
+  <message>api.uis.gov.rs</message>
+</record>

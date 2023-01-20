@@ -49,7 +49,7 @@ public class Functions {
 				}
 				return transactionId = obj.getString("transaction_id");
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
+				createLog("Functions getTransansactionId U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
 			}
 
@@ -64,7 +64,7 @@ public class Functions {
 				}
 				return transactionId = obj.getString("transaction_id");
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja transaction_id" + e.getMessage());
+				createLog("Functions getTransansactionId 2 U ovom JSON-u nema polja transaction_id" + e.getMessage());
 				return "U ovom JSON-u nema polja transaction_id";
 			}
 
@@ -112,7 +112,7 @@ public class Functions {
 				paramValueD = obj.getDouble(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
-				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
+				createLog("Functions getParamFromJson transaction_withdraw_amount" + ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
 				return null;
 			}
 		case "transaction_types":
@@ -123,7 +123,7 @@ public class Functions {
 				paramValueD = obj.getInt(Param);
 				return String.valueOf(f.format(paramValueD));
 			} catch (JSONException e) {
-				createLog(ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
+				createLog("Functions getParamFromJson transaction_types" + ce.getParamFromJsonDuable + "JSON" + JSON + "Parametar" + Param);
 				return null;
 			}
 		default:
@@ -135,7 +135,7 @@ public class Functions {
 				return paramValue;
 			} catch (JSONException e) {
 				if (!Param.equals("error")) {
-					createLog(ce.getParamFromJson + "JSON" + JSON + "Parametar" + Param);
+					createLog("Functions getParamFromJson default" + ce.getParamFromJson + "JSON" + JSON + "Parametar" + Param);
 				}
 				return null;
 			}
@@ -289,7 +289,7 @@ public class Functions {
 			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
 			return macAddress;
 		} catch (SQLException e) {
-			createLog("getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
+			createLog("Functions getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
 			return "macAddress nije kako treba";
 		}
 	}
@@ -307,7 +307,7 @@ public class Functions {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			createLog("Api kaunter nije kako treba" + e.getMessage());
+			createLog("Functions Api kaunter nije kako treba" + e.getMessage());
 			return "Api kaunter nije kako treba";
 		}
 	}
@@ -318,7 +318,7 @@ public class Functions {
 					"get_transaction_exe_status");
 			return workStatus;
 		} catch (SQLException e) {
-			createLog("work status nije kako treba" + e.getMessage());
+			createLog("Functions work status nije kako treba" + e.getMessage());
 			return "work status nije kako treba";
 		}
 	}
@@ -528,7 +528,7 @@ public class Functions {
 				}
 				return report_index;
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja report index" + e.getMessage());
+				createLog("Functions getReportIndex U ovom JSON-u nema polja report index" + e.getMessage());
 				return 0;
 			}
 
@@ -544,7 +544,7 @@ public class Functions {
 				}
 				return report_index;
 			} catch (JSONException e) {
-				createLog("U ovom JSON-u nema polja report index" + e.getMessage());
+				createLog("Functions getReportIndex 2 U ovom JSON-u nema polja report index" + e.getMessage());
 				return 0;
 			}
 
@@ -647,7 +647,7 @@ public class Functions {
 				spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
 			}
 		} catch (SQLException | SecurityException | IOException e) {
-			createLog(ce.sendSlotPeriodicWithStatus0 + "Greska :" + e);
+			createLog("Functions sendSlotPeriodicWithStatus0" + ce.sendSlotPeriodicWithStatus0 + "Greska :" + e);
 		}
 	}
 
@@ -659,7 +659,7 @@ public class Functions {
 					"get_sp_report_exe_status");
 			return workStatus;
 		} catch (SQLException e) {
-			createLog("work status nije kako treba" + e.getMessage());
+			createLog("Functions getSpWorkStatus  work status nije kako treba" + e.getMessage());
 			return "work status nije kako treba";
 		}
 	}
@@ -677,7 +677,7 @@ public class Functions {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			createLog("Api kaunter nije kako treba" + e.getMessage());
+			createLog("Functions getSpWorkStatus getSpApiCounter Api kaunter nije kako treba" + e.getMessage());
 			return "Api kaunter nije kako treba";
 		}
 	}
@@ -690,7 +690,7 @@ public class Functions {
 					"get_sp_cron_job_error_counter");
 			return workStatus;
 		} catch (SQLException e) {
-			createLog("get_sp_cron_job_error_counter nije kako treba" + e.getMessage());
+			createLog("Functions getCronError get_sp_cron_job_error_counter nije kako treba" + e.getMessage());
 			return "get_sp_cron_job_error_counter nije kako treba";
 		}
 	}
@@ -700,9 +700,6 @@ public class Functions {
 	public boolean workTime() throws ParseException {
 
 		LocalTime now = LocalTime.now();
-		
-		// Radi sve vreme
-		//
 
 		if (now.isAfter(LocalTime.parse("03:30:00")) && now.isBefore(LocalTime.parse("07:30:00"))) {
 			return false;

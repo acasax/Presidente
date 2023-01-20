@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-10T08:43:23.032526900Z</date>
+  <millis>1673340203032</millis>
+  <nanos>526900</nanos>
+  <sequence>53</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>15</thread>
+  <message>Funkcija sendSlotPeriodicWithStatus0 nije uspešno izvršenaGreska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

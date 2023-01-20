@@ -61,16 +61,16 @@ public class App {
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
-							fun.createLog(transactionJSONError);
+							fun.createLog("sendTransaction transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
 							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
 							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
-							fun.createLog(transactionSendingStatus);
+							fun.createLog("sendTransaction transactionSendingStatus: " + transactionSendingStatus);
 						}
 					} else {
-						System.out.println("Pre" + ManagementFactory.getThreadMXBean().getThreadCount());
+						System.out.println("sendTransaction before Threads number" + ManagementFactory.getThreadMXBean().getThreadCount());
 						if(ManagementFactory.getThreadMXBean().getThreadCount() < 120) {
-							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
+							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
 							// Pokretanje procesa za odredjeni transaction id
@@ -81,7 +81,9 @@ public class App {
 					}
 				}
 			} catch (SecurityException | IOException e) {
-				fun.createLog(ce.sendTransaction);
+				fun.createLog("sendTransaction SQLException | SecurityException | IOException e" +
+						ce.sendTransactionWithStatus0 + " Transaction id: " + transactionId + "  Transaction path: "
+								+ transactionPath + "Transaction body : " + transactionBody + "Greska :" + e);
 			}
 		}
 	}
@@ -104,11 +106,11 @@ public class App {
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
-							fun.createLog(transactionJSONError);
+							fun.createLog("sendTransactionWithStatus0 transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
 							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
 							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
-							fun.createLog(transactionSendingStatus);
+							fun.createLog("sendTransactionWithStatus0 transactionSendingStatus: " + transactionSendingStatus);
 						}
 					} else {
 						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
@@ -126,7 +128,7 @@ public class App {
 					}
 				}
 			} catch (SQLException | SecurityException | IOException e) {
-				fun.createLog(
+				fun.createLog("sendTransactionWithStatus0 SQLException | SecurityException | IOException e" +
 						ce.sendTransactionWithStatus0 + " Transaction id: " + transactionId + "  Transaction path: "
 								+ transactionPath + "Transaction body : " + transactionBody + "Greska :" + e);
 			}
@@ -161,6 +163,9 @@ public class App {
 		  apiUuidStatus aus = new apiUuidStatus();
 		  badTransactions bt = new badTransactions();
 		  transactionsReport tr = new transactionsReport();
+		  checkCertificate cc = new checkCertificate();
+		  
+		  cc.start();
 		  
 		  
 		  // Email za proveru aplikacije 

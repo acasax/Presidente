@@ -35,11 +35,11 @@ public class DbFunctions {
 				source.setDatabaseName("accounting");
 				source.setUser("presidente");
 				source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
-				source.setMaxConnections(100);
+				source.setMaxConnections(70);
 				Connection connection = source.getConnection();
 				return connection;
 			} catch (SQLException e) {
-				 fun.createLogDb(ce.asyconnect);
+				 fun.createLogDb("DbFunctions asyconnect: " + ce.asyconnect);
 				 fun.sendEmailYahho("konekcija na bazu je prekinuta", "presidenteapp@yahoo.com", "Nema konekcije na bazu");
 			}
 		}
@@ -56,7 +56,7 @@ public class DbFunctions {
 		        return "";
 		    } catch (SQLException e) {
 		    	lConn.close();
-		    	fun.createLogDb(ce.executeQuery + procedureSQL);
+		    	fun.createLogDb("DbFunctions executeQuery: " + ce.executeQuery + procedureSQL);
 	            return e.getMessage();
 		    }
 
@@ -74,7 +74,7 @@ public class DbFunctions {
 	            return result;
 	        } catch (SQLException e) {
 	        	lConn.close();
-	        	fun.createLogDb(ce.executeProcedure + procedureSQL);
+	        	fun.createLogDb("DbFunctions executeProcedure: " + ce.executeProcedure + procedureSQL);
 	            return e.getMessage();
 	        } 
 	}
@@ -97,7 +97,7 @@ public class DbFunctions {
 			}
 		} catch (SQLException e) {
 			lConn.close();
-			fun.createLogDb(ce.executeFunction + SQL);
+			fun.createLogDb("DbFunctions executeFunction: " + ce.executeFunction + SQL);
             return e.getMessage();
         }
 		return null;
@@ -128,7 +128,7 @@ public class DbFunctions {
 				}
 		    } catch (SQLException e) {
 		    	lConn.close();
-		    	fun.createLogDb(ce.executeQuery1 + SQL);
+		    	fun.createLogDb("DbFunctions executeQuery1: " + ce.executeQuery1 + SQL);
 	            return e.getMessage();
 		    }
 
@@ -158,7 +158,7 @@ public class DbFunctions {
 				}
 		    } catch (SQLException e) {
 		    	lConn.close();
-		    	fun.createLogDb(ce.executeQuery1 + SQL);
+		    	fun.createLogDb("DbFunctions executeQuery2: " + ce.executeQuery2 + SQL);
 	            return e.getMessage();
 		    }
 
@@ -188,7 +188,7 @@ public class DbFunctions {
 				}
 		    } catch (SQLException e) {
 		    	lConn.close();
-		    	fun.createLogDb(ce.executeQuery1 + SQL);
+		    	fun.createLogDb("DbFunctions executeQuery3: " + ce.executeQuery3 + SQL);
 	            return e.getMessage();
 		    }
 
@@ -207,7 +207,7 @@ public class DbFunctions {
 				return resultSet;
 		    } catch (SQLException e) {
 		    	lConn.close();
-		    	fun.createLogDb(ce.executeQuery4 + SQL);
+		    	fun.createLogDb("DbFunctions executeQuery4: " + ce.executeQuery4 + SQL);
 		    }
 		return null;
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-19T11:00:48.342684200Z</date>
+  <millis>1674126048342</millis>
+  <nanos>684200</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>416</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a0437d01-dd41-42d7-982f-4332823b7727  Transaction path: slot/depositTransaction body : {"transaction_id":"a0437d01-dd41-42d7-982f-4332823b7727","slot_club_id":"12","transaction_amount":500,"transaction_time":"2023-01-18T11:35:37+01:00","transaction_type":"1","sticker_no":"020031"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-19T11:00:48.349351500Z</date>
+  <millis>1674126048349</millis>
+  <nanos>351500</nanos>
+  <sequence>3</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>816</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a0437d01-dd41-42d7-982f-4332823b7727  Transaction path: slot/depositTransaction body : {"transaction_id":"a0437d01-dd41-42d7-982f-4332823b7727","slot_club_id":"12","transaction_amount":500,"transaction_time":"2023-01-18T11:35:37+01:00","transaction_type":"1","sticker_no":"020031"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-01-19T11:00:48.473655100Z</date>
+  <millis>1674126048473</millis>
+  <nanos>655100</nanos>
+  <sequence>4</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1182</thread>
+  <message>Funkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: a0437d01-dd41-42d7-982f-4332823b7727  Transaction path: slot/depositTransaction body : {"transaction_id":"a0437d01-dd41-42d7-982f-4332823b7727","slot_club_id":"12","transaction_amount":500,"transaction_time":"2023-01-18T11:35:37+01:00","transaction_type":"1","sticker_no":"020031"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

@@ -9,6 +9,8 @@ public class ConstError {
 	public String executeProcedure             = "Funkcija executeProcedure nije uspešno izvršena";
 	public String executeFunction              = "Funkcija executeFunction nije uspešno izvršena";
 	public String executeQuery1                = "Funkcija executeQuery1 nije uspešno izvršena";
+	public String executeQuery2                = "Funkcija executeQuery2 nije uspešno izvršena";
+	public String executeQuery3                = "Funkcija executeQuery3 nije uspešno izvršena";
 	public String executeQuery4                = "Funkcija executeQuery4 nije uspešno izvršena";
 	public String getParamFromJsonDuable       = "Parametar koji ste zatrazili nije dabl formata";
 	public String getParamFromJson             = "U jsonu nema unetog parametra";
