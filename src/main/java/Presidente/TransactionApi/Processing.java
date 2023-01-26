@@ -195,37 +195,47 @@ public class Processing extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog("Processing NumberFormatException e:" + e.getMessage());
+					fun.createLog("Processing NumberFormatException e:" + e.getMessage() + "transactionId: " + TransactionId);
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
+					fun.createLog("Processing SecurityException | IOException e:" + e2.getMessage() + "transactionId: " + TransactionId);
 					e2.printStackTrace();
+				} finally {
+					response.close();
+					httpClient.close();
 				}
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					fun.createLog("Processing InterruptedException e:" + e.getMessage());
+					fun.createLog("Processing InterruptedException e:" + e.getMessage() + "transactionId: " + TransactionId);
 				} catch (SecurityException | IOException e2) {
 					// TODO Auto-generated catch block
+					fun.createLog("Processing SecurityException | IOException e2:" + e2.getMessage() + "transactionId: " + TransactionId);
 					e2.printStackTrace();
+				} finally {
+					response.close();
+					httpClient.close();
 				}
 			} finally {
 				response.close();
+				httpClient.close();
 			}
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
-				fun.createLog("Processing ClientProtocolException e:" + e.getMessage());
+				fun.createLog("Processing ClientProtocolException e:" + e.getMessage()+ "transactionId: " + TransactionId);
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			try {
-				fun.createLog("Processing IOException e:" + e.getMessage());
+				fun.createLog("Processing IOException e:" + e.getMessage()+ "transactionId: " + TransactionId);
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
