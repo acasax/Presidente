@@ -224,7 +224,13 @@ public class Functions {
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
 				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						" presidenteapp@yahoo.com", "Velika uplata");
+						"presidenteapp@yahoo.com", "Velika uplata");
+				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
+						"presidente.ks@gmail.com", "Velika uplata");
+				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
+						"dusan@presidente.rs", "Velika uplata");
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -240,16 +246,17 @@ public class Functions {
 				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
 						"presidenteapp@yahoo.com", "Velika isplata");
+				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
+						"presidente.ks@gmail.com", "Velika isplata");
+				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
+						"dusan@presidente.rs", "Velika isplata");
 			}
 			return transactionBody;
 		case "slot/jackpot":
 			// Ovde je zato sto postoji samo za ovu rutu
 			//
-			// String transaction_withdraw_amount = getParamFromJson(JSON,
-			// "transaction_withdraw_amount");
-			// Double p_transaction_withdraw_amount =
-			// Double.valueOf(transaction_withdraw_amount); // Konvertovanje u
-			// potrebni tip
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
@@ -260,6 +267,10 @@ public class Functions {
 			String macAddress = getMacAddressOfMachines(sticker_no, db);
 			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
 					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidenteapp@yahoo.com", "Jackpot");
+			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
+			+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
+			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
+			+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "dusan@presidente.rs", "Jackpot");
 				return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu

@@ -1,6 +1,7 @@
 package Presidente.TransactionApi;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -42,11 +43,12 @@ public class spStart extends Thread {
 		sk.start();
 		while (true) {
 			try {
-
-				// Slanje zahteva na putanju slot-periodic
-				//
-				fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
-
+				if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
+					// Slanje zahteva na putanju slot-periodic
+					//
+					fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
+				}
+				
 			} catch (SecurityException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

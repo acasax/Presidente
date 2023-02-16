@@ -69,7 +69,7 @@ public class App {
 						}
 					} else {
 						System.out.println("sendTransaction before Threads number" + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 120) {
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
 							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -114,7 +114,7 @@ public class App {
 						}
 					} else {
 						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 50) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
