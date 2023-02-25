@@ -35,7 +35,7 @@ public class DbFunctions {
 				source.setDatabaseName("accounting");
 				source.setUser("presidente");
 				source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
-				source.setMaxConnections(70);
+				source.setMaxConnections(250);
 				Connection connection = source.getConnection();
 				return connection;
 			} catch (SQLException e) {

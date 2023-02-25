@@ -33,6 +33,13 @@ public class Processing extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static Connection lConn;
+	
+	// Kreira httpClient
+	//
+	CloseableHttpClient httpClient = HttpClients.createDefault();
+	// Kreira httpPostRequest
+	//
+	HttpPost request = new HttpPost(URL + TransactionPath);
 
 	// Konsturktor osnovne klase
 	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody) {
@@ -68,12 +75,7 @@ public class Processing extends Thread {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			// Kreira httpClient
-			//
-			CloseableHttpClient httpClient = HttpClients.createDefault();
-			// Kreira httpPostRequest
-			//
-			HttpPost request = new HttpPost(URL + TransactionPath);
+			
 
 			// Dodaje potrebne parametre u request
 			//
@@ -227,6 +229,7 @@ public class Processing extends Thread {
 			e.printStackTrace();
 			try {
 				fun.createLog("Processing ClientProtocolException e:" + e.getMessage()+ "transactionId: " + TransactionId);
+				httpClient.close();
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -236,6 +239,7 @@ public class Processing extends Thread {
 			e.printStackTrace();
 			try {
 				fun.createLog("Processing IOException e:" + e.getMessage()+ "transactionId: " + TransactionId);
+				httpClient.close();
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
