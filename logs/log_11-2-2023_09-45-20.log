@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-11T20:45:20.927629600Z</date>
+  <millis>1676148320927</millis>
+  <nanos>629600</nanos>
+  <sequence>99</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>9977</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 9a107c9b-1b33-4b65-9fdf-90993741d9ac</message>
+</record>
+<record>
+  <date>2023-02-11T20:45:21.366728500Z</date>
+  <millis>1676148321366</millis>
+  <nanos>728500</nanos>
+  <sequence>100</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>9978</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 9a107c9b-1b33-4b65-9fdf-90993741d9ac</message>
+</record>
+<record>
+  <date>2023-02-11T20:45:22.412956600Z</date>
+  <millis>1676148322412</millis>
+  <nanos>956600</nanos>
+  <sequence>101</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>9979</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: a0b9d924-ca7d-4c8d-9e52-c40882f1e0d3</message>
+</record>
+<record>
+  <date>2023-02-11T20:45:22.960495200Z</date>
+  <millis>1676148322960</millis>
+  <nanos>495200</nanos>
+  <sequence>102</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>9980</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 0f3fb527-5830-4d3f-af52-4b506d79dded</message>
+</record>

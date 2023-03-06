@@ -307,19 +307,19 @@ public class Functions {
 
 	// Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public String getApiCounter(String transaction_id, DbFunctions db) throws SecurityException, IOException {
+	public Long getApiCounter(String transaction_id, DbFunctions db) throws SecurityException, IOException {
 		try {
 			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')",
 					"get_api_counter");
 			if (Integer.parseInt(apiCounter) < 3) {
-				return "60000";
+				return (long) 60000;
 			} else {
-				return "3600000";
+				return (long) 3600000;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			createLog("Functions Api kaunter nije kako treba" + e.getMessage());
-			return "Api kaunter nije kako treba";
+			return null;
 		}
 	}
 
@@ -712,7 +712,7 @@ public class Functions {
 
 		LocalTime now = LocalTime.now();
 
-		if (now.isAfter(LocalTime.parse("03:30:00")) && now.isBefore(LocalTime.parse("07:30:00"))) {
+		if (now.isAfter(LocalTime.parse("00:00:00")) && now.isBefore(LocalTime.parse("00:00:00"))) {
 			return false;
 		} else {
 			return true;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-02T20:13:15.616617900Z</date>
+  <millis>1677787995616</millis>
+  <nanos>617900</nanos>
+  <sequence>15</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>228</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: c47c6385-214f-49df-986f-c16e0a1fa326</message>
+</record>
+<record>
+  <date>2023-03-02T20:13:20.935316900Z</date>
+  <millis>1677788000935</millis>
+  <nanos>316900</nanos>
+  <sequence>16</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>230</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 896aa476-70dc-4e55-bc55-e4b550cc5b04</message>
+</record>

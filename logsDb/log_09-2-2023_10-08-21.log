@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-09T21:08:21.145024400Z</date>
+  <millis>1675976901145</millis>
+  <nanos>24400</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1608</thread>
+  <message>DbFunctions executeProcedure: Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_1_by_transaction_id('7fc6e65a-84ac-48f5-b86a-48d560651657','e026c8cd-8924-4ae2-83da-01046323b730')</message>
+</record>

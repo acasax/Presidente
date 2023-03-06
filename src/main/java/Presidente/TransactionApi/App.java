@@ -69,7 +69,7 @@ public class App {
 						}
 					} else {
 						System.out.println("sendTransaction before Threads number" + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
+						//if(ManagementFactory.getThreadMXBean().getThreadCount() < 200) {
 							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -77,7 +77,7 @@ public class App {
 							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 							lista.add(newProcess);
 							newProcess.start();
-						}
+						//}
 					}
 				}
 			} catch (SecurityException | IOException e) {
@@ -99,6 +99,7 @@ public class App {
 				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
 						"get_json_by_status");
 				while (transactionWithStatus0 != null) {
+					Thread.sleep(5000);
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true);
@@ -114,7 +115,7 @@ public class App {
 						}
 					} else {
 						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 250) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -131,6 +132,9 @@ public class App {
 				fun.createLog("sendTransactionWithStatus0 SQLException | SecurityException | IOException e" +
 						ce.sendTransactionWithStatus0 + " Transaction id: " + transactionId + "  Transaction path: "
 								+ transactionPath + "Transaction body : " + transactionBody + "Greska :" + e);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

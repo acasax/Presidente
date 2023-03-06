@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-02T22:02:29.042190700Z</date>
+  <millis>1677794549042</millis>
+  <nanos>190700</nanos>
+  <sequence>106</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>868</thread>
+  <message>sendTransactionWithStatus0 SQLException | SecurityException | IOException eFunkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: 54f07681-27bd-4b6f-981e-876f74fe35d3  Transaction path: slot/depositTransaction body : {"transaction_id":"54f07681-27bd-4b6f-981e-876f74fe35d3","slot_club_id":"0127000008","transaction_amount":2000,"transaction_time":"2023-03-02T23:02:16+01:00","transaction_type":"1","sticker_no":"029915"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>

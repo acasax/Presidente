@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-11T19:30:49.101824Z</date>
+  <millis>1676143849101</millis>
+  <nanos>824000</nanos>
+  <sequence>56</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2771</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 5bb06a6c-68f1-4f3d-b952-ac7d32669818</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:49.681402200Z</date>
+  <millis>1676143849681</millis>
+  <nanos>402200</nanos>
+  <sequence>57</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2772</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 5bb06a6c-68f1-4f3d-b952-ac7d32669818</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:50.416227200Z</date>
+  <millis>1676143850416</millis>
+  <nanos>227200</nanos>
+  <sequence>58</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2773</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 5bb06a6c-68f1-4f3d-b952-ac7d32669818</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:50.807813Z</date>
+  <millis>1676143850807</millis>
+  <nanos>813000</nanos>
+  <sequence>59</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2776</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 7a8ae304-62f1-4073-9369-e792b3ff51a1</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:51.307914400Z</date>
+  <millis>1676143851307</millis>
+  <nanos>914400</nanos>
+  <sequence>60</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2774</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 5bb06a6c-68f1-4f3d-b952-ac7d32669818</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:52.136331700Z</date>
+  <millis>1676143852136</millis>
+  <nanos>331700</nanos>
+  <sequence>61</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2777</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: db1eca88-91ea-43f6-bfea-1d84df819de4</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:52.136331700Z</date>
+  <millis>1676143852136</millis>
+  <nanos>331700</nanos>
+  <sequence>62</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2775</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: 5bb06a6c-68f1-4f3d-b952-ac7d32669818</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:52.698498Z</date>
+  <millis>1676143852698</millis>
+  <nanos>498000</nanos>
+  <sequence>63</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2778</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: db1eca88-91ea-43f6-bfea-1d84df819de4</message>
+</record>
+<record>
+  <date>2023-02-11T19:30:53.608470600Z</date>
+  <millis>1676143853608</millis>
+  <nanos>470600</nanos>
+  <sequence>64</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2779</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connecttransactionId: db1eca88-91ea-43f6-bfea-1d84df819de4</message>
+</record>

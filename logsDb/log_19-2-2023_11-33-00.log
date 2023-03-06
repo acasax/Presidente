@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-19T22:33:00.054268800Z</date>
+  <millis>1676845980054</millis>
+  <nanos>268800</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>16</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_transaction_exe_status('d94b9420-4501-40ea-a721-eafaa180f083')</message>
+</record>

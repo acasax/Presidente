@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-02T21:24:38.073615300Z</date>
+  <millis>1677792278073</millis>
+  <nanos>615300</nanos>
+  <sequence>76</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>608</thread>
+  <message>sendTransactionWithStatus0 SQLException | SecurityException | IOException eFunkcija sendTransactionWithStatus0 nije uspešno izvršena Transaction id: c5de6a8f-32ac-4884-ad99-9ce266d97965  Transaction path: slot/depositTransaction body : {"transaction_id":"c5de6a8f-32ac-4884-ad99-9ce266d97965","slot_club_id":"0127000010","transaction_amount":1000,"transaction_time":"2023-03-02T22:24:34.133039+01:00","transaction_type":"6","sticker_no":"019881"}Greska :org.postgresql.util.PSQLException: The connection attempt failed.</message>
+</record>
+<record>
+  <date>2023-03-02T21:25:16.543556200Z</date>
+  <millis>1677792316543</millis>
+  <nanos>556200</nanos>
+  <sequence>77</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>638</thread>
+  <message>spProcessing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Connection timed out: connect</message>
+</record>

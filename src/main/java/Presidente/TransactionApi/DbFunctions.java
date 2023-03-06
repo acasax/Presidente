@@ -28,23 +28,49 @@ public class DbFunctions {
 	
 	@SuppressWarnings("deprecation")
 	public Connection asyconnect() throws SecurityException, IOException, ParseException {
-		if(fun.workTime()) {
-			try{
-				PGPoolingDataSource source = new PGPoolingDataSource();
-				source.setServerNames(new String[] {"93.87.76.139:1521"});
-				source.setDatabaseName("accounting");
-				source.setUser("presidente");
-				source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
-				source.setMaxConnections(250);
-				Connection connection = source.getConnection();
-				return connection;
-			} catch (SQLException e) {
-				 fun.createLogDb("DbFunctions asyconnect: " + ce.asyconnect);
-				 fun.sendEmailYahho("konekcija na bazu je prekinuta", "presidenteapp@yahoo.com", "Nema konekcije na bazu");
-			}
-		}
-		return null;
+	    int retries = 0;
+	    int maxRetries = 5;
+	    int delaySeconds = 10;
+
+	    while (retries < maxRetries) {
+	        if (fun.workTime()) {
+	            try{
+	                PGPoolingDataSource source = new PGPoolingDataSource();
+	                source.setServerNames(new String[] {"93.87.76.139:1521"});
+	                source.setDatabaseName("accounting");
+	                source.setUser("presidente");
+	                source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
+	                source.setMaxConnections(300);
+	                Connection connection = source.getConnection();
+	                return connection;
+	            } catch (SQLException e) {
+	                fun.createLogDb("DbFunctions asyconnect: " + ce.asyconnect);
+	                fun.sendEmailYahho("konekcija na bazu je prekinuta", "presidenteapp@yahoo.com", "Nema konekcije na bazu");
+
+	                // Wait for a specified amount of time before retrying
+	                try {
+	                    Thread.sleep(delaySeconds * 1000);
+	                } catch (InterruptedException ex) {
+	                    ex.printStackTrace();
+	                }
+
+	                // Increment the retry counter
+	                retries++;
+	            }
+	        } else {
+	            // Wait for a specified amount of time before retrying
+	            try {
+	                Thread.sleep(delaySeconds * 1000);
+	            } catch (InterruptedException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    }
+
+	    // If the connection was not established after the maximum number of retries, throw an exception
+	    throw new RuntimeException("Failed to connect to database after " + retries + " attempts.");
 	}
+
 	
 	public String executeQuery(String procedureSQL) throws SecurityException, IOException, SQLException {
 		Connection lConn = DriverManager.getConnection(urlL, user, password);
