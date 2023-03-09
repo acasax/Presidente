@@ -40,7 +40,7 @@ public class DbFunctions {
 	                source.setDatabaseName("accounting");
 	                source.setUser("presidente");
 	                source.setPassword("Pr3z1d3nt3@Tr3ndPl@j!");
-	                source.setMaxConnections(300);
+	                source.setMaxConnections(150);
 	                Connection connection = source.getConnection();
 	                return connection;
 	            } catch (SQLException e) {

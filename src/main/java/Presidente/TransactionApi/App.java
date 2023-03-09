@@ -62,7 +62,6 @@ public class App {
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog("sendTransaction transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
-							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
 							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog("sendTransaction transactionSendingStatus: " + transactionSendingStatus);
@@ -108,14 +107,13 @@ public class App {
 					if (transactionJSONError != null || transactionSendingStatus != null) {
 						if (transactionJSONError != null) {
 							fun.createLog("sendTransactionWithStatus0 transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
-							fun.sendEmail(transactionJSONError, "pedjabg@gmail.com", "Probelm sa vremenom transakcije");
 							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
 						} else {
 							fun.createLog("sendTransactionWithStatus0 transactionSendingStatus: " + transactionSendingStatus);
 						}
 					} else {
 						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 250) {
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 130) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");

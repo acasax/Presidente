@@ -227,9 +227,6 @@ public class Functions {
 						"presidenteapp@yahoo.com", "Velika uplata");
 				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"presidente.ks@gmail.com", "Velika uplata");
-				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
 						"dusan@presidente.rs", "Velika uplata");
 			}
 			return transactionBody;
@@ -248,9 +245,6 @@ public class Functions {
 						"presidenteapp@yahoo.com", "Velika isplata");
 				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"presidente.ks@gmail.com", "Velika isplata");
-				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
 						"dusan@presidente.rs", "Velika isplata");
 			}
 			return transactionBody;
@@ -267,8 +261,6 @@ public class Functions {
 			String macAddress = getMacAddressOfMachines(sticker_no, db);
 			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
 					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidenteapp@yahoo.com", "Jackpot");
-			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-			+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidente.ks@gmail.com", "Jackpot");
 			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
 			+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "dusan@presidente.rs", "Jackpot");
 				return transactionBody;
@@ -319,7 +311,7 @@ public class Functions {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			createLog("Functions Api kaunter nije kako treba" + e.getMessage());
-			return null;
+			return (long) 0;
 		}
 	}
 
