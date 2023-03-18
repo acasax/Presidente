@@ -7,15 +7,13 @@ public class locationCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "select * from slot_clubs where not slot_club_id in (SELECT distinct slot_club_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '2 HOURS' AND NOW()) AND work_status = true";
-	static String[] columns = { "slot_club_id" };
 
 	public void run() {
 		try {
 			while (true) {
 				if (fun.workTime()) {
 					try {
-						msg = db.executeQuery1(sql, "Sve lokacije salju podatke", columns);
+						msg = db.executeQuery1(sqlConsts.sqlLocationWorkCheck, "Sve lokacije salju podatke", sqlConsts.columnsLocationWorkCheck);
 						//msg = fun.setUTF8(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Lokacije koje nisu slale podatke");
 						fun.sendEmail(msg, "dusan@presidente.rs", "Lokacije koje nisu slale podatke");

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-17T18:47:03.212561300Z</date>
+  <millis>1679078823212</millis>
+  <nanos>561300</nanos>
+  <sequence>15</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>148</thread>
+  <message>Functions Api kaunter nije kako trebaThe connection attempt failed.</message>
+</record>

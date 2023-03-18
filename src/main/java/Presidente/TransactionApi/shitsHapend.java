@@ -6,15 +6,13 @@ public class shitsHapend extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT transaction_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '25 minutes' AND NOW() order by transaction_time limit 1";
-	static String[] columns = { "transaction_id" };
 
 	public void run() {
 		try {
 			while (true) {
 				if (fun.workTime()) {
 					try {
-						msg = db.executeQuery1(sql, "Sranje neko je pocelo", columns);
+						msg = db.executeQuery1(sqlConsts.sqlShitsHapend, "Sranje neko je pocelo", sqlConsts.columnsShitsHapend);
 						if(msg != "Sranje neko je pocelo") {
 							msg = fun.setUTF8(msg);
 							fun.sendEmail(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO");

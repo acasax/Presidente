@@ -287,9 +287,9 @@ public class Functions {
 	public String getMacAddressOfMachines(String sn, DbFunctions db) throws SecurityException, IOException {
 		String macAddress = "";
 		try {
-			String sql = "SELECT * FROM public.machines WHERE sticker_number = " + "'" + sn + "'";
-			String[] columns = { "id_number" };
-			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, columns);
+			String sql = sqlConsts.sglGetMacAdressByStickerNumber + "'" + sn + "'";
+		
+			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, sqlConsts.columnsGetMacAdressByStickerNumber);
 			return macAddress;
 		} catch (SQLException e) {
 			createLog("Functions getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
@@ -634,8 +634,8 @@ public class Functions {
 	public void sendSlotPeriodicWithStatus0(int reportIndex, DbFunctions db, ArrayList<spProcessing> lista)
 			throws SQLException, SecurityException, IOException {
 		try {
-			String spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)",
-					"get_json_sp_by_status");
+			String spWithStatus0 = db.executeFunction(sqlConsts.sqlGetSlotPeriodicWithStatus0,
+					sqlConsts.columnGetSlotPeriodicWithStatus0[0]);
 
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
@@ -647,7 +647,8 @@ public class Functions {
 				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
 				lista.add(newProcess);
 				newProcess.start();
-				spWithStatus0 = db.executeFunction("SELECT public.get_json_sp_by_status(0)", "get_json_sp_by_status");
+				spWithStatus0 = db.executeFunction(sqlConsts.sqlGetSlotPeriodicWithStatus0,
+						sqlConsts.columnGetSlotPeriodicWithStatus0[0]);
 			}
 		} catch (SQLException | SecurityException | IOException e) {
 			createLog("Functions sendSlotPeriodicWithStatus0" + ce.sendSlotPeriodicWithStatus0 + "Greska :" + e);
@@ -689,8 +690,8 @@ public class Functions {
 	//
 	public String getCronError(DbFunctions db) throws SecurityException, IOException {
 		try {
-			String workStatus = db.executeFunction("SELECT public.get_sp_cron_job_error_counter()",
-					"get_sp_cron_job_error_counter");
+			String workStatus = db.executeFunction(sqlConsts.sqlGetCronError,
+					sqlConsts.columnGetCronError[0]);
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("Functions getCronError get_sp_cron_job_error_counter nije kako treba" + e.getMessage());

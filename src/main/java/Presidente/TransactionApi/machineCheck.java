@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//Don't work until api41
 public class machineCheck extends Thread {
 
 	DbFunctions db = new DbFunctions();

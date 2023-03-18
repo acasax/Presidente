@@ -21,8 +21,8 @@ public class Check extends Thread {
 				while (true) {
 					try {
 						// proverava da li u bazi ima transakcija sa statusom 11
-						transactionWithStatus11 = db.executeFunction("SELECT public.get_json_by_status(11)",
-								"get_json_by_status");
+						transactionWithStatus11 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus11,
+								sqlConsts.columnsGetJsonWithStatus[0]);
 						// kreira parametre
 						if (transactionWithStatus11 != null) {
 							transactionId = fun.getTransansactionId(transactionWithStatus11, "s"); // uzima

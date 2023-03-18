@@ -68,7 +68,7 @@ public class App {
 						}
 					} else {
 						System.out.println("sendTransaction before Threads number" + ManagementFactory.getThreadMXBean().getThreadCount());
-						//if(ManagementFactory.getThreadMXBean().getThreadCount() < 200) {
+						if(ManagementFactory.getThreadMXBean().getThreadCount() < 200) {
 							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
@@ -76,7 +76,7 @@ public class App {
 							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 							lista.add(newProcess);
 							newProcess.start();
-						//}
+						}
 					}
 				}
 			} catch (SecurityException | IOException e) {
@@ -121,8 +121,8 @@ public class App {
 							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
 							lista.add(newProcess);
 							newProcess.start();
-							transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
-									"get_json_by_status");
+							transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
+									sqlConsts.columnsGetJsonWithStatus[0]);
 						}
 					}
 				}
@@ -164,7 +164,7 @@ public class App {
 		  paymentCheck pc = new paymentCheck();
 		  apiUuidStatus aus = new apiUuidStatus();
 		  badTransactions bt = new badTransactions();
-		  transactionsReport tr = new transactionsReport();
+		  //transactionsReport tr = new transactionsReport();
 		  checkCertificate cc = new checkCertificate();
 		  
 		  cc.start();
@@ -201,7 +201,7 @@ public class App {
 		  
 		  // Provera da li ima pristiglih uplata u poslednjih 15 minuta 
 		  // 
-		  //sh.start();
+		  sh.start();
 		  
 		  // Provera slot periodic 
 		  // 

@@ -6,8 +6,6 @@ public class apiUuidStatus extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT count(transaction_id) FROM public.transactions where status = 0";
-	static String[] columns = { "count" };
 
 	public void run() {
 	
@@ -15,7 +13,7 @@ public class apiUuidStatus extends Thread {
 			try {
 				if(fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sql, "Slanje ka upravi je ok", columns);
+						msg = db.executeQuery2(sqlConsts.sqlApiUuidStatus, "Slanje ka upravi je ok", sqlConsts.columnsApiUuidStatus);
 						//msg = fun.setUTF8(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
 					} catch (Exception e) {

@@ -43,11 +43,10 @@ public class spStart extends Thread {
 		sk.start();
 		while (true) {
 			try {
-				if(ManagementFactory.getThreadMXBean().getThreadCount() < 100) {
 					// Slanje zahteva na putanju slot-periodic
 					//
 					fun.sendSlotPeriodicWithStatus0(reportIndex, db, lista);
-				}
+				
 				
 			} catch (SecurityException | IOException e) {
 				// TODO Auto-generated catch block

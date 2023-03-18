@@ -6,15 +6,13 @@ public class badTransactions extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT * FROM public.bad_transactions where status = 0";
-	static String[] columns = { "bed_transactions_id" };
-
+	
 	public void run() {
 		try {
 			while (true) {
 				if (fun.workTime()) {
 					try {
-						msg = db.executeQuery1(sql, "Losa transakcija", columns);
+						msg = db.executeQuery1(sqlConsts.sqlBadTransaction, "Losa transakcija", sqlConsts.columnBadTransaction);
 						if(msg != "") {
 							msg = fun.setUTF8(msg);
 							fun.sendEmail(msg, "presidenteapp@yahoo.com", "Losa transakcija");

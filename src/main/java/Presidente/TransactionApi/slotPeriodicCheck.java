@@ -7,8 +7,6 @@ public class slotPeriodicCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
-	static String sql = "SELECT * FROM public.slot_periodic_h ORDER BY report_index DESC LIMIT 1";
-	static String[] columns = { "api_json" };
 
 	public void run() {
 	
@@ -16,7 +14,7 @@ public class slotPeriodicCheck extends Thread {
 			try {
 				if(!fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sql, "Brojaci", columns);
+						msg = db.executeQuery2(sqlConsts.sqlSlotPeriodicCheck, "Brojaci", sqlConsts.columnsSlotPeriodicCheck);
 						msg = fun.setUTF8(msg);
 						msg = fun.slotPriodicCheckString(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Poslednji brojaci");
