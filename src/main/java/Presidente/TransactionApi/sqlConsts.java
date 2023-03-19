@@ -4,7 +4,7 @@ public class sqlConsts {
 	
 	//ApiUuidStatusFile
 	//
-	static String sqlApiUuidStatus = "SELECT count(transaction_id) FROM public.transactions where status = 0";
+	static String sqlApiUuidStatus = "SELECT count(transaction_id) FROM public.transactions where status = 0 and transaction_time > '2023-02-19'";
 	static String[] columnsApiUuidStatus = { "count" };
 	
 	//App 

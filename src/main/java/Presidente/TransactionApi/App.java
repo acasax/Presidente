@@ -97,6 +97,8 @@ public class App {
 			try {
 				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
 						"get_json_by_status");
+				System.out.println("sendTransactionWithStatus0 start");
+				System.out.println("sendTransactionWithStatus0 transactionWithStatus0 != null: " + transactionWithStatus0 != null);
 				while (transactionWithStatus0 != null) {
 					Thread.sleep(5000);
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");

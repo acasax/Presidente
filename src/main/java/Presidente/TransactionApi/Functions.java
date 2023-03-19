@@ -162,11 +162,11 @@ public class Functions {
 		String slot_club_id = getParamFromJson(JSON, "slot_club_id");
 		String sticker_no = null;
 		if(status) {
-			String machine_id_number = getParamFromJson(JSON, "machine_num_id");
+			String machine_id_number = getParamFromJson(JSON, "machine_num_id");	
 			if(machine_id_number != null || machine_id_number != "") {
-				String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" + machine_id_number.trim() + "'";
+				String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" +machine_id_number.trim()+ "'";
 				String[] columns = {"sticker_number"};
-				
+				System.out.println(strickerNumberQuery);
 				sticker_no = db.executeQuery3(strickerNumberQuery, columns);
 			} 
 		} else {
@@ -640,7 +640,7 @@ public class Functions {
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
-				String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
+				//String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
 				// if(transactionJSONError != null) { return; }
 				db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
 				// Pokretanje procesa za odredjeni transaction id
