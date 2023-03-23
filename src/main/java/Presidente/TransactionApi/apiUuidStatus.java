@@ -14,8 +14,7 @@ public class apiUuidStatus extends Thread {
 				if(fun.workTime()) {
 					try {
 						msg = db.executeQuery2(sqlConsts.sqlApiUuidStatus, "Slanje ka upravi je ok", sqlConsts.columnsApiUuidStatus);
-						//msg = fun.setUTF8(msg);
-						fun.sendEmail(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO SA SLANJEM KA UPRAVI");
+						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Ima transakcija koje nisu otisle");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

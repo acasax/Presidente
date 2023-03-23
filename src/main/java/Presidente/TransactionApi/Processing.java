@@ -65,7 +65,7 @@ public class Processing extends Thread {
 			}
 			//upisuje bodi koji je poslat u bazu
 			//
-			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId.toString() +"';";
+			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
 			try {
 				db.executeQuery(apiJsonQuery);
 			} catch (SecurityException e1) {
@@ -112,7 +112,7 @@ public class Processing extends Thread {
 
 					try {
 						db.executeProcedure(
-								"CALL public.set_status_1_by_transaction_id('" + TransactionId.toString() + "','" + api_uid + "')");
+								"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
 					} catch (SecurityException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -132,7 +132,7 @@ public class Processing extends Thread {
 							
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getApiCounter(TransactionId.toString(), db);
+							threadSleep = fun.getApiCounter(TransactionId, db);
 							Thread.sleep(threadSleep);
 							
 
@@ -163,7 +163,7 @@ public class Processing extends Thread {
 
 							if (Status == 201) {
 								try {
-									db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId.toString() + "','" + api_uid + "')");
+									db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -176,7 +176,7 @@ public class Processing extends Thread {
 								return;
 							}else {
 								try {
-									db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId.toString() + "','"	+ response_text + "', '" + String.valueOf(Status) + "')");
+									db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"	+ response_text + "', '" + String.valueOf(Status) + "')");
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

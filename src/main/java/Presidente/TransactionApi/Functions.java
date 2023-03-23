@@ -2,6 +2,7 @@ package Presidente.TransactionApi;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -147,7 +148,6 @@ public class Functions {
 	// odredjenu putanju
 	//
 	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status) throws SecurityException, IOException, SQLException {
-
 		// Uzimanje podataka iz JSON-a
 		//
 		String transaction_time = getParamFromJson(JSON, "transaction_time");
@@ -166,7 +166,6 @@ public class Functions {
 			if(machine_id_number != null || machine_id_number != "") {
 				String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" +machine_id_number.trim()+ "'";
 				String[] columns = {"sticker_number"};
-				System.out.println(strickerNumberQuery);
 				sticker_no = db.executeQuery3(strickerNumberQuery, columns);
 			} 
 		} else {
@@ -222,12 +221,11 @@ public class Functions {
 			if (p_transaction_amount > ce.maxDeposit) {
 				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"presidenteapp@yahoo.com", "Velika uplata");
-				sendEmailYahho("Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"dusan@presidente.rs", "Velika uplata");
+				String msg = "Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
+				System.out.println("msg: " + msg);
+				sendEmail(msg, "presidenteapp@yahoo.com", "Velika uplata");
+				sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -240,12 +238,11 @@ public class Functions {
 			if (p_transaction_amount > ce.maxWithdraw) {
 				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db);
-				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"presidenteapp@yahoo.com", "Velika isplata");
-				sendEmailYahho("Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress,
-						"dusan@presidente.rs", "Velika isplata");
+				String msg = "Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
+				System.out.println("msg: " + msg);
+				sendEmail(msg, "presidenteapp@yahoo.com", "Velika isplata");
+				sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
 			}
 			return transactionBody;
 		case "slot/jackpot":
@@ -259,10 +256,11 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
 			String macAddress = getMacAddressOfMachines(sticker_no, db);
-			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-					+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "presidenteapp@yahoo.com", "Jackpot");
-			sendEmailYahho("ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-			+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount, "dusan@presidente.rs", "Jackpot");
+			String msg = "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
+						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount;
+			System.out.println("msg: " + msg);
+			sendEmail(msg, "presidenteapp@yahoo.com", "Jackpot");
+			sendEmail(msg, "dusan@presidente.rs", "Jackpot");
 				return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu
@@ -302,8 +300,8 @@ public class Functions {
 	public Long getApiCounter(String transaction_id, DbFunctions db) throws SecurityException, IOException {
 		try {
 			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')",
-					"get_api_counter");
-			if (Integer.parseInt(apiCounter) < 3) {
+				    "get_api_counter");
+			if (apiCounter != null && Integer.parseInt(apiCounter) < 3) {
 				return (long) 60000;
 			} else {
 				return (long) 3600000;

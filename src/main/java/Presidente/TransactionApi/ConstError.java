@@ -91,6 +91,30 @@ public class ConstError {
 			    return "13";
 		  case "127000018":
 			    return "14";
+		  case "0127000008":
+			    return "01";
+		  case "0127000002":
+				return "02";
+		  case "0127000017":
+				return "03";
+		  case "0127000004":
+				return "04";
+		  case "0127000007":
+				return "07";
+	      case "01270000010":
+				return "08";
+		  case "0127000012":
+				return "09";
+	      case "0127000013":
+				return "10";
+	      case "0127000014":
+				return "11";
+	      case "0127000015":
+				return "12";
+		  case "0127000016":
+				return "13";
+		  case "0127000018":
+				return "14";
 		  default:
 		    return "Nema u bazi pristiglog sid-a";
 		}	
