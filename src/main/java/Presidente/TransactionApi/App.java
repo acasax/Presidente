@@ -30,11 +30,16 @@ public class App {
 	static Functions fun = new Functions();
 	static ConstError ce = new ConstError();
 
+	// Ne radi jer je uvek lista prazna 
+	// build version 48
 	// Da li postoji proces sa zadatim transaction_id koji radi
 	public static Processing nadjiProcessing(String transactionId) {
+		System.out.println("App nadjiProcessing: " + transactionId);
+		System.out.println("App lista.size(): " + lista.size());
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i).getTransactionId().equals(transactionId)) {
 				Processing badProcess = lista.get(i);
+				System.out.println("App badProcess: " + badProcess);
 				lista.remove(i);
 				return badProcess;
 			}
@@ -49,14 +54,14 @@ public class App {
 
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
 	//
-	public static void sendTransaction(String transaction)
+	public static void sendTransaction(String transaction, Connection lConn)
 			throws SecurityException, IOException, SQLException, ParseException {
 		if (fun.workTime()) {
 			try {
 				if (transaction != null) {
 					transactionId = fun.getTransansactionId(transaction, "s");
 					transactionPath = fun.getTransansactionPath(transaction, db, false);
-					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db, false);
+					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db, false, lConn);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
@@ -71,9 +76,9 @@ public class App {
 						//if(ManagementFactory.getThreadMXBean().getThreadCount() < 200) {
 							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
 							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
 							lista.add(newProcess);
 							newProcess.start();
 						//}
@@ -91,17 +96,18 @@ public class App {
 	// i koja ima status 0
 	//
 	
-	public static void sendTransactionWithStatus0()
+	public static void sendTransactionWithStatus0(Connection lConn)
 			throws SQLException, SecurityException, IOException, ParseException {
+		System.out.println("sendTransactionWithStatus0 start");
 		if (fun.workTime()) {
 			try {
 				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
-						"get_json_by_status");
+						"get_json_by_status", lConn);
 				System.out.println("sendTransactionWithStatus0 start");
 				while (transactionWithStatus0 != null) {
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
-					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true);
+					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true, lConn);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
@@ -116,13 +122,13 @@ public class App {
 						if(ManagementFactory.getThreadMXBean().getThreadCount() < 6500) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							// Procedura Set Status 10
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')");
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
 							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody);
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
 							lista.add(newProcess);
 							newProcess.start();
 							transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
-									sqlConsts.columnsGetJsonWithStatus[0]);
+									sqlConsts.columnsGetJsonWithStatus[0], lConn);
 						}
 					}
 				}
@@ -151,19 +157,20 @@ public class App {
 		
 		  Connection lConn = db.asyconnect();
 		  
-		  slotPeriodicCheck spc = new slotPeriodicCheck(); 
-		  spStart sp = new spStart();
-		  Check ck = new Check();
+		  slotPeriodicCheck spc = new slotPeriodicCheck(lConn); 
+		  spStart sp = new spStart(lConn);
+		  Check ck = new Check(lConn);
 		  ErrorCheck ec = new ErrorCheck();
-		  locationCheck lc = new locationCheck(); 
-		  shitsHapend sh = new shitsHapend();
-		  spErrorCheck spec = new spErrorCheck();
-		  paymentCheck pc = new paymentCheck();
-		  apiUuidStatus aus = new apiUuidStatus();
-		  badTransactions bt = new badTransactions();
-		  //transactionsReport tr = new transactionsReport();
+		  locationCheck lc = new locationCheck(lConn); 
+		  shitsHapend sh = new shitsHapend(lConn);
+		  spErrorCheck spec = new spErrorCheck(lConn);
+		  paymentCheck pc = new paymentCheck(lConn);
+		  apiUuidStatus aus = new apiUuidStatus(lConn);
+		  badTransactions bt = new badTransactions(lConn);
 		  checkCertificate cc = new checkCertificate();
 		  
+		  // Proverava sertifikate
+		  // 
 		  cc.start();
 		  
 		  
@@ -228,11 +235,11 @@ public class App {
 		  
 		  // Proveri da nije null 
 		  // 
-		  sendTransactionWithStatus0();
-		  sendTransactionWithStatus0();
-		  sendTransactionWithStatus0();
-		  sendTransactionWithStatus0();
-		  sendTransactionWithStatus0();
-		  sendTransactionWithStatus0();
+		  sendTransactionWithStatus0(lConn);
+		  sendTransactionWithStatus0(lConn);
+		  sendTransactionWithStatus0(lConn);
+		  sendTransactionWithStatus0(lConn);
+		  sendTransactionWithStatus0(lConn);
+		  sendTransactionWithStatus0(lConn);
 	}
 }

@@ -11,13 +11,20 @@ public class spErrorCheck extends Thread {
 	static String cronError;
 	static int reportIndex;
 	static String spWorkStatus;
+	
+    private Connection conn;
+    
+    public spErrorCheck(Connection conn) {
+        this.conn = conn;
+    }
+    
 
 	public void run() {
 		try {
 			if(fun.workTime()) {
 				while (true) {
 					try {
-						cronError = fun.getCronError(db);
+						cronError = fun.getCronError(db, conn);
 						if (cronError.equals("1")) {
 							// proverava da li u bazi ima sn izvestaja sa statusom 1
 							fun.sendEmail("cron error je 1", "presidenteapp@yahoo.com", "report index, slot preiodic error");

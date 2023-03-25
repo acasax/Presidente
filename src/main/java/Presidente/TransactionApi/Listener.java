@@ -39,7 +39,7 @@ class Listener extends Thread {
 						new Thread(new Runnable() {
 							public void run() {
 								try {
-									App.sendTransactionWithStatus0();
+									App.sendTransactionWithStatus0(conn);
 									// U log fajlu da li se ovo desava
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
@@ -85,7 +85,7 @@ class Listener extends Thread {
 		if (Objects.nonNull(notifications)) {
 			for (org.postgresql.PGNotification notification : notifications) {
 				transaction = notification.getParameter();
-				App.sendTransaction(transaction);
+				App.sendTransaction(transaction, conn);
 			}
 		}
 	}

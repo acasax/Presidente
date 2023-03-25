@@ -1,5 +1,6 @@
 package Presidente.TransactionApi;
 
+import java.sql.Connection;
 import java.text.ParseException;
 
 public class slotPeriodicCheck extends Thread {
@@ -7,6 +8,12 @@ public class slotPeriodicCheck extends Thread {
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	static String msg;
+	
+    private Connection conn;
+    
+    public slotPeriodicCheck(Connection conn) {
+        this.conn = conn;
+    }
 
 	public void run() {
 	
@@ -14,7 +21,7 @@ public class slotPeriodicCheck extends Thread {
 			try {
 				if(!fun.workTime()) {
 					try {
-						msg = db.executeQuery2(sqlConsts.sqlSlotPeriodicCheck, "Brojaci", sqlConsts.columnsSlotPeriodicCheck);
+						msg = db.executeQuery2(sqlConsts.sqlSlotPeriodicCheck, "Brojaci", sqlConsts.columnsSlotPeriodicCheck, conn);
 						msg = fun.setUTF8(msg);
 						msg = fun.slotPriodicCheckString(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Poslednji brojaci");

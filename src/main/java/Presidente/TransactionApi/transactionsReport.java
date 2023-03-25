@@ -1,5 +1,6 @@
 package Presidente.TransactionApi;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,6 +21,7 @@ public class transactionsReport extends Thread {
 	static String msg = "";
 	static String sql;
 	static String[] columns = { "ukupno", "slot_club_id", "path" };
+	private Connection conn;
 	
 	public static String createQuery() {
 		LocalTime now = LocalTime.now();
@@ -61,7 +63,7 @@ public class transactionsReport extends Thread {
 						String slotClubId = null;
 						JSONArray slotClubsWithData = new JSONArray();
 						JSONObject item = new JSONObject();
-						ResultSet rs = db.executeQuery4(sql);
+						ResultSet rs = db.executeQuery4(conn, sql);
 						while (rs.next()) {
 							//if(slotClubsWithData.otpString(rs.getString("slot_club_id")){}
 							item.put(rs.getString("slot_club_id"), new JSONObject());

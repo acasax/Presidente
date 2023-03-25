@@ -23,7 +23,7 @@ public class updateMachines extends Thread {
 	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; // sa lokalne masine
 	private static String user = "presidente";
 	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
-
+	private Connection conn;
 	String sticker_number;
 	int machine_number;
 	String id_number;
@@ -71,7 +71,7 @@ public class updateMachines extends Thread {
 					}
 					j++;
 					updateMachineQuery = "UPDATE public.machines SET location_machine_number = " + sticker_number + " WHERE machine_id_number= '" + id_number + "';";
-					db.executeQuery(updateMachineQuery);
+					db.executeQuery(updateMachineQuery, conn);
 					System.out.println("");
 				}
 				System.out.println(j);

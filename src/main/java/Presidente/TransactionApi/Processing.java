@@ -32,7 +32,7 @@ public class Processing extends Thread {
 
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-	static Connection lConn;
+	private Connection conn;
 	
 	// Kreira httpClient
 	//
@@ -42,11 +42,12 @@ public class Processing extends Thread {
 	HttpPost request = new HttpPost(URL + TransactionPath);
 
 	// Konsturktor osnovne klase
-	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody) {
+	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody, Connection conn) {
 		super();
 		this.TransactionId   = TransactionId;
 		this.TransactionPath = TransactionPath;
 		this.TransactionBody = TransactionBody;
+		this.conn = conn;
 	}
 
 	public String getTransactionId() {
@@ -67,7 +68,7 @@ public class Processing extends Thread {
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
 			try {
-				db.executeQuery(apiJsonQuery);
+				db.executeQuery(apiJsonQuery, conn);
 			} catch (SecurityException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -112,7 +113,7 @@ public class Processing extends Thread {
 
 					try {
 						db.executeProcedure(
-								"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
+								"CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')", conn);
 					} catch (SecurityException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -132,7 +133,7 @@ public class Processing extends Thread {
 							
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getApiCounter(TransactionId, db);
+							threadSleep = fun.getApiCounter(TransactionId, db, conn);
 							Thread.sleep(threadSleep);
 							
 
@@ -163,7 +164,7 @@ public class Processing extends Thread {
 
 							if (Status == 201) {
 								try {
-									db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')");
+									db.executeProcedure("CALL public.set_status_1_by_transaction_id('" + TransactionId + "','" + api_uid + "')", conn);
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -176,7 +177,7 @@ public class Processing extends Thread {
 								return;
 							}else {
 								try {
-									db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"	+ response_text + "', '" + String.valueOf(Status) + "')");
+									db.executeProcedure("CALL public.set_status_11_by_transaction_id('" + TransactionId + "','"	+ response_text + "', '" + String.valueOf(Status) + "')", conn);
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

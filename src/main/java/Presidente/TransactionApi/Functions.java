@@ -3,6 +3,7 @@ package Presidente.TransactionApi;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -147,7 +148,7 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status) throws SecurityException, IOException, SQLException {
+	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status, Connection conn) throws SecurityException, IOException, SQLException {
 		// Uzimanje podataka iz JSON-a
 		//
 		String transaction_time = getParamFromJson(JSON, "transaction_time");
@@ -166,7 +167,7 @@ public class Functions {
 			if(machine_id_number != null || machine_id_number != "") {
 				String strickerNumberQuery = "SELECT sticker_number FROM public.machines where id_number = '" +machine_id_number.trim()+ "'";
 				String[] columns = {"sticker_number"};
-				sticker_no = db.executeQuery3(strickerNumberQuery, columns);
+				sticker_no = db.executeQuery3(strickerNumberQuery, columns, conn);
 			} 
 		} else {
 			sticker_no = getParamFromJson(JSON, "sticker_number");
@@ -220,7 +221,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			if (p_transaction_amount > ce.maxDeposit) {
 				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
-				String macAddress = getMacAddressOfMachines(sticker_no, db);
+				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
 				System.out.println("msg: " + msg);
@@ -237,7 +238,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			if (p_transaction_amount > ce.maxWithdraw) {
 				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
-				String macAddress = getMacAddressOfMachines(sticker_no, db);
+				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
 						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
 				System.out.println("msg: " + msg);
@@ -255,7 +256,7 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
-			String macAddress = getMacAddressOfMachines(sticker_no, db);
+			String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 			String msg = "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
 						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount;
 			System.out.println("msg: " + msg);
@@ -282,12 +283,12 @@ public class Functions {
 	
 	//Uzimanje mac adrese aparata 
 	//
-	public String getMacAddressOfMachines(String sn, DbFunctions db) throws SecurityException, IOException {
+	public String getMacAddressOfMachines(String sn, DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		String macAddress = "";
 		try {
 			String sql = sqlConsts.sglGetMacAdressByStickerNumber + "'" + sn + "'";
 		
-			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, sqlConsts.columnsGetMacAdressByStickerNumber);
+			macAddress = db.executeQuery2(sql, "Nema izabrani sn broj" + sn, sqlConsts.columnsGetMacAdressByStickerNumber, lConn);
 			return macAddress;
 		} catch (SQLException e) {
 			createLog("Functions getMacAddressOfMachines" + e.getMessage() + "SN ERROR" + macAddress);
@@ -297,10 +298,10 @@ public class Functions {
 
 	// Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public Long getApiCounter(String transaction_id, DbFunctions db) throws SecurityException, IOException {
+	public Long getApiCounter(String transaction_id, DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		try {
 			String apiCounter = db.executeFunction("SELECT public.get_api_counter('" + transaction_id + "')",
-				    "get_api_counter");
+				    "get_api_counter", lConn);
 			if (apiCounter != null && Integer.parseInt(apiCounter) < 3) {
 				return (long) 60000;
 			} else {
@@ -313,10 +314,10 @@ public class Functions {
 		}
 	}
 
-	public String getWorkStatus(String transaction_id, DbFunctions db) throws SecurityException, IOException {
+	public String getWorkStatus(String transaction_id, DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		try {
 			String workStatus = db.executeFunction("SELECT public.get_transaction_exe_status('" + transaction_id + "')",
-					"get_transaction_exe_status");
+					"get_transaction_exe_status", lConn);
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("Functions work status nije kako treba" + e.getMessage());
@@ -629,24 +630,24 @@ public class Functions {
 	// bazi
 	// i koja ima status 0
 	//
-	public void sendSlotPeriodicWithStatus0(int reportIndex, DbFunctions db, ArrayList<spProcessing> lista)
+	public void sendSlotPeriodicWithStatus0(int reportIndex, DbFunctions db, ArrayList<spProcessing> lista, Connection lConn)
 			throws SQLException, SecurityException, IOException {
 		try {
 			String spWithStatus0 = db.executeFunction(sqlConsts.sqlGetSlotPeriodicWithStatus0,
-					sqlConsts.columnGetSlotPeriodicWithStatus0[0]);
+					sqlConsts.columnGetSlotPeriodicWithStatus0[0], lConn);
 
 			while (spWithStatus0 != null) {
 				reportIndex = getReportIndex(spWithStatus0, "s");
 				JSONObject slotPeriodicBody = checkSpJSONforSend(spWithStatus0);
 				//String transactionJSONError = getParamFromJson(slotPeriodicBody.toString(), "error");
 				// if(transactionJSONError != null) { return; }
-				db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")");
+				db.executeProcedure("CALL public.set_sp_status_10_by_report_index(" + reportIndex + ")", lConn);
 				// Pokretanje procesa za odredjeni transaction id
-				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody);
+				spProcessing newProcess = new spProcessing(reportIndex, slotPeriodicBody, lConn);
 				lista.add(newProcess);
 				newProcess.start();
 				spWithStatus0 = db.executeFunction(sqlConsts.sqlGetSlotPeriodicWithStatus0,
-						sqlConsts.columnGetSlotPeriodicWithStatus0[0]);
+						sqlConsts.columnGetSlotPeriodicWithStatus0[0], lConn);
 			}
 		} catch (SQLException | SecurityException | IOException e) {
 			createLog("Functions sendSlotPeriodicWithStatus0" + ce.sendSlotPeriodicWithStatus0 + "Greska :" + e);
@@ -655,10 +656,10 @@ public class Functions {
 
 	// Funkcija koja proverava da li ima spProcesa koji ne rade kako treba
 	//
-	public String getSpWorkStatus(int reportIndex, DbFunctions db) throws SecurityException, IOException {
+	public String getSpWorkStatus(int reportIndex, DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		try {
 			String workStatus = db.executeFunction("SELECT public.get_sp_report_exe_status(" + reportIndex + ")",
-					"get_sp_report_exe_status");
+					"get_sp_report_exe_status", lConn);
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("Functions getSpWorkStatus  work status nije kako treba" + e.getMessage());
@@ -668,10 +669,10 @@ public class Functions {
 
 	// Funkcija za proveru cekanja do sledeceg slanja
 	//
-	public String getSpApiCounter(int reportIndex, DbFunctions db) throws SecurityException, IOException {
+	public String getSpApiCounter(int reportIndex, DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		try {
 			String apiCounter = db.executeFunction("SELECT public.get_sp_api_counter(" + reportIndex + ")",
-					"get_sp_api_counter");
+					"get_sp_api_counter", lConn);
 			if (Integer.parseInt(apiCounter) < 3) {
 				return "60000";
 			} else {
@@ -686,10 +687,10 @@ public class Functions {
 
 	// Cron error
 	//
-	public String getCronError(DbFunctions db) throws SecurityException, IOException {
+	public String getCronError(DbFunctions db, Connection lConn) throws SecurityException, IOException {
 		try {
 			String workStatus = db.executeFunction(sqlConsts.sqlGetCronError,
-					sqlConsts.columnGetCronError[0]);
+					sqlConsts.columnGetCronError[0], lConn);
 			return workStatus;
 		} catch (SQLException e) {
 			createLog("Functions getCronError get_sp_cron_job_error_counter nije kako treba" + e.getMessage());

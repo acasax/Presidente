@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-25T13:49:10.350713700Z</date>
+  <millis>1679752150350</millis>
+  <nanos>713700</nanos>
+  <sequence>7</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>25</thread>
+  <message>DbFunctions executeQuery1: Funkcija executeQuery1 nije uspešno izvršenaSELECT bed_transactions_id FROM public.bad_transactions where status = 0</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.350713700Z</date>
+  <millis>1679752150350</millis>
+  <nanos>713700</nanos>
+  <sequence>6</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>20</thread>
+  <message>DbFunctions executeQuery1: Funkcija executeQuery1 nije uspešno izvršenaselect slot_club_id from slot_clubs where not slot_club_id in (SELECT distinct slot_club_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '2 HOURS' AND NOW()) AND work_status = true</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.349714300Z</date>
+  <millis>1679752150349</millis>
+  <nanos>714300</nanos>
+  <sequence>5</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>22</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_sp_cron_job_error_counter()</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.349714300Z</date>
+  <millis>1679752150349</millis>
+  <nanos>714300</nanos>
+  <sequence>4</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>17</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_json_sp_by_status(0)</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.348712800Z</date>
+  <millis>1679752150348</millis>
+  <nanos>712800</nanos>
+  <sequence>3</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>21</thread>
+  <message>DbFunctions executeQuery1: Funkcija executeQuery1 nije uspešno izvršenaSELECT transaction_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '25 minutes' AND NOW() order by transaction_time limit 1</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.347713Z</date>
+  <millis>1679752150347</millis>
+  <nanos>713000</nanos>
+  <sequence>2</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>18</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_json_by_status(11)</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.381800100Z</date>
+  <millis>1679752150381</millis>
+  <nanos>800100</nanos>
+  <sequence>8</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>18</thread>
+  <message>Functions getTransansactionId U ovom JSON-u nema polja transaction_idA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.381800100Z</date>
+  <millis>1679752150381</millis>
+  <nanos>800100</nanos>
+  <sequence>9</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>28</thread>
+  <message>Functions getReportIndex U ovom JSON-u nema polja report indexA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.382801200Z</date>
+  <millis>1679752150382</millis>
+  <nanos>801200</nanos>
+  <sequence>10</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>17</thread>
+  <message>Functions getReportIndex U ovom JSON-u nema polja report indexA JSONObject text must begin with '{' at 1 [character 2 line 1]</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.385844700Z</date>
+  <millis>1679752150385</millis>
+  <nanos>844700</nanos>
+  <sequence>11</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>18</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_transaction_exe_status('U ovom JSON-u nema polja transaction_id')</message>
+</record>
+<record>
+  <date>2023-03-25T13:49:10.385844700Z</date>
+  <millis>1679752150385</millis>
+  <nanos>844700</nanos>
+  <sequence>12</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>28</thread>
+  <message>DbFunctions executeFunction: Funkcija executeFunction nije uspešno izvršenaSELECT public.get_sp_report_exe_status(0)</message>
+</record>

@@ -19,22 +19,23 @@ public class spProcessing extends Thread {
 	int reportIndex;
 	JSONObject slotPeriodicBody;
 	
-	
 	private String URL = "https://api.uis.gov.rs/api/imports/v1/";
 	private String TransactionPath = "slot-periodic";
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
 	private int Status;
+    private Connection conn;
 	static String api_uid;
 	static String response_text;
 	static String threadSleep;
 
 	// Konsturktor osnovne klase
 	//
-	public spProcessing(int reportIndex, JSONObject slotPeriodicBody) {
+	public spProcessing(int reportIndex, JSONObject slotPeriodicBody, Connection conn) {
 		super();
 		this.reportIndex      = reportIndex;
 		this.slotPeriodicBody = slotPeriodicBody;
+		this.conn = conn;
 	}
 
 	// geterr za report index
@@ -57,7 +58,7 @@ public class spProcessing extends Thread {
 			//
 			String apiJsonQuery = "UPDATE public.slot_periodic_h SET api_json='" + slotPeriodicBody.toString() + "' WHERE report_index = '"+ reportIndex +"';";
 			try {
-				db.executeQuery(apiJsonQuery);
+				db.executeQuery(apiJsonQuery, conn);
 			} catch (SecurityException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -108,7 +109,7 @@ public class spProcessing extends Thread {
 				if (Status == 201) {
 
 					try {
-						db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
+						db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')", conn);
 					} catch (SecurityException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -127,7 +128,7 @@ public class spProcessing extends Thread {
 
 							// Funkcija za api kaunter
 							//
-							threadSleep = fun.getSpApiCounter(reportIndex, db);
+							threadSleep = fun.getSpApiCounter(reportIndex, db, conn);
 							Thread.sleep(Long.parseLong(threadSleep));
 
 							request = new HttpPost(URL + TransactionPath);
@@ -157,7 +158,7 @@ public class spProcessing extends Thread {
 
 							if (Status == 201) {
 								try {
-									db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')");
+									db.executeProcedure("CALL public.set_sp_status_1_by_report_index('" + reportIndex + "','" + api_uid + "')", conn);
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -170,7 +171,7 @@ public class spProcessing extends Thread {
 								return;
 							} else {
 								try {
-									db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex + "','" + response_text + "'," + String.valueOf(Status) + "')");
+									db.executeProcedure("CALL public.set_sp_status_11_by_report_index('" + reportIndex + "','" + response_text + "'," + String.valueOf(Status) + "')", conn);
 								} catch (SecurityException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

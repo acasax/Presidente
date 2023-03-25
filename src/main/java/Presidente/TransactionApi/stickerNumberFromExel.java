@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class stickerNumberFromExel extends Thread {
 	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; // sa lokalne masine
 	private static String user = "presidente";
 	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
+	private Connection conn;
 
 	String producer_serial_number;
 	String id_number;
@@ -75,7 +77,7 @@ public class stickerNumberFromExel extends Thread {
 				stricker_number = cell1.getStringCellValue();
 				stricker_number = stricker_number.replaceAll("\\s+","");
 				sumDepositSql = "SELECT  SUM(public.transactions.transaction_amount) as suma FROM public.transactions INNER JOIN public.machines ON public.transactions.machine_num_id = public.machines.id_number INNER JOIN public.transaction_types ON public.transactions.transaction_types = public.transaction_types.transaction_types WHERE public.transactions.transaction_time >= '"+ date +" 07:00:00' AND public.transactions.transaction_time <= '"+ nextDate +" 03:59:59' AND public.machines.sticker_number = '"+ stricker_number +"' AND public.transaction_types.path = 'slot/deposit'";
-				sumDeposit = db.executeQuery1(sumDepositSql, "Gotovo je", columnsSum);
+				sumDeposit = db.executeQuery1(sumDepositSql, "Gotovo je", columnsSum, conn);
 				String[] parts = sumDeposit.split(":"); 
 				Cell cell2 = row.getCell(4);
 				String val = parts[1].replaceAll("\\s+","");

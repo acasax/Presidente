@@ -45,5 +45,6 @@
 	<classpathentry kind="lib" path="D:/projekti/javaProjekti/Presidente/lib/httpmime-4.5.13.jar"/>
 	<classpathentry kind="lib" path="D:/projekti/javaProjekti/Presidente/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="D:/projekti/javaProjekti/Presidente/lib/java-mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="D:/projekti/javaProjekti/Presidente/lib/HikariCP-5.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

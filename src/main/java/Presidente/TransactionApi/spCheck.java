@@ -12,6 +12,12 @@ public class spCheck extends Thread {
 	static String spWithStatus11;
 	static int reportIndex;
 	static String spWorkStatus;
+	
+    private Connection conn;
+    
+    public spCheck(Connection conn) {
+        this.conn = conn;
+    }
 
 	public void run() {
 		try {
@@ -19,11 +25,11 @@ public class spCheck extends Thread {
 				while (true) {
 					try {
 						// proverava da li u bazi ima izvestaja sa statusom 11
-						spWithStatus11 = db.executeFunction("SELECT public.get_json_sp_by_status(11)", "get_json_sp_by_status");
+						spWithStatus11 = db.executeFunction("SELECT public.get_json_sp_by_status(11)", "get_json_sp_by_status", conn);
 						//kreira parametre
 						if (spWithStatus11 != null ) {
 							reportIndex = fun.getReportIndex(spWithStatus11, "s"); // uzima reportindex za taj
-							spWorkStatus = fun.getSpWorkStatus(reportIndex, db); // proveraba procedurom da li ima procesinga
+							spWorkStatus = fun.getSpWorkStatus(reportIndex, db, conn); // proveraba procedurom da li ima procesinga
 						}
 						
 						// ubija koji nerade kako treba
