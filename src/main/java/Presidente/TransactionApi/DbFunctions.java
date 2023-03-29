@@ -138,6 +138,7 @@ public class DbFunctions {
 	
 	public String executeProcedure(String procedureSQL, Connection conn) throws SecurityException, IOException, SQLException {
 	    String result = "";
+	    System.out.println("Processing executeProcedure procedureSQL: " + procedureSQL);
 	    try {
 	        CallableStatement properCase = conn.prepareCall(procedureSQL);
 	        //properCase.setString(1, procedureName);

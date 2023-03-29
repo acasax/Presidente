@@ -44,7 +44,7 @@ public class ConstError {
 		  case "14":
 			    return "Čolak Antina 17 Kruševac";
 		  default:
-		    return "Nema u bazi pristiglog sid-a";
+		    return sid;
 		}	
 	}
 	

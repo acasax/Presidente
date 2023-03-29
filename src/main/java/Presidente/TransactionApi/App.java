@@ -51,7 +51,13 @@ public class App {
 	public static void prekini(Processing p) {
 		p.interrupt();
 	}
+	
+	// Ocisti niz od dobrih proces
+	public static void ocistiProcese() {
+		lista = new ArrayList<>();
+	}
 
+	
 	// Funkcija koja kreira novi processing od transakcije koja je stigla iz notifya
 	//
 	public static void sendTransaction(String transaction, Connection lConn)
@@ -99,7 +105,6 @@ public class App {
 	public static void sendTransactionWithStatus0(Connection lConn)
 			throws SQLException, SecurityException, IOException, ParseException {
 		System.out.println("sendTransactionWithStatus0 start");
-		if (fun.workTime()) {
 			try {
 				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
 						"get_json_by_status", lConn);
@@ -137,7 +142,7 @@ public class App {
 						ce.sendTransactionWithStatus0 + " Transaction id: " + transactionId + "  Transaction path: "
 								+ transactionPath + "Transaction body : " + transactionBody + "Greska :" + e);
 			}
-		}
+		
 	}
 
 	public static void main(String[] args) throws SQLException, InterruptedException, ExecutionException,
@@ -233,13 +238,8 @@ public class App {
 		  //
 		  //tr.start();
 		  
-		  // Proveri da nije null 
+		  // Salje stare uplate
 		  // 
-		  sendTransactionWithStatus0(lConn);
-		  sendTransactionWithStatus0(lConn);
-		  sendTransactionWithStatus0(lConn);
-		  sendTransactionWithStatus0(lConn);
-		  sendTransactionWithStatus0(lConn);
 		  sendTransactionWithStatus0(lConn);
 	}
 }

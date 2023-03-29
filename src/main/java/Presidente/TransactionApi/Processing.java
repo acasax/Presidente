@@ -6,11 +6,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -34,12 +38,6 @@ public class Processing extends Thread {
 	Functions fun = new Functions();
 	private Connection conn;
 	
-	// Kreira httpClient
-	//
-	CloseableHttpClient httpClient = HttpClients.createDefault();
-	// Kreira httpPostRequest
-	//
-	HttpPost request = new HttpPost(URL + TransactionPath);
 
 	// Konsturktor osnovne klase
 	public Processing(String TransactionId, String TransactionPath, JSONObject TransactionBody, Connection conn) {
@@ -58,15 +56,22 @@ public class Processing extends Thread {
 	public void run() {	
 
 		try {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// Kreira httpClient
+			//
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			// Kreira httpPostRequest
+			//
+			HttpPost request = new HttpPost(URL + TransactionPath);
+
+			System.out.println("Processing start");
+			System.out.println("Processing TransactionId: " + TransactionId);
+			System.out.println("Processing TransactionPath: " + TransactionPath);
+			System.out.println("Processing TransactionBody: " + TransactionBody);
+			System.out.println("Processing URL + TransactionPath: " + URL + TransactionPath);
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
+			System.out.println("Processing apiJsonQuery: " + apiJsonQuery);
 			try {
 				db.executeQuery(apiJsonQuery, conn);
 			} catch (SecurityException e1) {
@@ -83,8 +88,12 @@ public class Processing extends Thread {
 			request.addHeader("x-api-key", "56443d42ce9c84e2dcc14f7bcc55bdbce21b0577458e18e82741979c9362c6e0"); // parametri
 																												// za
 																												// heder
-			request.setEntity(new StringEntity(TransactionBody.toString(), ContentType.APPLICATION_JSON)); // parametri
-																											// body
+			StringEntity se = new StringEntity(TransactionBody.toString(), "utf-8");
+			se.setContentEncoding("UTF-8");
+			se.setContentType("application/json");
+			request.setEntity(se); // parametri
+			
+			System.out.println("Processing request getEntity: " + request.getEntity());																			// body
 
 			// Izvrsava request i ceka odgovor
 			//
@@ -93,13 +102,15 @@ public class Processing extends Thread {
 			try {
 
 				Status = response.getStatusLine().getStatusCode(); // status odgovora
-
+				System.out.println("Processing Status: " + Status);
 				// Body odgovora
 				//
 				HttpEntity entity = response.getEntity();
+				System.out.println("Processing entity: " + entity);
 				if (entity != null) {
 					// return it as a String
 					String result = EntityUtils.toString(entity);
+					System.out.println("Processing result: " + result);
 					if (Status == 201) {
 						api_uid = fun.getParamFromJson(result, "uuid");
 					} else {
@@ -124,7 +135,7 @@ public class Processing extends Thread {
 					response.close();
 					httpClient.close();
 				} else {
-
+					System.out.println("Processing else true");
 					while (true) {
 						// Proverava da li je radna za prekidanje
 						//
@@ -135,7 +146,6 @@ public class Processing extends Thread {
 							//
 							threadSleep = fun.getApiCounter(TransactionId, db, conn);
 							Thread.sleep(threadSleep);
-							
 
 							request = new HttpPost(URL + TransactionPath);
 
@@ -230,7 +240,7 @@ public class Processing extends Thread {
 			e.printStackTrace();
 			try {
 				fun.createLog("Processing ClientProtocolException e:" + e.getMessage()+ "transactionId: " + TransactionId);
-				httpClient.close();
+				//httpClient.close();
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -240,7 +250,7 @@ public class Processing extends Thread {
 			e.printStackTrace();
 			try {
 				fun.createLog("Processing IOException e:" + e.getMessage()+ "transactionId: " + TransactionId);
-				httpClient.close();
+				//httpClient.close();
 			} catch (SecurityException | IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
