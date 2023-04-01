@@ -116,7 +116,7 @@ public class ConstError {
 		  case "0127000018":
 				return "14";
 		  default:
-		    return "Nema u bazi pristiglog sid-a";
+		    return sid;
 		}	
 	}
 	

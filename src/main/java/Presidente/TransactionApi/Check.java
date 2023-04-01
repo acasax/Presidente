@@ -47,8 +47,6 @@ public class Check extends Thread {
 							//od verzije bild 48
 							if(badProcessing != null) {
 								App.prekini(badProcessing);
-							} else {
-								App.ocistiProcese();
 							}
 						}
 					} catch (SQLException e1) {

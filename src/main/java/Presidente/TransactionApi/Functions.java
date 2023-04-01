@@ -223,7 +223,7 @@ public class Functions {
 				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + transaction_time;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika uplata");
 				sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
@@ -240,7 +240,7 @@ public class Functions {
 				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress;
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + transaction_time;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika isplata");
 				sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
@@ -258,7 +258,7 @@ public class Functions {
 			transactionBody.put("transaction_withdraw_amount", 0);
 			String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 			String msg = "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount;
+						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount + " Vreme transakcije: " + transaction_time;
 			System.out.println("msg: " + msg);
 			sendEmail(msg, "presidenteapp@yahoo.com", "Jackpot");
 			sendEmail(msg, "dusan@presidente.rs", "Jackpot");

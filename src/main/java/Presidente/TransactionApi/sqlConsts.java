@@ -56,5 +56,9 @@ public class sqlConsts {
 	static String sqlSlotPeriodicCheck = "SELECT api_json FROM public.slot_periodic_h ORDER BY report_index DESC LIMIT 1";
 	static String[] columnsSlotPeriodicCheck = { "api_json" };
 	
+	//statusChecker
+	//
+	static String sqlStatusChecker = "CALL public.transaction_status_10_update_to_1()";
+	
 	
 }

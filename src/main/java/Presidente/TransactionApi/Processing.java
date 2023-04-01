@@ -3,18 +3,13 @@ package Presidente.TransactionApi;
 import org.json.JSONObject;
 import org.apache.http.client.ClientProtocolException;
 
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -65,13 +60,9 @@ public class Processing extends Thread {
 
 			System.out.println("Processing start");
 			System.out.println("Processing TransactionId: " + TransactionId);
-			System.out.println("Processing TransactionPath: " + TransactionPath);
-			System.out.println("Processing TransactionBody: " + TransactionBody);
-			System.out.println("Processing URL + TransactionPath: " + URL + TransactionPath);
 			//upisuje bodi koji je poslat u bazu
 			//
 			String apiJsonQuery = "UPDATE public.transactions SET api_json='" + TransactionBody.toString() + "' WHERE transaction_id = '"+ TransactionId +"';";
-			System.out.println("Processing apiJsonQuery: " + apiJsonQuery);
 			try {
 				db.executeQuery(apiJsonQuery, conn);
 			} catch (SecurityException e1) {
@@ -92,8 +83,7 @@ public class Processing extends Thread {
 			se.setContentEncoding("UTF-8");
 			se.setContentType("application/json");
 			request.setEntity(se); // parametri
-			
-			System.out.println("Processing request getEntity: " + request.getEntity());																			// body
+																				// body
 
 			// Izvrsava request i ceka odgovor
 			//
@@ -102,15 +92,12 @@ public class Processing extends Thread {
 			try {
 
 				Status = response.getStatusLine().getStatusCode(); // status odgovora
-				System.out.println("Processing Status: " + Status);
 				// Body odgovora
 				//
 				HttpEntity entity = response.getEntity();
-				System.out.println("Processing entity: " + entity);
 				if (entity != null) {
 					// return it as a String
 					String result = EntityUtils.toString(entity);
-					System.out.println("Processing result: " + result);
 					if (Status == 201) {
 						api_uid = fun.getParamFromJson(result, "uuid");
 					} else {
@@ -154,9 +141,11 @@ public class Processing extends Thread {
 							request.addHeader("x-api-key",
 									"56443d42ce9c84e2dcc14f7bcc55bdbce21b0577458e18e82741979c9362c6e0"); // parametri za
 																											// heder
-							request.setEntity(
-									new StringEntity(TransactionBody.toString(), ContentType.APPLICATION_JSON)); // parametri
-																													// body
+							se = new StringEntity(TransactionBody.toString(), "utf-8");
+							se.setContentEncoding("UTF-8");
+							se.setContentType("application/json");
+							request.setEntity(se); // parametri
+							
 							response = httpClient.execute(request);
 
 							Status = response.getStatusLine().getStatusCode();

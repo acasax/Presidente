@@ -10,6 +10,7 @@ Presidente\TransactionApi\DbFunctions.class
 Presidente\TransactionApi\spStart.class
 Presidente\TransactionApi\Functions$2.class
 Presidente\TransactionApi\locationCheck.class
+Presidente\TransactionApi\statusChecker.class
 Presidente\TransactionApi\ConstError.class
 Presidente\TransactionApi\slotPeriodicCheck.class
 Presidente\TransactionApi\badTransactions.class

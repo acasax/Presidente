@@ -19,6 +19,7 @@ public class App {
 
 	static Object pgconn;
 	static String transactionWithStatus0;
+	static String previusTransactionWithStatus0;
 	static String transactionId;
 	static String transactionPath;
 	static String transactionWithtransactionId;
@@ -103,14 +104,17 @@ public class App {
 	//
 	
 	public static void sendTransactionWithStatus0(Connection lConn)
-			throws SQLException, SecurityException, IOException, ParseException {
-		System.out.println("sendTransactionWithStatus0 start");
+			throws SQLException, SecurityException, IOException, ParseException, InterruptedException {
 			try {
 				transactionWithStatus0 = db.executeFunction("SELECT public.get_json_by_status(0)",
 						"get_json_by_status", lConn);
+				
 				System.out.println("sendTransactionWithStatus0 start");
+				System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
 				while (transactionWithStatus0 != null) {
+					Thread.sleep(1000);
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
+					System.out.println("sendTransactionWithStatus0 transactionId: " + transactionId);
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
 					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true, lConn);
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
@@ -126,14 +130,22 @@ public class App {
 						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
 						if(ManagementFactory.getThreadMXBean().getThreadCount() < 6500) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
+							System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
+							System.out.println("sendTransactionWithStatus0 previusTransactionWithStatus0: " + previusTransactionWithStatus0);
 							// Procedura Set Status 10
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
-							lista.add(newProcess);
-							newProcess.start();
+							if(previusTransactionWithStatus0 != transactionWithStatus0 || transactionWithStatus0 == null) {
+								db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+								// Pokretanje procesa za odredjeni transaction id
+								Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
+								lista.add(newProcess);
+								newProcess.start();
+							} else {
+								fun.createLog("sendTransactionWithStatus0 previusTransactionWithStatus0: " + transactionSendingStatus);
+							}
+							previusTransactionWithStatus0 = transactionWithStatus0;
 							transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
 									sqlConsts.columnsGetJsonWithStatus[0], lConn);
+							
 						}
 					}
 				}
@@ -173,6 +185,7 @@ public class App {
 		  apiUuidStatus aus = new apiUuidStatus(lConn);
 		  badTransactions bt = new badTransactions(lConn);
 		  checkCertificate cc = new checkCertificate();
+		  statusChecker ch = new statusChecker(lConn);
 		  
 		  // Proverava sertifikate
 		  // 
@@ -241,5 +254,10 @@ public class App {
 		  // Salje stare uplate
 		  // 
 		  sendTransactionWithStatus0(lConn);
+		  
+		  //Ako ima transakcija koje nisu promenile status iz 10 u 1 nakon uspesnog odgovore
+		  //
+		  ch.start();
+		  
 	}
 }

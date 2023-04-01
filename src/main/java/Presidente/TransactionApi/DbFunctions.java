@@ -158,6 +158,7 @@ public class DbFunctions {
 	public String executeFunction(String SQL, String functionName, Connection conn) throws SQLException, SecurityException, IOException {
 	    Statement statement = null;
 	    ResultSet resultSet = null;
+	    System.out.println("Processing executeFunction SQL: " + SQL);
 	    try {
 	        statement = conn.createStatement();
 	        resultSet = statement.executeQuery(SQL);
