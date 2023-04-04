@@ -21,7 +21,7 @@ public class shitsHapend extends Thread {
 					try {
 						msg = db.executeQuery1(sqlConsts.sqlShitsHapend, "Sranje neko je pocelo", sqlConsts.columnsShitsHapend, conn);
 						if(msg != "Sranje neko je pocelo") {
-							msg = fun.setUTF8(msg);
+							//msg = fun.setUTF8(msg);
 							fun.sendEmail(msg, "presidenteapp@yahoo.com", "SRANJE SE DESAVA NEKO");
 						}
 						try {

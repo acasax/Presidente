@@ -19,7 +19,6 @@ public class App {
 
 	static Object pgconn;
 	static String transactionWithStatus0;
-	static String previusTransactionWithStatus0;
 	static String transactionId;
 	static String transactionPath;
 	static String transactionWithtransactionId;
@@ -35,10 +34,10 @@ public class App {
 	// build version 48
 	// Da li postoji proces sa zadatim transaction_id koji radi
 	public static Processing nadjiProcessing(String transactionId) {
-		System.out.println("App nadjiProcessing: " + transactionId);
-		System.out.println("App lista.size(): " + lista.size());
+		System.out.println("nadjiProcessing transactionId: " + transactionId);
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i).getTransactionId().equals(transactionId)) {
+				System.out.println("nadjiProcessing lista.get(i).getTransactionId(): " + lista.get(i).getTransactionId());
 				Processing badProcess = lista.get(i);
 				System.out.println("App badProcess: " + badProcess);
 				lista.remove(i);
@@ -80,15 +79,14 @@ public class App {
 						}
 					} else {
 						System.out.println("sendTransaction before Threads number" + ManagementFactory.getThreadMXBean().getThreadCount());
-						//if(ManagementFactory.getThreadMXBean().getThreadCount() < 200) {
-							System.out.println("sendTransaction number of Threads" + ManagementFactory.getThreadMXBean().getThreadCount());
+						if(nadjiProcessing(transactionId) == null) {
 							// Procedura Set Status 10
 							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
 							// Pokretanje procesa za odredjeni transaction id
 							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
 							lista.add(newProcess);
 							newProcess.start();
-						//}
+						}
 					}
 				}
 			} catch (SecurityException | IOException e) {
@@ -112,7 +110,7 @@ public class App {
 				System.out.println("sendTransactionWithStatus0 start");
 				System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
 				while (transactionWithStatus0 != null) {
-					Thread.sleep(1000);
+					Thread.sleep(1500);
 					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
 					System.out.println("sendTransactionWithStatus0 transactionId: " + transactionId);
 					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
@@ -131,18 +129,14 @@ public class App {
 						if(ManagementFactory.getThreadMXBean().getThreadCount() < 6500) {
 							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
 							System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
-							System.out.println("sendTransactionWithStatus0 previusTransactionWithStatus0: " + previusTransactionWithStatus0);
 							// Procedura Set Status 10
-							if(previusTransactionWithStatus0 != transactionWithStatus0 || transactionWithStatus0 == null) {
-								db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-								// Pokretanje procesa za odredjeni transaction id
-								Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
-								lista.add(newProcess);
-								newProcess.start();
-							} else {
-								fun.createLog("sendTransactionWithStatus0 previusTransactionWithStatus0: " + transactionSendingStatus);
-							}
-							previusTransactionWithStatus0 = transactionWithStatus0;
+						
+							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+							// Pokretanje procesa za odredjeni transaction id
+							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
+							lista.add(newProcess);
+							newProcess.start();
+							
 							transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
 									sqlConsts.columnsGetJsonWithStatus[0], lConn);
 							
@@ -179,7 +173,7 @@ public class App {
 		  Check ck = new Check(lConn);
 		  ErrorCheck ec = new ErrorCheck();
 		  locationCheck lc = new locationCheck(lConn); 
-		  shitsHapend sh = new shitsHapend(lConn);
+		  //shitsHapend sh = new shitsHapend(lConn);
 		  spErrorCheck spec = new spErrorCheck(lConn);
 		  paymentCheck pc = new paymentCheck(lConn);
 		  apiUuidStatus aus = new apiUuidStatus(lConn);
@@ -223,7 +217,7 @@ public class App {
 		  
 		  // Provera da li ima pristiglih uplata u poslednjih 15 minuta 
 		  // 
-		  sh.start();
+		  //sh.start();
 		  
 		  // Provera slot periodic 
 		  // 
