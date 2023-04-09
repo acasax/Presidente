@@ -29,6 +29,9 @@ public class App {
 	static DbFunctions db = new DbFunctions();
 	static Functions fun = new Functions();
 	static ConstError ce = new ConstError();
+	
+	static boolean isDev = false;
+	static boolean isSendingOldTransaction = false;
 
 	// Ne radi jer je uvek lista prazna 
 	// build version 48
@@ -67,7 +70,7 @@ public class App {
 				if (transaction != null) {
 					transactionId = fun.getTransansactionId(transaction, "s");
 					transactionPath = fun.getTransansactionPath(transaction, db, false);
-					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db, false, lConn);
+					transactionBody = fun.checkJSONforSend(transaction, transactionPath, db, false, lConn, isDev);
 					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
 					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
 					if (transactionJSONError != null || transactionSendingStatus != null) {
@@ -109,37 +112,44 @@ public class App {
 				
 				System.out.println("sendTransactionWithStatus0 start");
 				System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
-				while (transactionWithStatus0 != null) {
-					Thread.sleep(1500);
-					transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
-					System.out.println("sendTransactionWithStatus0 transactionId: " + transactionId);
-					transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
-					transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true, lConn);
-					transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
-					transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
-					if (transactionJSONError != null || transactionSendingStatus != null) {
-						if (transactionJSONError != null) {
-							fun.createLog("sendTransactionWithStatus0 transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
-							fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
+				if(!isSendingOldTransaction) {
+					while (transactionWithStatus0 != null) {
+						if(transactionWithStatus0 != null) {
+							isSendingOldTransaction = true;
 						} else {
-							fun.createLog("sendTransactionWithStatus0 transactionSendingStatus: " + transactionSendingStatus);
+							isSendingOldTransaction = false;
 						}
-					} else {
-						System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
-						if(ManagementFactory.getThreadMXBean().getThreadCount() < 6500) {
-							System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
-							System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
-							// Procedura Set Status 10
-						
-							db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
-							// Pokretanje procesa za odredjeni transaction id
-							Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
-							lista.add(newProcess);
-							newProcess.start();
+						Thread.sleep(1500);
+						transactionId = fun.getTransansactionId(transactionWithStatus0, "s");
+						System.out.println("sendTransactionWithStatus0 transactionId: " + transactionId);
+						transactionPath = fun.getTransansactionPath(transactionWithStatus0, db, true);
+						transactionBody = fun.checkJSONforSend(transactionWithStatus0, transactionPath, db, true, lConn, isDev);
+						transactionSendingStatus = fun.getParamFromJson(transactionBody.toString(), "send_status");
+						transactionJSONError = fun.getParamFromJson(transactionBody.toString(), "error");
+						if (transactionJSONError != null || transactionSendingStatus != null) {
+							if (transactionJSONError != null) {
+								fun.createLog("sendTransactionWithStatus0 transactionJSONError problem sa vremenom transakcije: " + transactionJSONError);
+								fun.sendEmail(transactionJSONError, "presidenteapp@yahoo.com", "Probelm sa vremenom transakcije");
+							} else {
+								fun.createLog("sendTransactionWithStatus0 transactionSendingStatus: " + transactionSendingStatus);
+							}
+						} else {
+							System.out.println("Pre 0 " + ManagementFactory.getThreadMXBean().getThreadCount());
+							if(ManagementFactory.getThreadMXBean().getThreadCount() < 6500) {
+								System.out.println("Total Number of threads " + ManagementFactory.getThreadMXBean().getThreadCount());
+								System.out.println("sendTransactionWithStatus0 transactionWithStatus0: " + transactionWithStatus0);
+								// Procedura Set Status 10
 							
-							transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
-									sqlConsts.columnsGetJsonWithStatus[0], lConn);
-							
+								db.executeProcedure("CALL public.set_status_10_by_transaction_id('" + transactionId + "')", lConn);
+								// Pokretanje procesa za odredjeni transaction id
+								Processing newProcess = new Processing(transactionId, transactionPath, transactionBody, lConn);
+								lista.add(newProcess);
+								newProcess.start();
+								
+								transactionWithStatus0 = db.executeFunction(sqlConsts.sqlGetJsonWithStatus0,
+										sqlConsts.columnsGetJsonWithStatus[0], lConn);
+								
+							}
 						}
 					}
 				}
@@ -168,18 +178,22 @@ public class App {
 		
 		  Connection lConn = db.asyconnect();
 		  
-		  slotPeriodicCheck spc = new slotPeriodicCheck(lConn); 
+		  slotPeriodicCheck spc = new slotPeriodicCheck(lConn, isDev); 
 		  spStart sp = new spStart(lConn);
 		  Check ck = new Check(lConn);
 		  ErrorCheck ec = new ErrorCheck();
-		  locationCheck lc = new locationCheck(lConn); 
-		  //shitsHapend sh = new shitsHapend(lConn);
+		  locationCheck lc = new locationCheck(lConn, isDev); 
+		  shitsHapend sh = new shitsHapend(lConn);
 		  spErrorCheck spec = new spErrorCheck(lConn);
-		  paymentCheck pc = new paymentCheck(lConn);
+		  paymentCheck pc = new paymentCheck(lConn, isDev);
 		  apiUuidStatus aus = new apiUuidStatus(lConn);
 		  badTransactions bt = new badTransactions(lConn);
 		  checkCertificate cc = new checkCertificate();
 		  statusChecker ch = new statusChecker(lConn);
+		  
+		  //Provera da li je pristiglo nesto u bazu u zadnjih 5 minuta
+		  //
+		  sh.start();
 		  
 		  // Proverava sertifikate
 		  // 

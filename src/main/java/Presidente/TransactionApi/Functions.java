@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -148,7 +149,7 @@ public class Functions {
 	// Funkcija koja proveraba da li JSON ima sva polja koja su potrebna za
 	// odredjenu putanju
 	//
-	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status, Connection conn) throws SecurityException, IOException, SQLException {
+	public JSONObject checkJSONforSend(String JSON, String path, DbFunctions db, Boolean status, Connection conn, boolean isDev) throws SecurityException, IOException, SQLException {
 		// Uzimanje podataka iz JSON-a
 		//
 		String transaction_time = getParamFromJson(JSON, "transaction_time");
@@ -223,10 +224,12 @@ public class Functions {
 				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + transaction_time;
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika uplata");
-				sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
+				if(!isDev) {
+					sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
+				}
 			}
 			return transactionBody;
 		case "slot/withdraw":
@@ -240,10 +243,13 @@ public class Functions {
 				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + transaction_time;
+						+ " Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika isplata");
-				sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
+				if(!isDev) {
+					sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
+				}
+				
 			}
 			return transactionBody;
 		case "slot/jackpot":
@@ -258,10 +264,13 @@ public class Functions {
 			transactionBody.put("transaction_withdraw_amount", 0);
 			String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 			String msg = "ID: " + transaction_id + "Slot klub id: " + ce.slotClubIdFromSlotClubSid(slot_club_id)
-						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount + " Vreme transakcije: " + transaction_time;
+						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
 			System.out.println("msg: " + msg);
 			sendEmail(msg, "presidenteapp@yahoo.com", "Jackpot");
-			sendEmail(msg, "dusan@presidente.rs", "Jackpot");
+			if(!isDev) {
+				sendEmail(msg, "dusan@presidente.rs", "Jackpot");
+			}
+			
 				return transactionBody;
 		case "slot/rollback":
 			// Ovde je zato sto postoji samo za ovu rutu
@@ -742,6 +751,23 @@ public class Functions {
 		}
 
 		return msg;
+	}
+	
+	//Format data 
+	//
+	public String formatDataToString(String inputDate) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String outputDate = null;
+        try {
+            Date date = inputFormat.parse(inputDate);
+            outputFormat.setTimeZone(TimeZone.getTimeZone("GMT+2")); // Set the desired time zone
+             outputDate = outputFormat.format(date);
+            System.out.println(outputDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outputDate;
 	}
 	
 

@@ -35,32 +35,32 @@ class Listener extends Thread {
 				if (startMilis == 0) {
 					startMilis = millis;
 				} else {
-//					if (millis > startMilis + 300000) { // vreme za proveru statusa 0
-//						new Thread(new Runnable() {
-//							public void run() {
-//								try {
-//									App.sendTransactionWithStatus0(conn);
-//									// U log fajlu da li se ovo desava
-//								} catch (SQLException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (SecurityException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (ParseException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (InterruptedException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//							}
-//						}).start();
-//						startMilis = millis;
-//					}
+					if (millis > startMilis + 300000) { // vreme za proveru statusa 0
+						new Thread(new Runnable() {
+							public void run() {
+								try {
+									App.sendTransactionWithStatus0(conn);
+									// U log fajlu da li se ovo desava
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SecurityException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}).start();
+						startMilis = millis;
+					}
 				}
 				// wait a while before checking again for new
 				// notifications

@@ -10,9 +10,11 @@ public class paymentCheck extends Thread {
 	static String msg;
 	
     private Connection conn;
+	private boolean isDev;
 	    
-    public paymentCheck(Connection conn) {
+    public paymentCheck(Connection conn, boolean isDev) {
 		this.conn = conn;
+		this.isDev = isDev;
     }
 	
 	public void run() {
@@ -22,8 +24,10 @@ public class paymentCheck extends Thread {
 					try {
 						msg = db.executeQuery1(sqlConsts.sqlPaymentCheck, "Nije bilo uplata celog dana", sqlConsts.columnsPaymentCheck, conn);
 						msg = fun.setUTF8(msg);
+						if(!isDev) {
+							fun.sendEmail(msg, "presidente.ks@gmail.com", "Sumarno po lokacijama i tipu");
+						}
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Sumarno po lokacijama i tipu");
-						fun.sendEmail(msg, "presidente.ks@gmail.com", "Sumarno po lokacijama i tipu");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

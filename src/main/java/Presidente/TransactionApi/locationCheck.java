@@ -10,10 +10,12 @@ public class locationCheck extends Thread {
 	static String msg;
 	
 	private Connection conn;
-
-	public locationCheck(Connection lConn) {
+	private boolean isDev;
+	 
+	public locationCheck(Connection lConn, boolean isDev) {
 		// TODO Auto-generated constructor stub
 		this.conn = lConn;
+		this.isDev = isDev;
 	}
 
 	public void run() {
@@ -22,9 +24,10 @@ public class locationCheck extends Thread {
 				if (fun.workTime()) {
 					try {
 						msg = db.executeQuery1(sqlConsts.sqlLocationWorkCheck, "Sve lokacije salju podatke", sqlConsts.columnsLocationWorkCheck, conn);
-						//msg = fun.setUTF8(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Lokacije koje nisu slale podatke");
-						fun.sendEmail(msg, "dusan@presidente.rs", "Lokacije koje nisu slale podatke");
+						if(!isDev) {
+							fun.sendEmail(msg, "dusan@presidente.rs", "Lokacije koje nisu slale podatke");
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

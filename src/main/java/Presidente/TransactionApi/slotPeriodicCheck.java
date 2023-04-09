@@ -10,9 +10,11 @@ public class slotPeriodicCheck extends Thread {
 	static String msg;
 	
     private Connection conn;
+    private boolean isDev;
     
-    public slotPeriodicCheck(Connection conn) {
+    public slotPeriodicCheck(Connection conn, boolean isDev) {
         this.conn = conn;
+        this.isDev = isDev;
     }
 
 	public void run() {
@@ -25,7 +27,9 @@ public class slotPeriodicCheck extends Thread {
 						msg = fun.setUTF8(msg);
 						msg = fun.slotPriodicCheckString(msg);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Poslednji brojaci");
-						fun.sendEmail(msg, "presidente.ks@gmail.com", "Poslednji brojaci");
+						if(!isDev) {
+							fun.sendEmail(msg, "presidente.ks@gmail.com", "Poslednji brojaci");	
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
