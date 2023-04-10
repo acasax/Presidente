@@ -763,7 +763,7 @@ public class Functions {
             Date date = inputFormat.parse(inputDate);
             outputFormat.setTimeZone(TimeZone.getTimeZone("GMT+2")); // Set the desired time zone
              outputDate = outputFormat.format(date);
-            System.out.println(outputDate);
+           
         } catch (Exception e) {
             e.printStackTrace();
         }

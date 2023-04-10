@@ -191,7 +191,7 @@ public class App {
 		  checkCertificate cc = new checkCertificate();
 		  statusChecker ch = new statusChecker(lConn);
 		  
-		  //Provera da li je pristiglo nesto u bazu u zadnjih 5 minuta
+		  //Provera da li je pristiglo nesto u bazu u zadnjih 25 minuta
 		  //
 		  sh.start();
 		  
@@ -224,15 +224,7 @@ public class App {
 		  // Provera da li ima nekih koje ne rade kako treba 
 		  // 
 		  ck.start();
-		  
-		  // Garbage collector 
-		  // 
-		  System.gc();
-		  
-		  // Provera da li ima pristiglih uplata u poslednjih 15 minuta 
-		  // 
-		  //sh.start();
-		  
+		
 		  // Provera slot periodic 
 		  // 
 		  spec.start();
@@ -266,6 +258,11 @@ public class App {
 		  //Ako ima transakcija koje nisu promenile status iz 10 u 1 nakon uspesnog odgovore
 		  //
 		  ch.start();
+		  
+		  
+		  // Garbage collector 
+		  // 
+		  System.gc();
 		  
 	}
 }
