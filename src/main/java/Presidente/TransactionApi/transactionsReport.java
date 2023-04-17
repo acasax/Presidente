@@ -60,7 +60,7 @@ public class transactionsReport extends Thread {
 				if(fun.workTime()) {
 					try {
 						sql = createQuery();
-						String slotClubId = null;
+						//String slotClubId = null;
 						JSONArray slotClubsWithData = new JSONArray();
 						JSONObject item = new JSONObject();
 						ResultSet rs = db.executeQuery4(conn, sql);

@@ -2,7 +2,6 @@ package Presidente.TransactionApi;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,12 +13,12 @@ import org.postgresql.ds.PGPoolingDataSource;
 
 
 
+@SuppressWarnings("deprecation")
 public class DbFunctions {
 	
 	Functions fun = new Functions();
 	ConstError ce = new ConstError();
 	
-	@SuppressWarnings("deprecation")
 	public Connection asyconnect() throws SecurityException, IOException, ParseException {
 	    int retries = 0;
 	    int maxRetries = 5;
@@ -66,6 +65,7 @@ public class DbFunctions {
 	
 	
 
+	@SuppressWarnings("resource")
 	public Connection newAsyconnect() throws SQLException, SecurityException, IOException, ParseException {
 	    int retries = 0;
 	    int maxRetries = 5;

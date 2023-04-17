@@ -46,10 +46,13 @@ public class sqlConsts {
 	static String sqlPaymentCheck = "SELECT SUM(public.transactions.transaction_amount) as suma, count(public.transactions.transaction_id) as brojUplata, public.transactions.slot_club_id, public.transaction_types.path FROM public.transactions INNER JOIN public.transaction_types ON public.transactions.transaction_types = public.transaction_types.transaction_types WHERE public.transactions.transaction_time BETWEEN CURRENT_DATE - INTEGER '1' + TIME '06:45:59' AND CURRENT_DATE + TIME '03:59:59' GROUP BY public.transactions.slot_club_id, public.transaction_types.path";
 	static String[] columnsPaymentCheck = { "suma", "slot_club_id", "brojUplata", "path" };
 	
-	//paymentCheck 
+	//shitHapend
 	//
-	static String sqlShitsHapend = "SELECT transaction_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '25 minutes' AND NOW() order by transaction_time limit 1";
-	static String[] columnsShitsHapend = { "transaction_id" };
+	static String sqlShitsHapend = "SELECT COUNT(*) FROM transactions WHERE transaction_time >= NOW() - INTERVAL '25 minutes';";
+	static String sqlShitsHapend1 = "SELECT COUNT(*) FROM transactions WHERE transaction_time >= NOW() - INTERVAL '25 minutes' and status = 0;";
+	static String[] columnsShitsHapend = { "count" };
+	
+	
 	
 	//slotPeriodicCheck
 	//

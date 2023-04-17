@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,9 +21,6 @@ public class stickerNumberFromExel extends Thread {
 	Functions fun = new Functions();
 	
 	private static final long MILLIS_IN_A_DAY = 1000 * 60 * 60 * 24;
-	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; // sa lokalne masine
-	private static String user = "presidente";
-	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 	private Connection conn;
 
 	String producer_serial_number;
@@ -64,7 +60,7 @@ public class stickerNumberFromExel extends Thread {
 					rowNumber++;
 					continue;
 				}
-				Iterator<Cell> cellIterator = row.cellIterator(); // iterating over each column
+				//Iterator<Cell> cellIterator = row.cellIterator(); // iterating over each column
 				// while (cellIterator.hasNext()) {
 				Cell cell = row.getCell(2);
 				date = cell.getStringCellValue();

@@ -2,7 +2,6 @@ package Presidente.TransactionApi;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -580,7 +579,6 @@ public class Functions {
 
 		JSONObject slotPeriodicBody = new JSONObject();
 		JSONObject machineElement = new JSONObject();
-		JSONArray machinesJSON = new JSONArray();
 
 		// Provera da li su svi parametri tu
 		//
@@ -724,7 +722,9 @@ public class Functions {
 	// String moze da koristi cirilicna slova
 	//
 	public String setUTF8(String str) {
+		@SuppressWarnings("deprecation")
 		byte[] bytes = str.getBytes(Charsets.UTF_8);
+		@SuppressWarnings("deprecation")
 		String strUtf8 = new String(bytes, Charsets.UTF_8);
 
 		return strUtf8;
@@ -736,7 +736,6 @@ public class Functions {
 		String msg = "";
 		String jsonString = str; // assign your JSON String here
 		JSONObject obj = new JSONObject(jsonString);
-		String pageName = obj.getString("date");
 
 		JSONArray arr = obj.getJSONArray("machines"); // notice that `"posts": [...]`
 		for (int i = 0; i < arr.length(); i++) {
@@ -756,13 +755,16 @@ public class Functions {
 	//Format data 
 	//
 	public String formatDataToString(String inputDate) {
+		System.out.println("acasax inputDate: " + inputDate);
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String outputDate = null;
         try {
             Date date = inputFormat.parse(inputDate);
+            System.out.println("acasax date: " + date);
             outputFormat.setTimeZone(TimeZone.getTimeZone("GMT+2")); // Set the desired time zone
-             outputDate = outputFormat.format(date);
+            outputDate = outputFormat.format(date);
+            System.out.println("acasax outputFormat: " + outputFormat);
            
         } catch (Exception e) {
             e.printStackTrace();

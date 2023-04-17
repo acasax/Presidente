@@ -1,10 +1,8 @@
 package Presidente.TransactionApi;
 
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 public class spStart extends Thread {

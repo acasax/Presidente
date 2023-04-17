@@ -164,18 +164,6 @@ public class App {
 	public static void main(String[] args) throws SQLException, InterruptedException, ExecutionException,
 			SecurityException, IOException, ParseException {
 
-		
-		/*
-		 * updateMachines um = new updateMachines();
-		 * 
-		 * um.start();
-		 */
-		 
-
-		/*
-		 * stickerNumberFromExel snfx = new stickerNumberFromExel(); snfx.start();
-		 */
-		
 		  Connection lConn = db.asyconnect();
 		  
 		  slotPeriodicCheck spc = new slotPeriodicCheck(lConn, isDev); 

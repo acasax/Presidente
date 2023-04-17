@@ -2,12 +2,7 @@ package Presidente.TransactionApi;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,10 +14,6 @@ public class updateMachines extends Thread {
 
 	DbFunctions db = new DbFunctions();
 	Functions fun = new Functions();
-
-	private static String urlL = "jdbc:postgresql://93.87.76.139:1521/accounting"; // sa lokalne masine
-	private static String user = "presidente";
-	private static String password = "Pr3z1d3nt3@Tr3ndPl@j!";
 	private Connection conn;
 	String sticker_number;
 	int machine_number;

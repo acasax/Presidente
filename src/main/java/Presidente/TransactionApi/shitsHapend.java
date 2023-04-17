@@ -20,8 +20,12 @@ public class shitsHapend extends Thread {
 				if (fun.workTime()) {
 					try {
 						msg = db.executeQuery1(sqlConsts.sqlShitsHapend, "Nije stiglo nista u bazu zadnjih 25 minuta", sqlConsts.columnsShitsHapend, conn);
-						if(msg != "Nije stiglo nista u bazu zadnjih 25 minuta") {
+						if(msg == "Nije stiglo nista u bazu zadnjih 25 minuta") {
 							fun.sendEmail(msg, "presidenteapp@yahoo.com", "Nije stiglo nista u bazu zadnjih 25 minuta");
+						}
+						msg = db.executeQuery1(sqlConsts.sqlShitsHapend1, "Nije poslato nista upravi zadnjih 25 minuta", sqlConsts.columnsShitsHapend, conn);
+						if(msg == "Nije poslato nista upravi zadnjih 25 minuta") {
+							fun.sendEmail(msg, "presidenteapp@yahoo.com", "Nije poslato nista upravi zadnjih 25 minuta");
 						}
 						try {
 							Thread.sleep(1500000);
