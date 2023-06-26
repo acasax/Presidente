@@ -52,8 +52,6 @@ public class sqlConsts {
 	static String sqlShitsHapend1 = "SELECT COUNT(*) FROM transactions WHERE transaction_time >= NOW() - INTERVAL '25 minutes' and status = 0;";
 	static String[] columnsShitsHapend = { "count" };
 	
-	
-	
 	//slotPeriodicCheck
 	//
 	static String sqlSlotPeriodicCheck = "SELECT api_json FROM public.slot_periodic_h ORDER BY report_index DESC LIMIT 1";
@@ -63,5 +61,10 @@ public class sqlConsts {
 	//
 	static String sqlStatusChecker = "CALL public.transaction_status_10_update_to_1()";
 	
+	//slot club data
+	//
+	static String sqlSlotClubDataWithSid = "SELECT * FROM public.slot_clubs where slot_club_sid =";
+	static String sqlSlotClubDataWithId = "SELECT * FROM public.slot_clubs where slot_club_id =";
+	static String[] columnsSlotClubData = {"slot_club_id", "adresa", "opstina", "mesto", "slot_club_sid"};
 	
 }

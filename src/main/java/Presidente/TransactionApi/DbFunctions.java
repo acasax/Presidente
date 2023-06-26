@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -323,6 +326,28 @@ public class DbFunctions {
 	    }
 	}
 
-		
+	public String[] executeQuery5(String SQL, String[] params, Connection conn) throws SecurityException, IOException, SQLException {
+	    List<String> resultData = new ArrayList<>();
+
+	    try {
+	        Statement stmnt = conn.createStatement();
+	        ResultSet resultSet = stmnt.executeQuery(SQL);
+	        if (resultSet != null) {
+	            while (resultSet.next()) {
+	                for (int i = 0; i < params.length; i++) {
+	                    resultData.add(resultSet.getString(params[i]));
+	                }
+	            }
+	            resultSet.close();
+	            stmnt.cancel();
+	        }
+	    } catch (SQLException e) {
+	        fun.createLogDb("DbFunctions executeQuery5: " + ce.executeQuery5 + SQL);
+	        e.printStackTrace();
+	    }
+
+	    return resultData.toArray(new String[0]);
+	}
+
 	
 }
