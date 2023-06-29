@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -243,7 +244,7 @@ public class Functions {
 				//transactionBody.put("send_status", "Uplata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji uplata veca od " + String.valueOf(ce.maxDeposit) + " ID: " + transaction_id
-						+ " Slot klub id: " + String.join(" ", slot_club_data) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
+						+ " Slot klub : " + String.join(" ", slot_club_data) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika uplata");
 				if(!isDev) {
@@ -262,7 +263,7 @@ public class Functions {
 				//transactionBody.put("send_status", "Islata nije za slanje. ID: " + transaction_id);
 				String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 				String msg = "Postoji isplata veca od " + String.valueOf(ce.maxWithdraw) + " ID: " + transaction_id
-						+ " Slot klub id: " + String.join(" ", slot_club_data) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
+						+ " Slot klub : " + String.join(" ", slot_club_data) + " Aparat: " + sticker_no + " Mak adresa: " + macAddress + " Vreme transakcije: " + formatDataToString(transaction_time) + " Iznos: " + p_transaction_amount;
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika isplata");
 				if(!isDev) {
@@ -282,7 +283,7 @@ public class Functions {
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
 			String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
-			String msg = "ID: " + transaction_id + "Slot klub id: " + String.join(" ", slot_club_data)
+			String msg = "ID: " + transaction_id + "Slot klub: " + String.join(" ", slot_club_data)
 						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount + " Vreme transakcije: " + formatDataToString(transaction_time);
 			System.out.println("msg: " + msg);
 			sendEmail(msg, "presidenteapp@yahoo.com", "Jackpot");
@@ -399,7 +400,7 @@ public class Functions {
 		String to = emailTo;
 
 		// Sender's email ID needs to be mentioned
-		String from = "acasax@gmail.com";
+		String from = "slotapp.resivoje@gmail.com";
 
 		// Assuming you are sending email from through gmails smtp
 		String host = "smtp.gmail.com";
@@ -418,7 +419,7 @@ public class Functions {
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("acasax@gmail.com", "cgbjqlhqsylqcmsp");
+				return new PasswordAuthentication("slotapp.resivoje@gmail.com", "hnmcsyyjakjhnvqi");
 
 			}
 
@@ -776,31 +777,46 @@ public class Functions {
 	//
 	public String formatDataToString(String inputDate) {
 	    System.out.println("inputDate: " + inputDate);
-	    SimpleDateFormat oldInputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssXXX");
-	    SimpleDateFormat newInputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSSXXX");
-	    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX");
-	    SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	    String outputDate = null;
 	    try {
-	        Date date = null;
-	        try {
-	            date = oldInputFormat.parse(inputDate);
-	        } catch (ParseException e) {
-	        	try {
-	        		date = newInputFormat.parse(inputDate);
-	        	} catch (ParseException e1) {
-	        		date = isoFormat.parse(inputDate);
-	        	}
-	        }
-	        System.out.println("date: " + date);
-	        outputFormat.setTimeZone(TimeZone.getTimeZone("GMT+2")); // Set the desired time zone
-	        outputDate = outputFormat.format(date);
+	        // Extract date and time components
+	        String[] parts = inputDate.split(" ");
+	        String datePart = parts[0];
+	        String timePart = parts[1].substring(0, 8);
+
+	        // Format date
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        Date date = dateFormat.parse(datePart);
+
+	        // Format time
+	        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	        Date time = timeFormat.parse(timePart);
+
+	        // Combine date and time
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(date);
+	        Calendar timeCalendar = Calendar.getInstance();
+	        timeCalendar.setTime(time);
+	        calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
+	        calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
+	        calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+
+	        // Set desired time zone
+	        calendar.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+
+	        // Format output date
+	        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	        outputDate = outputFormat.format(calendar.getTime());
+
 	        System.out.println("outputDate: " + outputDate);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return outputDate;
 	}
+
+
+
 
 
 
