@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-02T20:16:56.560195800Z</date>
+  <millis>1677788216560</millis>
+  <nanos>195800</nanos>
+  <sequence>28</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>371</thread>
+  <message>Processing NumberFormatException e:Cannot parse null stringtransactionId: d033b9d4-3238-41b6-95d9-9381f581faa8</message>
+</record>

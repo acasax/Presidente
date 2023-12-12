@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-11-28T18:46:11.090770500Z</date>
+  <millis>1669661171090</millis>
+  <nanos>770500</nanos>
+  <sequence>54</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>45</thread>
+  <message>Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_10_by_transaction_id('16578ef8-2302-4791-ae38-45a7ba3b9daf')</message>
+</record>
+<record>
+  <date>2022-11-28T18:46:11.153361400Z</date>
+  <millis>1669661171153</millis>
+  <nanos>361400</nanos>
+  <sequence>55</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>61</thread>
+  <message>Funkcija executeQuery nije uspešno izvršenaUPDATE public.transactions SET api_json='{"transaction_id":"16578ef8-2302-4791-ae38-45a7ba3b9daf","slot_club_id":"09","transaction_amount":1000,"transaction_time":"2022-11-27T16:23:30+01:00","transaction_type":"1","sticker_no":"019954"}' WHERE transaction_id = '16578ef8-2302-4791-ae38-45a7ba3b9daf';</message>
+</record>
+<record>
+  <date>2022-11-28T18:46:11.807326600Z</date>
+  <millis>1669661171807</millis>
+  <nanos>326600</nanos>
+  <sequence>56</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>61</thread>
+  <message>Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_1_by_transaction_id('16578ef8-2302-4791-ae38-45a7ba3b9daf','0d2a8b1c-b8f0-4d5e-bfdf-c957c038dc48')</message>
+</record>
+<record>
+  <date>2022-11-28T18:46:13.227480Z</date>
+  <millis>1669661173227</millis>
+  <nanos>480000</nanos>
+  <sequence>57</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>45</thread>
+  <message>Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_10_by_transaction_id('16578ef8-2302-4791-ae38-45a7ba3b9daf')</message>
+</record>
+<record>
+  <date>2022-11-28T18:46:13.292293300Z</date>
+  <millis>1669661173292</millis>
+  <nanos>293300</nanos>
+  <sequence>58</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>62</thread>
+  <message>Funkcija executeQuery nije uspešno izvršenaUPDATE public.transactions SET api_json='{"transaction_id":"16578ef8-2302-4791-ae38-45a7ba3b9daf","slot_club_id":"09","transaction_amount":1000,"transaction_time":"2022-11-27T16:23:30+01:00","transaction_type":"1","sticker_no":"019954"}' WHERE transaction_id = '16578ef8-2302-4791-ae38-45a7ba3b9daf';</message>
+</record>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-30T22:17:22.691171300Z</date>
+  <millis>1675117042691</millis>
+  <nanos>171300</nanos>
+  <sequence>141</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>38673</thread>
+  <message>DbFunctions executeQuery: Funkcija executeQuery nije uspešno izvršenaUPDATE public.transactions SET api_json='{"transaction_id":"ae552b17-b9bc-49f8-9b3e-ddf60fe56328","slot_club_id":"14","transaction_amount":200,"transaction_time":"2023-01-30T14:45:53.436305+01:00","transaction_type":"6","sticker_no":"029905"}' WHERE transaction_id = 'ae552b17-b9bc-49f8-9b3e-ddf60fe56328';</message>
+</record>

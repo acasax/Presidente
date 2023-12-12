@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-19T14:08:22.166577900Z</date>
+  <millis>1679234902166</millis>
+  <nanos>577900</nanos>
+  <sequence>7</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršena0004A3000308</message>
+</record>
+<record>
+  <date>2023-03-19T14:08:29.572620400Z</date>
+  <millis>1679234909572</millis>
+  <nanos>620400</nanos>
+  <sequence>8</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršena0004A3000FF2</message>
+</record>
+<record>
+  <date>2023-03-19T14:08:37.757497500Z</date>
+  <millis>1679234917757</millis>
+  <nanos>497500</nanos>
+  <sequence>9</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršena0004A3000FCD</message>
+</record>

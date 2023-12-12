@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-01-18T07:22:32.372629600Z</date>
+  <millis>1674026552372</millis>
+  <nanos>629600</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>Funkcija asyconnect nije uspešno izvršena</message>
+</record>

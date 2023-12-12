@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-05T13:29:23.361067400Z</date>
+  <millis>1678022963361</millis>
+  <nanos>67400</nanos>
+  <sequence>267</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1171</thread>
+  <message>Processing NumberFormatException e:nulltransactionId: 285960da-382b-437d-837d-1c6c8e35fc6f</message>
+</record>
+<record>
+  <date>2023-03-05T13:29:25.315159800Z</date>
+  <millis>1678022965315</millis>
+  <nanos>159800</nanos>
+  <sequence>268</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>1172</thread>
+  <message>Processing NumberFormatException e:nulltransactionId: 285960da-382b-437d-837d-1c6c8e35fc6f</message>
+</record>

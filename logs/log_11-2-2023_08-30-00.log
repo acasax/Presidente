@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-11T19:30:00.010762200Z</date>
+  <millis>1676143800010</millis>
+  <nanos>762200</nanos>
+  <sequence>19</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>2698</thread>
+  <message>Processing IOException e:Connect to api.uis.gov.rs:443 [api.uis.gov.rs/195.222.99.209] failed: Read timed outtransactionId: a004f7db-2bdd-48ab-9868-0d95903205ab</message>
+</record>

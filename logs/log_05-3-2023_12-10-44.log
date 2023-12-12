@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-05T11:10:44.868242300Z</date>
+  <millis>1678014644868</millis>
+  <nanos>242300</nanos>
+  <sequence>5</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLog</method>
+  <thread>315</thread>
+  <message>Processing NumberFormatException e:nulltransactionId: d2da0c25-0fb8-4e96-b5fb-cbf945fab15a</message>
+</record>

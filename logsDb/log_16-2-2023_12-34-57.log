@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-15T23:34:57.204795100Z</date>
+  <millis>1676504097204</millis>
+  <nanos>795100</nanos>
+  <sequence>29</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>590</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršenaSELECT sticker_number FROM public.machines where id_number = '0127003330'</message>
+</record>

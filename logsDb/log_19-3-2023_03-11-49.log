@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-03-19T14:11:49.673795400Z</date>
+  <millis>1679235109673</millis>
+  <nanos>795400</nanos>
+  <sequence>29</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršena0004A3000A13</message>
+</record>
+<record>
+  <date>2023-03-19T14:11:56.768390600Z</date>
+  <millis>1679235116768</millis>
+  <nanos>390600</nanos>
+  <sequence>30</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>1</thread>
+  <message>DbFunctions executeQuery3: Funkcija executeQuery3 nije uspešno izvršena0004A3000036</message>
+</record>

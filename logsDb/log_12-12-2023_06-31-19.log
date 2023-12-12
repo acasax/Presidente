@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-12T17:31:20.000877200Z</date>
+  <millis>1702402280000</millis>
+  <nanos>877200</nanos>
+  <sequence>0</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>35</thread>
+  <message>DbFunctions executeQuery1: Funkcija executeQuery1 nije uspešno izvršenaSELECT m.sticker_number, m.location_machine_number, m.slot_club_id, sc.mesto, sc.adresa FROM machines m JOIN slot_clubs sc ON m.slot_club_id = sc.slot_club_id WHERE m.work_Status = true AND NOT m.id_number IN (SELECT DISTINCT machine_num_id FROM public.transactions HERE transaction_time BETWEEN NOW() - INTERVAL '48 HOURS' AND NOW());</message>
+</record>
