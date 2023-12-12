@@ -30,7 +30,7 @@ public class App {
 	static Functions fun = new Functions();
 	static ConstError ce = new ConstError();
 	
-	static boolean isDev = true;
+	static boolean isDev = false;
 	static boolean isSendingOldTransaction = false;
 
 	// Ne radi jer je uvek lista prazna 
