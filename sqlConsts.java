@@ -69,6 +69,6 @@ public class sqlConsts {
 	
 	//machine work 
 	//
-	static String sqlMachineCheck = "SELECT m.sticker_number, m.location_machine_number, m.slot_club_id, sc.mesto, sc.adresa FROM machines m JOIN slot_clubs sc ON m.slot_club_id = sc.slot_club_id WHERE m.work_Status = true AND NOT m.id_number IN (SELECT DISTINCT machine_num_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '48 HOURS' AND NOW());";
-	static String[] columnsMachineCheck  = {"sticker_number", "location_machine_number", "slot_club_id", "mesto", "adresa"};
+	static String sqlMachineCheck = "SELECT m.sticker_number, m.location_machine_number, m.slot_club_id, sc.mesto, sc.adresa, MAX(t.transaction_time) AS last_transaction_time FROM machines m JOIN slot_clubs sc ON m.slot_club_id = sc.slot_club_id LEFT JOIN transactions t ON m.id_number = t.machine_num_id WHERE m.work_Status = true AND NOT m.id_number IN (SELECT DISTINCT machine_num_id FROM public.transactions WHERE transaction_time BETWEEN NOW() - INTERVAL '48 HOURS' AND NOW()) GROUP BY m.sticker_number, m.location_machine_number, m.slot_club_id, sc.mesto, sc.adresa";
+	static String[] columnsMachineCheck  = {"sticker_number", "location_machine_number", "slot_club_id", "mesto", "adresa", "last_transaction_time"};
 }
