@@ -44,7 +44,7 @@ public class machineCheck extends Thread {
 			}
 
 			try {
-				Thread.sleep(3600000);
+				Thread.sleep(86400000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
