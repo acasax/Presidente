@@ -10,6 +10,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/***
+ * 
+ * DEV COMMENT 
+ * 
+ * @author Aleksandar Djordjevic
+ * @date 08.02.2024
+ * 
+ * This class is use to add new machines from excel to database
+ * 
+ */
 public class updateMachines extends Thread {
 
 	DbFunctions db = new DbFunctions();

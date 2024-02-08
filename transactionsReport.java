@@ -13,6 +13,16 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/***
+ * 
+ * DEV COMMENT 
+ * 
+ * @author Aleksandar Djordjevic
+ * @date 08.02.2024
+ * 
+ * This class is not active for now
+ * 
+ */
 public class transactionsReport extends Thread {
 
 	DbFunctions db = new DbFunctions();

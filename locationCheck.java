@@ -27,6 +27,8 @@ public class locationCheck extends Thread {
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Lokacije koje nisu slale podatke");
 						if(!isDev) {
 							fun.sendEmail(msg, "dusan@presidente.rs", "Lokacije koje nisu slale podatke");
+							fun.sendEmail(msg, "sladja.djokic@presidente.rs", "Lokacije koje nisu slale podatke");
+							fun.sendEmail(msg, "marija.milic@presidente.rs", "Lokacije koje nisu slale podatke");
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

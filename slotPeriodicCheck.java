@@ -3,6 +3,16 @@ package Presidente.TransactionApi;
 import java.sql.Connection;
 import java.text.ParseException;
 
+/***
+ * 
+ * DEV COMMENT 
+ * 
+ * @author Aleksandar Djordjevic
+ * @date 08.02.2024
+ * 
+ * This class send only to owner (Bojan)
+ * 
+ */
 public class slotPeriodicCheck extends Thread {
 
 	DbFunctions db = new DbFunctions();

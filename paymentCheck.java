@@ -3,6 +3,17 @@ package Presidente.TransactionApi;
 import java.sql.Connection;
 import java.text.ParseException;
 
+
+/***
+ * 
+ * DEV COMMENT 
+ * 
+ * @author Aleksandar Djordjevic
+ * @date 08.02.2024
+ * 
+ * This class is not active for now
+ * 
+ */
 public class paymentCheck extends Thread {
 
 	DbFunctions db = new DbFunctions();
