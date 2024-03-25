@@ -29,7 +29,7 @@ public class machineCheck extends Thread {
 						if(!isDev) {
 							fun.sendEmail(msg, "dusan@presidente.rs", "APARATI koje nisu slale podatke");
 							fun.sendEmail(msg, "sladja.djokic@presidente.rs", "APARATI koje nisu slale podatke");
-							fun.sendEmail(msg, "marija.milic@presidente.rs", "APARATI koje nisu slale podatke");
+							///fun.sendEmail(msg, "marija.milic@presidente.rs", "APARATI koje nisu slale podatke");
 						}
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

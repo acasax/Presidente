@@ -250,7 +250,7 @@ public class Functions {
 				if(!isDev) {
 					sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
 					sendEmail(msg, "sladja.djokic@presidente.rs", "Velika uplata");
-					sendEmail(msg, "marija.milic@presidente.rs", "Velika uplata");
+					///sendEmail(msg, "marija.milic@presidente.rs", "Velika uplata");
 				}
 			}
 			return transactionBody;
@@ -271,7 +271,7 @@ public class Functions {
 				if(!isDev) {
 					sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
 					sendEmail(msg, "sladja.djokic@presidente.rs", "Velika isplata");
-					sendEmail(msg, "marija.milic@presidente.rs", "Velika isplata");
+					///sendEmail(msg, "marija.milic@presidente.rs", "Velika isplata");
 				}
 				
 			}
@@ -294,7 +294,7 @@ public class Functions {
 			if(!isDev) {
 				sendEmail(msg, "dusan@presidente.rs", "Jackpot");
 				sendEmail(msg, "sladja.djokic@presidente.rs", "Jackpot");
-				sendEmail(msg, "marija.milic@presidente.rs", "Jackpot");
+				///sendEmail(msg, "marija.milic@presidente.rs", "Jackpot");
 			}
 			
 				return transactionBody;
