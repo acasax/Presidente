@@ -27,7 +27,7 @@ public class machineCheck extends Thread {
 						msg = db.executeQuery1(sqlConsts.sqlMachineCheck, "Svi aparati salju podatke", sqlConsts.columnsMachineCheck, conn);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Aparati koje nisu slale podatke");
 						if(!isDev) {
-							fun.sendEmail(msg, "dusan@presidente.rs", "APARATI koje nisu slale podatke");
+							fun.sendEmail(msg, "braca@presidente.rs", "APARATI koje nisu slale podatke");
 							///fun.sendEmail(msg, "sladja.djokic@presidente.rs", "APARATI koje nisu slale podatke");
 							///fun.sendEmail(msg, "marija.milic@presidente.rs", "APARATI koje nisu slale podatke");
 						}

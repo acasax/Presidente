@@ -248,7 +248,7 @@ public class Functions {
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika uplata");
 				if(!isDev) {
-					sendEmail(msg, "dusan@presidente.rs", "Velika uplata");
+					sendEmail(msg, "braca@presidente.rs", "Velika uplata");
 					//sendEmail(msg, "sladja.djokic@presidente.rs", "Velika uplata");
 					///sendEmail(msg, "marija.milic@presidente.rs", "Velika uplata");
 				}
@@ -269,7 +269,7 @@ public class Functions {
 				System.out.println("msg: " + msg);
 				sendEmail(msg, "presidenteapp@yahoo.com", "Velika isplata");
 				if(!isDev) {
-					sendEmail(msg, "dusan@presidente.rs", "Velika isplata");
+					sendEmail(msg, "braca@presidente.rs", "Velika isplata");
 					//sendEmail(msg, "sladja.djokic@presidente.rs", "Velika isplata");
 					///sendEmail(msg, "marija.milic@presidente.rs", "Velika isplata");
 				}
@@ -292,7 +292,7 @@ public class Functions {
 			System.out.println("msg: " + msg);
 			sendEmail(msg, "presidenteapp@yahoo.com", "Jackpot");
 			if(!isDev) {
-				sendEmail(msg, "dusan@presidente.rs", "Jackpot");
+				sendEmail(msg, "braca@presidente.rs", "Jackpot");
 				//sendEmail(msg, "sladja.djokic@presidente.rs", "Jackpot");
 				///sendEmail(msg, "marija.milic@presidente.rs", "Jackpot");
 			}

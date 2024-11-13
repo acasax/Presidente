@@ -26,7 +26,7 @@ public class locationCheck extends Thread {
 						msg = db.executeQuery1(sqlConsts.sqlLocationWorkCheck, "Sve lokacije salju podatke", sqlConsts.columnsLocationWorkCheck, conn);
 						fun.sendEmail(msg, "presidenteapp@yahoo.com", "Lokacije koje nisu slale podatke");
 						if(!isDev) {
-							fun.sendEmail(msg, "dusan@presidente.rs", "Lokacije koje nisu slale podatke");
+							fun.sendEmail(msg, "braca@presidente.rs", "Lokacije koje nisu slale podatke");
 							fun.sendEmail(msg, "sladja.djokic@presidente.rs", "Lokacije koje nisu slale podatke");
 							///fun.sendEmail(msg, "marija.milic@presidente.rs", "Lokacije koje nisu slale podatke");
 						}
