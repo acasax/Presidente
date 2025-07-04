@@ -600,6 +600,7 @@ public class Functions {
 		String pi;
 		String po;
 		String sn;
+		String dn;
 		// Uzimanje podataka iz JSON-a
 		//
 		String date = getParamFromJson(JSON, "date");
@@ -631,6 +632,7 @@ public class Functions {
 			pi = machine.getString("pi");
 			po = machine.getString("po");
 			sn = machine.getString("sn");
+			dn = machine.getString("dn");
 
 			// Sklanjanje " da bi mogli bilo koji brojevi da prodju
 			//
@@ -641,6 +643,7 @@ public class Functions {
 			w = w.substring(0, w.length());
 			pi = pi.substring(0, pi.length());
 			po = po.substring(0, po.length());
+			dn = dn.substring(0, dn.length());
 
 			machineElement = new JSONObject();
 			machineElement.put("b", b);
@@ -650,6 +653,7 @@ public class Functions {
 			machineElement.put("pi", pi);
 			machineElement.put("po", po);
 			machineElement.put("sn", sn);
+			machineElement.put("dn", dn);
 
 			filtederMachines.add(i, machineElement);
 
