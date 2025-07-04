@@ -773,7 +773,8 @@ public class Functions {
 			String pi = arr.getJSONObject(i).getString("pi");
 			String j  = arr.getJSONObject(i).getString("j");
 			String po = arr.getJSONObject(i).getString("po");
-			msg = msg + "sn: " + sn + " b: " + b +  " g: " + g +  " w: " + w +  " pi: " + pi +  " j: " + j +  " po: " + po + "\r\n";
+			String dn = arr.getJSONObject(i).getString("dn");
+			msg = msg + "sn: " + sn + " b: " + b +  " g: " + g +  " w: " + w +  " pi: " + pi +  " j: " + j +  " po: " + po + " dn: " + dn + "\r\n";
 		}
 
 		return msg;
