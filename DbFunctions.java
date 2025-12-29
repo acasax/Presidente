@@ -117,8 +117,6 @@ public class DbFunctions {
 	    }
 		return null;
 	}
-
-
 	
 	public String executeQuery(String procedureSQL, Connection conn) throws SecurityException, IOException, SQLException {
 	    Statement stmnt = null;
@@ -137,8 +135,6 @@ public class DbFunctions {
 	    }
 	}
 
-	
-	
 	public String executeProcedure(String procedureSQL, Connection conn) throws SecurityException, IOException, SQLException {
 	    String result = "";
 	    System.out.println("Processing executeProcedure procedureSQL: " + procedureSQL);
@@ -155,9 +151,6 @@ public class DbFunctions {
 	    }
 	}
 
-	
-	
-	
 	public String executeFunction(String SQL, String functionName, Connection conn) throws SQLException, SecurityException, IOException {
 	    Statement statement = null;
 	    ResultSet resultSet = null;

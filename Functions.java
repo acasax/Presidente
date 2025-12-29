@@ -279,6 +279,8 @@ public class Functions {
 		case "slot/jackpot":
 			// Ovde je zato sto postoji samo za ovu rutu
 			//
+			String jackpot_type = getParamFromJson(JSON, "jackpot_type");
+			
 			transactionBody.put("transaction_time", transaction_time);
 			transactionBody.put("transaction_id", transaction_id);
 			transactionBody.put("transaction_amount", p_transaction_amount);
@@ -286,6 +288,8 @@ public class Functions {
 			transactionBody.put("slot_club_id", slot_club_id);
 			transactionBody.put("sticker_no", sticker_no);
 			transactionBody.put("transaction_withdraw_amount", 0);
+			transactionBody.put("jackpot_type", jackpot_type);
+			
 			String macAddress = getMacAddressOfMachines(sticker_no, db, conn);
 			String msg = "ID: " + transaction_id + "Slot klub: " + String.join(" ", slot_club_data)
 						+ "Aparat: " + sticker_no + "Mak adresa: " + macAddress + "Iznos: " + p_transaction_amount + " Vreme transakcije: " + formatDataToString(transaction_time);
