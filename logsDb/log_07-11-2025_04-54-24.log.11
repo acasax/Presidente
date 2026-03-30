@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2025-11-07T15:54:24.457498Z</date>
+  <millis>1762530864457</millis>
+  <nanos>498000</nanos>
+  <sequence>186</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>96</thread>
+  <message>DbFunctions executeProcedure: Funkcija executeProcedure nije uspešno izvršenaCALL public.set_sp_status_1_by_report_index('549685249','9d21d058-f5f6-4485-ace6-b3e2b412df40')</message>
+</record>
+<record>
+  <date>2025-11-07T15:54:24.545294700Z</date>
+  <millis>1762530864545</millis>
+  <nanos>294700</nanos>
+  <sequence>187</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>143</thread>
+  <message>DbFunctions executeProcedure: Funkcija executeProcedure nije uspešno izvršenaCALL public.set_status_1_by_transaction_id('a7550c88-90b1-45d5-b02e-18bfefbadd4a','b6a69c30-d73b-4640-8625-6cf2c827edbd')</message>
+</record>
+<record>
+  <date>2025-11-07T15:54:24.580410300Z</date>
+  <millis>1762530864580</millis>
+  <nanos>410300</nanos>
+  <sequence>188</sequence>
+  <logger>ResivoJe</logger>
+  <level>WARNING</level>
+  <class>Presidente.TransactionApi.Functions</class>
+  <method>createLogDb</method>
+  <thread>98</thread>
+  <message>DbFunctions executeProcedure: Funkcija executeProcedure nije uspešno izvršenaCALL public.set_sp_status_1_by_report_index('549685249','b0a097c7-730e-4a0f-81c3-75e0fc1bd74d')</message>
+</record>
